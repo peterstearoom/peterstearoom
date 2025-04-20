@@ -1,8 +1,8 @@
 import React, { useState } from 'react'
 import { useOrderStore } from '../store/useOrderStore'
-import { ref, push } from 'firebase/database'
-import { database } from '../lib/firebase'
 import { ref, push, get, set } from 'firebase/database'
+import { database } from '../lib/firebase'
+
 
 
 function OrderCart() {
