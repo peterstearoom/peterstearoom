@@ -48,13 +48,14 @@ function OrderCart() {
     <div className="p-4 bg-white mt-4 shadow rounded">
       <h2 className="text-xl font-bold mb-2">🛒 Order Summary</h2>
 
-      <input
-        placeholder="Table Number"
-        type="number"
-        value={tableNumber}
-        onChange={(e) => setTableNumber(e.target.value)}
-        className="border px-2 py-1 mb-3 w-full"
-      />
+<label className="block text-sm font-medium mb-1">Table Number</label>
+<input
+  type="number"
+  value={tableNumber}
+  onChange={(e) => setTableNumber(e.target.value)}
+  className="border px-2 py-1 mb-3 w-full"
+/>
+
 
       {['food', 'drinks'].map((type) =>
         grouped[type].length > 0 && (
