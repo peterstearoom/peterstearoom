@@ -24,25 +24,24 @@ function MenuTabs() {
 
   return (
     <div className="p-4">
-      <div className="flex gap-2 mb-3">
-        {['food', 'drinks'].map((tab) => (
-<button
-  key={tab}
-  onClick={() => {
-    setSearch('')
-    setActiveTab(tab)
-  }}
-  className={`flex-1 text-lg font-semibold tracking-wide py-3 rounded-xl border-2 transition-all duration-200 ${
-    activeTab === tab
-      ? 'bg-blue-600 text-white border-blue-700 shadow'
-      : 'bg-gray-100 border-gray-300 text-gray-800 hover:bg-gray-200'
-  }`}
->
-  {tab.toUpperCase()}
-</button>
-
-        ))}
-      </div>
+<div className="grid grid-cols-2 gap-4 mb-6">
+  {['food', 'drinks'].map((tab) => (
+    <button
+      key={tab}
+      onClick={() => {
+        setSearch('')
+        setActiveTab(tab)
+      }}
+      className={`w-full py-3 rounded-2xl shadow-md text-lg font-semibold tracking-wide transition-all duration-200 ${
+        activeTab === tab
+          ? 'bg-green-600 text-white'
+          : 'bg-white border border-gray-300 text-gray-800 hover:bg-gray-100'
+      }`}
+    >
+      {tab === 'food' ? '🍽️ Food' : '🥤 Drinks'}
+    </button>
+  ))}
+</div>
 
       <input
         type="text"
