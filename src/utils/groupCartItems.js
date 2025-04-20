@@ -3,6 +3,7 @@ export function groupCartItems(items) {
 
   items.forEach((item) => {
     const key = `${item.name}-${item.category}`
+
     if (!grouped[key]) {
       grouped[key] = {
         ...item,
