@@ -1,11 +1,7 @@
-import TestFirebase from './pages/TestFirebase'
+import WaiterScreen from './pages/WaiterScreen'
 
 function App() {
-  return (
-    <div className="min-h-screen bg-gray-100">
-      <TestFirebase />
-    </div>
-  )
+  return <WaiterScreen />
 }
 
 export default App
