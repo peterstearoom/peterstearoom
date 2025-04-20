@@ -96,7 +96,10 @@ function OrderCart() {
 
       <p className="mt-2 font-bold text-right">Total: £{total.toFixed(2)}</p>
 
-      <button onClick={submitOrder} className="mt-3 w-full bg-blue-600 text-white py-2 rounded">
+<button
+  onClick={submitOrder}
+  className="mt-4 w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 rounded-lg transition"
+>
         Submit Order
       </button>
 

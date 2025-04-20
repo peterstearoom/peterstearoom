@@ -13,7 +13,7 @@ function MenuItemCard({ item }) {
   }
 
   return (
-    <div className="bg-white p-3 rounded shadow">
+<div className="bg-white p-4 rounded-xl shadow-md border border-gray-200 hover:shadow-lg transition">
       <h3 className="font-bold">{item.name}</h3>
       <p className="text-sm text-gray-600">£{item.price.toFixed(2)}</p>
 
@@ -34,7 +34,7 @@ function MenuItemCard({ item }) {
 
       <button
         onClick={handleAdd}
-        className="mt-2 w-full bg-green-600 text-white py-1 rounded"
+        className="mt-3 w-full bg-green-600 hover:bg-green-700 text-white font-semibold py-2 rounded-lg transition"
       >
         Add to Order
       </button>
