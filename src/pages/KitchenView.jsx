@@ -45,14 +45,15 @@ function KitchenView() {
       {food.length > 0 && (
         <>
           <h2 className="font-bold text-lg mb-1">FOOD</h2>
-          {food.map((item, i) => (
-            <div key={i} className="mb-2">
-              {item.qty} {item.name}
-              {item.notes.map((note, idx) => (
-                <div key={idx} className="ml-4 text-xs">- {note.qty} {note.note}</div>
-              ))}
-            </div>
-          ))}
+{food.map((item, i) => (
+  <div key={i} className="mb-2">
+    {item.qty} {item.name}
+    {item.notes.map((note, idx) => (
+      <div key={idx} className="ml-4 text-xs">- {note.qty} {note.note}</div>
+    ))}
+  </div>
+))}
+
           <hr className="my-2 border-black" />
         </>
       )}
