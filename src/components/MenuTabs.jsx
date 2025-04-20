@@ -3,9 +3,9 @@ import MenuItemCard from './MenuItemCard'
 
 const menuData = {
   food: [
-    { name: 'Full English Breakfast', price: 9.99 },
-    { name: 'Toasted Panini', price: 6.0 },
-    { name: 'Soup of the Day', price: 4.5 }
+    { name: 'Small Breakfast', price: 9.99 },
+    { name: 'Large Breakfast', price: 6.0 },
+    { name: 'Teacake', price: 2.0 }
   ],
   drinks: [
     { name: 'Cappuccino', price: 2.8 },
