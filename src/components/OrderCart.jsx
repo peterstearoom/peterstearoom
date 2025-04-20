@@ -2,6 +2,8 @@ import React, { useState } from 'react'
 import { useOrderStore } from '../store/useOrderStore'
 import { ref, push } from 'firebase/database'
 import { database } from '../lib/firebase'
+import { ref, push, get, set } from 'firebase/database'
+
 
 function OrderCart() {
   const {
@@ -27,22 +29,50 @@ function OrderCart() {
     setShowPayment(true)
   }
 
-  const confirmSubmit = async (method) => {
-    setPaymentType(method)
+const confirmSubmit = async (method) => {
+  setPaymentType(method)
 
-    const payload = {
-      table: tableNumber,
-      items: JSON.parse(JSON.stringify(cart)),
-      payment: method,
-      total: Number(total.toFixed(2)),
-      time: new Date().toISOString()
+  const payload = {
+    table: tableNumber,
+    items: JSON.parse(JSON.stringify(cart)),
+    payment: method,
+    total: Number(total.toFixed(2)),
+    time: new Date().toISOString()
+  }
+
+  const dateKey = new Date().toISOString().split('T')[0] // e.g. "2025-04-20"
+
+  // Save order under /orders/DATE/
+  await push(ref(database, `orders/${dateKey}`), payload)
+
+  // Update totals under /totals/DATE/
+  const totalsRef = ref(database, `totals/${dateKey}`)
+
+  try {
+    const snapshot = await get(totalsRef)
+    const current = snapshot.val() || { cash: 0, card: 0 }
+    const updated = { ...current }
+
+    if (method === 'Cash') {
+      updated.cash += payload.total
+    } else {
+      updated.card += payload.total
     }
 
-    await push(ref(database, 'orders'), payload)
-    alert("✅ Order Submitted!")
-    clearCart()
-    setShowPayment(false)
+    // Round to 2 decimals
+    updated.cash = Number(updated.cash.toFixed(2))
+    updated.card = Number(updated.card.toFixed(2))
+
+    await set(totalsRef, updated)
+  } catch (error) {
+    console.error('Error updating totals:', error)
   }
+
+  alert("✅ Order Submitted!")
+  clearCart()
+  setShowPayment(false)
+}
+
 
   return (
     <div className="p-4 bg-white mt-4 shadow rounded">
