@@ -1,10 +1,10 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useOrderStore } from '../store/useOrderStore'
 import { ref, push, get, set } from 'firebase/database'
 import { database } from '../lib/firebase'
 import { groupCartItems } from '../utils/groupCartItems'
 import { useNavigate } from 'react-router-dom'
-import '../styles/custom.css' // Import your custom CSS file
+import '../styles/custom.css'
 
 function OrderCart() {
   const {
@@ -26,11 +26,48 @@ function OrderCart() {
   const [showSummary, setShowSummary] = useState(true)
   const total = cart.reduce((sum, i) => sum + i.qty * i.price, 0)
 
+  // Sync queued orders on reconnect
+  useEffect(() => {
+    const syncOfflineOrders = async () => {
+      const queued = JSON.parse(localStorage.getItem('offlineOrders') || '[]')
+      if (!queued.length) return
+      for (const order of queued) {
+        await uploadOrderToFirebase(order)
+      }
+      localStorage.removeItem('offlineOrders')
+      alert("📡 Back Online - Queued Orders Synced!")
+    }
+
+    window.addEventListener('online', syncOfflineOrders)
+    return () => window.removeEventListener('online', syncOfflineOrders)
+  }, [])
+
   const submitOrder = () => {
     if (!tableNumber || !waiterName || cart.length === 0) {
       return alert("Please select table number AND waiter before submitting.")
     }
     setShowPayment(true)
+  }
+
+  const uploadOrderToFirebase = async (payload) => {
+    const dateKey = new Date().toISOString().split('T')[0]
+    await push(ref(database, `orders/${dateKey}`), payload)
+
+    const totalsRef = ref(database, `totals/${dateKey}`)
+    try {
+      const snapshot = await get(totalsRef)
+      const current = snapshot.val() || { cash: 0, card: 0 }
+      const updated = { ...current }
+
+      if (payload.payment === 'Cash') updated.cash += payload.total
+      else updated.card += payload.total
+
+      updated.cash = Number(updated.cash.toFixed(2))
+      updated.card = Number(updated.card.toFixed(2))
+      await set(totalsRef, updated)
+    } catch (error) {
+      console.error('Error updating totals:', error)
+    }
   }
 
   const confirmSubmit = async (method) => {
@@ -45,25 +82,20 @@ function OrderCart() {
       time: new Date().toISOString()
     }
 
-    const dateKey = new Date().toISOString().split('T')[0]
-    await push(ref(database, `orders/${dateKey}`), payload)
+    if (!navigator.onLine) {
+      const offlineQueue = JSON.parse(localStorage.getItem('offlineOrders') || '[]')
+      localStorage.setItem('offlineOrders', JSON.stringify([...offlineQueue, payload]))
 
-    const totalsRef = ref(database, `totals/${dateKey}`)
+      try {
+        const registration = await navigator.serviceWorker.ready
+        await registration.sync.register('sync-orders')
+      } catch (err) {
+        console.warn('Background sync registration failed', err)
+      }
 
-    try {
-      const snapshot = await get(totalsRef)
-      const current = snapshot.val() || { cash: 0, card: 0 }
-      const updated = { ...current }
-
-      if (method === 'Cash') updated.cash += payload.total
-      else updated.card += payload.total
-
-      updated.cash = Number(updated.cash.toFixed(2))
-      updated.card = Number(updated.card.toFixed(2))
-
-      await set(totalsRef, updated)
-    } catch (error) {
-      console.error('Error updating totals:', error)
+      alert("📴 You're offline. Order queued and will sync automatically when you're back online.")
+    } else {
+      await uploadOrderToFirebase(payload)
     }
 
     clearCart()
@@ -88,17 +120,13 @@ function OrderCart() {
       <div className="order-inputs">
         <div>
           <label>Table Number</label>
-          <input
-            type="number"
-            value={tableNumber}
-            onChange={(e) => setTableNumber(e.target.value)}
-          />
+          <input type="number" value={tableNumber} onChange={(e) => setTableNumber(e.target.value)} />
         </div>
         <div>
           <label>Waiter</label>
           <select value={waiterName} onChange={(e) => setWaiterName(e.target.value)}>
             <option value="">Select</option>
-            {['Amanda', 'Linda', 'Carrie', 'Sharon', 'Libby', 'Elaine'].map((name) => (
+            {['Amanda', 'Linda', 'Carrie', 'Sharon', 'Libby', 'Elaine'].map(name => (
               <option key={name} value={name}>{name}</option>
             ))}
           </select>
@@ -151,7 +179,6 @@ function OrderCart() {
             ['food', 'drinks'].map((type) => {
               const itemsOfType = cart.filter((i) => i.category === type)
               const groupedItems = groupCartItems(itemsOfType)
-
               return groupedItems.length > 0 && (
                 <div key={type} className="summary-block">
                   <h3>{type.toUpperCase()}</h3>

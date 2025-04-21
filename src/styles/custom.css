@@ -894,38 +894,46 @@ textarea {
   flex: 1;
   padding: 1rem;
   font-size: 1.2rem;
-  font-weight: bold;
-  border: none;
+  font-weight: 700;
   border-radius: 0.75rem;
-  color: #fff;
+  border: none;
+  cursor: pointer;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  transition: background-color 0.2s ease, transform 0.1s ease;
 }
 
 .pay-btn.card {
-  background-color: #2e2e2e;
-}
-
-.pay-btn.card:hover {
-  background-color: #1c1c1c;
+  background: #333;
+  color: #fff;
 }
 
 .pay-btn.cash {
-  background-color: #4caf50;
-}
-
-.pay-btn.cash:hover {
-  background-color: #43a047;
-}
-
-.payment-buttons {
-  display: flex;
-  gap: 1rem;
+  background: #4caf50;
+  color: white;
 }
 
 .hidden-label {
   visibility: hidden;
   height: 0;
+}
+.status-banner {
+  width: 100%;
+  padding: 8px;
+  text-align: center;
+  font-weight: bold;
+  font-size: 0.9rem;
+  position: sticky;
+  top: 0;
+  z-index: 9999;
+}
+
+.status-banner.online {
+  background-color: #e8f5e9;
+  color: #2e7d32;
+}
+
+.status-banner.offline {
+  background-color: #fff3e0;
+  color: #ef6c00;
 }
 
 
