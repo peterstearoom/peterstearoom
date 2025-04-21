@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { ref, onChildAdded, get } from 'firebase/database'
 import { database } from '../lib/firebase'
 import { groupCartItems } from '../utils/groupCartItems'
+import '../styles/custom.css'
 
 function KitchenView() {
   const [orders, setOrders] = useState([])
@@ -31,7 +32,6 @@ function KitchenView() {
       setPrintedOrderId(snapshot.key)
       setOrders(prev => [newOrder, ...prev].slice(0, 10))
       setLatestOrder(newOrder)
-
       setTimeout(() => window.print(), 700)
     })
 
@@ -43,30 +43,27 @@ function KitchenView() {
     setTimeout(() => window.print(), 700)
   }
 
-  if (!latestOrder) return <div className="p-6 text-center">Waiting for orders...</div>
+  if (!latestOrder) {
+    return <div className="kitchen-waiting">Waiting for orders...</div>
+  }
 
   const grouped = groupCartItems(latestOrder.items || [])
-  const food = grouped.filter((item) => item.category === 'food')
-  const drinks = grouped.filter((item) => item.category === 'drinks')
+  const food = grouped.filter(item => item.category === 'food')
+  const drinks = grouped.filter(item => item.category === 'drinks')
 
   return (
-    <div className="relative h-screen bg-white font-mono text-black overflow-hidden print:h-screen print:overflow-hidden print:break-after-avoid print:px-0">
+    <div className="kitchen-view-container">
 
-      {/* Branding */}
-      <div className="text-center text-xs text-gray-500 mb-2 print:mb-2 print:text-[0.4rem]">
-        Peter's Tea Room
-      </div>
+      {/* Logo / Branding */}
+      <div className="kitchen-brand">Peter's Tea Room</div>
 
       {/* Dropdown */}
-      <div className="p-4 bg-gray-100 mb-2 text-sm print:hidden">
-        <label className="block font-semibold mb-1">Reprint previous order:</label>
+      <div className="kitchen-dropdown-container no-print">
+        <label>Reprint previous order:</label>
         <select
-          className="w-full border rounded px-3 py-2"
           onChange={(e) => {
-            const selectedIndex = e.target.value
-            if (selectedIndex !== '') {
-              handleReprint(orders[selectedIndex])
-            }
+            const index = e.target.value
+            if (index !== '') handleReprint(orders[index])
           }}
           defaultValue=""
         >
@@ -79,49 +76,42 @@ function KitchenView() {
         </select>
       </div>
 
-      {/* Header */}
-      <div className="mb-2 px-6 text-gray-700 leading-tight print:text-[0.5rem] text-sm">
+      {/* Order Details */}
+      <div className="kitchen-order-info">
         <strong>{new Date(latestOrder.time).toLocaleString()}</strong><br />
         <strong>Total:</strong> £{latestOrder.total.toFixed(2)}<br />
         <strong>Payment:</strong> {latestOrder.payment}<br />
         <strong>Served by:</strong> {latestOrder.waiter || 'N/A'}
       </div>
 
-      <hr className="my-2 border-black mx-6 print:my-1" />
+      <hr className="kitchen-divider" />
 
       {/* FOOD */}
       {food.length > 0 && (
-        <div className="px-6 break-inside-avoid">
-          <h2 className="font-bold text-2xl mb-3 print:text-2xl">FOOD</h2>
+        <div className="kitchen-section">
+          <h2>FOOD</h2>
           {food.map((item, i) => (
-            <div key={i} className="mb-3 print:mb-2">
-              <div className="font-bold print:text-[1.7rem] text-2xl">{item.qty} {item.name}</div>
+            <div key={i} className="kitchen-item">
+              <div className="kitchen-item-title">{item.qty} {item.name}</div>
               {item.notes.map((note, idx) => (
-                <div
-                  key={idx}
-                  className="ml-6 italic print:text-[1.1rem]"
-                >
+                <div key={idx} className="kitchen-note">
                   - {note.qty} {note.note}
                 </div>
               ))}
             </div>
           ))}
-          <hr className="my-2 border-black" />
         </div>
       )}
 
       {/* DRINKS */}
       {drinks.length > 0 && (
-        <div className="px-6 break-inside-avoid">
-          <h2 className="font-bold text-2xl mb-3 print:text-2xl">DRINKS</h2>
+        <div className="kitchen-section">
+          <h2>DRINKS</h2>
           {drinks.map((item, i) => (
-            <div key={i} className="mb-3 print:mb-2">
-              <div className="font-bold print:text-[1.7rem] text-2xl">{item.qty} {item.name}</div>
+            <div key={i} className="kitchen-item">
+              <div className="kitchen-item-title">{item.qty} {item.name}</div>
               {item.notes.map((note, idx) => (
-                <div
-                  key={idx}
-                  className="ml-6 italic print:text-[1.1rem]"
-                >
+                <div key={idx} className="kitchen-note">
                   - {note.qty} {note.note}
                 </div>
               ))}
@@ -130,8 +120,8 @@ function KitchenView() {
         </div>
       )}
 
-      {/* Table Number */}
-      <div className="fixed bottom-4 left-1/2 transform -translate-x-1/2 border-4 border-black rounded-full px-8 py-4 font-extrabold text-center bg-white print:text-[2.5rem] text-4xl">
+      {/* Table Number Display */}
+      <div className="kitchen-table-banner">
         TABLE {latestOrder.table}
       </div>
     </div>

@@ -575,6 +575,100 @@ textarea {
   color: #777;
 }
 
+.kitchen-view-container {
+  font-family: monospace;
+  background: white;
+  height: 100vh;
+  overflow: hidden;
+  padding-bottom: 3rem;
+}
+
+.kitchen-brand {
+  text-align: center;
+  font-size: 0.6rem;
+  color: #888;
+  margin-top: 1rem;
+  margin-bottom: 0.5rem;
+}
+
+.kitchen-dropdown-container {
+  padding: 1rem;
+  background: #f0f0f0;
+  font-size: 0.95rem;
+  margin-bottom: 1rem;
+}
+
+.kitchen-dropdown-container select {
+  width: 100%;
+  padding: 0.6rem;
+  border-radius: 0.5rem;
+  border: 1px solid #ccc;
+}
+
+.kitchen-order-info {
+  font-size: 0.9rem;
+  color: #444;
+  padding: 0 1.5rem;
+  line-height: 1.6;
+}
+
+.kitchen-divider {
+  margin: 1rem auto;
+  border-top: 2px solid black;
+  width: 90%;
+}
+
+.kitchen-section {
+  padding: 0 1.5rem;
+  break-inside: avoid;
+}
+
+.kitchen-section h2 {
+  font-size: 1.8rem;
+  margin-bottom: 1rem;
+  font-weight: 800;
+}
+
+.kitchen-item {
+  margin-bottom: 1.5rem;
+}
+
+.kitchen-item-title {
+  font-size: 1.6rem;
+  font-weight: bold;
+}
+
+.kitchen-note {
+  margin-left: 1.5rem;
+  font-size: 1.1rem;
+  font-style: italic;
+}
+
+.kitchen-table-banner {
+  position: fixed;
+  bottom: 1rem;
+  left: 50%;
+  transform: translateX(-50%);
+  background: white;
+  padding: 1rem 2rem;
+  border: 4px solid black;
+  border-radius: 999px;
+  font-size: 2.5rem;
+  font-weight: 900;
+  text-align: center;
+}
+
+/* Print Fixes */
+@media print {
+  .no-print {
+    display: none;
+  }
+  .kitchen-view-container {
+    padding: 0;
+    height: 100vh;
+    break-after: avoid;
+  }
+}
 
 .summary-block {
   background: #f9f9f9;
