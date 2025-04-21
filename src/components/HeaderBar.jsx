@@ -1,5 +1,5 @@
 import React from 'react'
-import logo from '../assets/PetersTeaRoom-removebg-preview_resized.png'
+import logo from '../assets/PetersTeaRoom-Logo1.png'
 import { useOrderStore } from '../store/useOrderStore'
 
 const waiterNames = ['Amanda', 'Linda', 'Carrie', 'Sharon', 'Libby', 'Elaine']
