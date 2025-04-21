@@ -47,7 +47,7 @@ function MenuItemCard({ item }) {
         extras.push('black pud')
         finalPrice += 1.4
       }
-      if (extras.length > 0) finalName += \` (\${extras.join(' + ')})\`
+      if (extras.length > 0) finalName += ' (' + extras.join(' + ') + ')'
     }
 
     // Hot Sandwich logic
