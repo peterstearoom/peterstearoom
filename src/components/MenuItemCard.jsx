@@ -16,7 +16,7 @@ function MenuItemCard({ item }) {
     let finalName = item.name
     let finalPrice = item.price
 
-    // Cold sandwich logic
+    // 🥪 Cold Sandwich logic
     if (item.subcategory === 'Cold sandwiches') {
       if (addSalad) {
         finalName = finalName.replace('muffin', 'salad muffin')
@@ -25,21 +25,21 @@ function MenuItemCard({ item }) {
       }
     }
 
-    // Breakfast logic
-    if (item.subcategory === 'Breakfast') {
-      let extras = ''
-      if (beansOption) {
-        extras += `(${beansOption}`
-      }
+    // 🍳 Breakfast logic (Small / Large only)
+    if (
+      item.subcategory === 'Breakfast' &&
+      (item.name.includes('Small breakfast') || item.name.includes('Large breakfast'))
+    ) {
+      let extras = []
 
+      if (beansOption) extras.push(beansOption)
       if (blackPud) {
+        extras.push('black pud')
         finalPrice += 1.4
-        extras += beansOption ? ' + black pud' : '(black pud'
       }
 
-      if (extras) {
-        extras += ')'
-        finalName += ' ' + extras
+      if (extras.length > 0) {
+        finalName += ` (${extras.join(' + ')})`
       }
     }
 
@@ -84,7 +84,7 @@ function MenuItemCard({ item }) {
                 if (!addSalad) setAddOnions(false)
               }}
             /> Add salad? (+£0.90)
-          </label>
+          </label><br />
 
           {addSalad && (
             <label>
@@ -101,7 +101,7 @@ function MenuItemCard({ item }) {
       {/* 🍳 Breakfast Options */}
       {item.subcategory === 'Breakfast' &&
         (item.name.includes('Small breakfast') || item.name.includes('Large breakfast')) && (
-          <div style={{ marginTop: '1rem' }}>
+          <div className="breakfast-options" style={{ marginTop: '1rem' }}>
             <p style={{ fontWeight: 600 }}>Breakfast Extras:</p>
 
             <label>
