@@ -9,6 +9,13 @@ function MenuItemCard({ item }) {
   const [addOnions, setAddOnions] = useState(false)
   const [beansOption, setBeansOption] = useState('')
   const [blackPud, setBlackPud] = useState(false)
+  const [toast, setToast] = useState(false)
+  const [hotAdditions, setHotAdditions] = useState({
+    egg: false,
+    bacon: false,
+    sausage: false,
+    spam: false,
+  })
 
   const addItem = useOrderStore((s) => s.addItem)
 
@@ -16,7 +23,7 @@ function MenuItemCard({ item }) {
     let finalName = item.name
     let finalPrice = item.price
 
-    // 🥪 Cold Sandwich logic
+    // Cold Sandwich logic
     if (item.subcategory === 'Cold sandwiches') {
       if (addSalad) {
         finalName = finalName.replace('muffin', 'salad muffin')
@@ -25,27 +32,39 @@ function MenuItemCard({ item }) {
       }
     }
 
-    // 🍳 Breakfast logic (Small / Large only)
+    // Breakfast logic
     if (
       item.subcategory === 'Breakfasts' &&
       (item.name.toLowerCase().includes('small breakfast') || item.name.toLowerCase().includes('large breakfast'))
     ) {
       let extras = []
-
       if (beansOption) {
-        if (beansOption === 'both') {
-          finalPrice += 0.4
-        }
+        if (beansOption === 'both') finalPrice += 0.4
         extras.push(beansOption)
       }
-
       if (blackPud) {
         extras.push('black pud')
         finalPrice += 1.4
       }
+      if (extras.length > 0) finalName += ` (${extras.join(' + ')})`
+    }
 
-      if (extras.length > 0) {
-        finalName += ` (${extras.join(' + ')})`
+    // Hot Sandwich logic
+    if (
+      item.subcategory === 'Hot sandwiches' &&
+      ['bacon muffin', 'sausage muffin', 'egg muffin', 'spam muffin'].some(v => item.name.toLowerCase().includes(v))
+    ) {
+      const selected = Object.entries(hotAdditions)
+        .filter(([key, value]) => value && !item.name.toLowerCase().includes(key))
+        .map(([key]) => key)
+
+      if (toast) finalName = finalName.replace('muffin', 'toast')
+
+      if (selected.length) {
+        const additions = selected.join(', ')
+        finalName = `${finalName.split(' ')[0]}, ${additions} ${toast ? 'toast' : 'muffin'}`
+        if (selected.length === 1) finalPrice += 0.7
+        if (selected.length >= 2) finalPrice += 1.0
       }
     }
 
@@ -56,6 +75,12 @@ function MenuItemCard({ item }) {
     setAddOnions(false)
     setBeansOption('')
     setBlackPud(false)
+    setHotAdditions({ egg: false, bacon: false, sausage: false, spam: false })
+    setToast(false)
+  }
+
+  const handleHotChange = (key) => {
+    setHotAdditions(prev => ({ ...prev, [key]: !prev[key] }))
   }
 
   return (
@@ -91,7 +116,6 @@ function MenuItemCard({ item }) {
               }}
             /> Add salad? (+£1.50)
           </label><br />
-
           {addSalad && (
             <label>
               <input
@@ -109,7 +133,6 @@ function MenuItemCard({ item }) {
         (item.name.toLowerCase().includes('small breakfast') || item.name.toLowerCase().includes('large breakfast')) && (
           <div className="breakfast-options" style={{ marginTop: '1rem' }}>
             <p style={{ fontWeight: 600 }}>Breakfast Extras:</p>
-
             <label>
               <input
                 type="radio"
@@ -118,7 +141,6 @@ function MenuItemCard({ item }) {
                 onChange={() => setBeansOption('beans')}
               /> Beans
             </label><br />
-
             <label>
               <input
                 type="radio"
@@ -127,16 +149,14 @@ function MenuItemCard({ item }) {
                 onChange={() => setBeansOption('tomatoes')}
               /> Tomatoes
             </label><br />
-
             <label>
               <input
                 type="radio"
                 name={`beans-${item.name}`}
                 checked={beansOption === 'both'}
                 onChange={() => setBeansOption('both')}
-              /> Both (£0.40)
+              /> Both (+£0.40)
             </label><br />
-
             <label>
               <input
                 type="checkbox"
@@ -146,6 +166,32 @@ function MenuItemCard({ item }) {
             </label>
           </div>
       )}
+
+      {/* 🌭 Hot Sandwich Extras */}
+      {item.subcategory === 'Hot sandwiches' &&
+        ['bacon muffin', 'sausage muffin', 'egg muffin', 'spam muffin'].some(v => item.name.toLowerCase().includes(v)) && (
+          <div className="hot-options" style={{ marginTop: '1rem' }}>
+            <p style={{ fontWeight: 600 }}>Extras:</p>
+            {['egg', 'bacon', 'sausage', 'spam'].map((ingredient) => (
+              <label key={ingredient}>
+                <input
+                  type="checkbox"
+                  checked={hotAdditions[ingredient]}
+                  onChange={() => handleHotChange(ingredient)}
+                  disabled={item.name.toLowerCase().includes(ingredient)}
+                /> Add {ingredient.charAt(0).toUpperCase() + ingredient.slice(1)}
+              </label>
+            ))}
+            <br />
+            <label>
+              <input
+                type="checkbox"
+                checked={toast}
+                onChange={() => setToast(!toast)}
+              /> Toast?
+            </label>
+          </div>
+        )}
 
       <button onClick={handleAdd} className="item-add-btn">
         ➕ Add to Order
