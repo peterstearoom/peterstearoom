@@ -1,13 +1,298 @@
-
 /* styles/custom.css */
 
+/* ========== Root Variables ========== */
+:root {
+  --color-brand: #4caf50;
+  --color-brand-dark: #43a047;
+  --color-bg: #fdfcf9;
+  --color-card: #ffffff;
+  --color-border: #d6d2c4;
+  --color-text: #2f2f2f;
+
+  --radius: 1.25rem;
+  --shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+
+  --font-serif: 'Playfair Display', serif;
+  --font-sans: 'Inter', sans-serif;
+}
+
+/* ========== Layout & Body ========== */
+body {
+  background: var(--color-bg);
+  font-family: var(--font-sans);
+  color: var(--color-text);
+  margin: 0;
+  padding: 2rem;
+}
+
+/* ========== Containers ========== */
+.app-wrapper {
+  max-width: 1280px;
+  margin: 0 auto;
+}
+
+.card {
+  background: var(--color-card);
+  border: 2px solid var(--color-border);
+  border-radius: var(--radius);
+  padding: 2rem;
+  box-shadow: var(--shadow);
+  margin-bottom: 2rem;
+}
+
+/* ========== Header & Branding ========== */
+.header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.logo-img {
+  height: 80px;
+  margin-bottom: 0.5rem;
+}
+
+.page-title {
+  font-family: var(--font-serif);
+  font-size: 2.5rem;
+  font-weight: bold;
+  color: var(--color-brand);
+}
+
+/* ========== Typography ========== */
+.section-title {
+  font-size: 1.75rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+  color: var(--color-brand);
+}
+
+.text-muted {
+  color: #888;
+  font-size: 0.9rem;
+}
+
+/* ========== Buttons ========== */
+.btn {
+  background-color: var(--color-brand);
+  color: white;
+  font-size: 1.25rem;
+  font-weight: 600;
+  padding: 1rem 1.5rem;
+  border: none;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  cursor: pointer;
+  transition: 0.2s ease;
+  display: inline-block;
+  width: 100%;
+  text-align: center;
+}
+
+.btn:hover {
+  background-color: var(--color-brand-dark);
+  transform: scale(0.98);
+}
+
+.btn-outline {
+  background: none;
+  border: 2px solid var(--color-brand);
+  color: var(--color-brand);
+}
+
+/* ========== Form Inputs ========== */
+.input,
+select,
+textarea {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  font-size: 1rem;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  margin-bottom: 1rem;
+}
+
+/* ========== Order Summary ========== */
 .order-summary {
   padding: 2rem;
-  background: white;
+  background: var(--color-card);
+  border: 2px solid var(--color-border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  margin-top: 2rem;
+}
+
+.order-total {
+  font-size: 3rem;
+  font-weight: 800;
+  color: var(--color-brand);
+  text-align: center;
+  margin-top: 2rem;
+  letter-spacing: 1px;
+}
+
+/* ===== Custom Styling for OrderCart ===== */
+
+.order-wrapper {
+  padding: 2rem;
+  background: #fff;
   border: 2px solid #d6d2c4;
   border-radius: 1.5rem;
   box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
   margin-top: 2rem;
+  font-family: 'Inter', sans-serif;
+}
+
+.order-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.order-header h2 {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #4caf50;
+}
+
+.edit-toggle {
+  font-size: 0.9rem;
+  color: #777;
+  text-decoration: underline;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.order-inputs {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.order-inputs input,
+.order-inputs select {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  font-size: 1rem;
+  border: 1px solid #d6d2c4;
+  border-radius: 0.75rem;
+  background: #f9f9f9;
+}
+
+.search-btn {
+  background: #f3f0e8;
+  border: 1px solid #d6d2c4;
+  color: #333;
+  padding: 0.75rem 1rem;
+  border-radius: 0.75rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.search-btn:hover {
+  background: #eae7de;
+  transform: scale(0.98);
+}
+
+.view-toggle {
+  display: flex;
+  justify-content: space-between;
+  font-weight: 600;
+  font-size: 1.1rem;
+  color: #4caf50;
+  background: none;
+  border: none;
+  cursor: pointer;
+  margin-bottom: 1rem;
+  width: 100%;
+}
+
+.raw-cart {
+  background: #f9f9f9;
+  padding: 1rem;
+  border-radius: 1rem;
+  border: 1px solid #ddd;
+}
+
+.raw-cart h3 {
+  font-size: 1.2rem;
+  margin-bottom: 1rem;
+}
+
+.raw-cart-item {
+  margin-bottom: 1rem;
+  border-bottom: 1px solid #ddd;
+  padding-bottom: 1rem;
+}
+
+.item-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.item-note {
+  font-size: 0.9rem;
+  font-style: italic;
+  color: #777;
+}
+
+.remove-btn {
+  background: none;
+  border: none;
+  font-size: 1rem;
+  color: #e53935;
+  cursor: pointer;
+}
+
+.item-controls {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 0.5rem;
+}
+
+.item-controls input {
+  width: 60px;
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+  border: 1px solid #ccc;
+}
+
+.raw-cart-item textarea {
+  width: 100%;
+  margin-top: 0.5rem;
+  padding: 0.75rem;
+  border-radius: 0.5rem;
+  border: 1px solid #ccc;
+}
+
+.summary-block {
+  background: #f9f9f9;
+  padding: 1rem;
+  border-radius: 1rem;
+  border: 1px solid #ddd;
+  margin-bottom: 1.5rem;
+}
+
+.summary-block h3 {
+  font-size: 1.3rem;
+  margin-bottom: 1rem;
+  color: #4caf50;
+}
+
+.summary-item {
+  margin-bottom: 1rem;
+}
+
+.summary-note {
+  font-size: 0.9rem;
+  font-style: italic;
+  margin-left: 1rem;
+  color: #666;
 }
 
 .order-total {
@@ -30,9 +315,66 @@
   border-radius: 1.25rem;
   box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
   transition: all 0.2s ease;
+  border: none;
+  cursor: pointer;
 }
 
 .submit-btn:hover {
   background-color: #43a047;
+  transform: scale(0.98);
+}
+
+.payment-section {
+  margin-top: 2rem;
+}
+
+.payment-buttons {
+  display: flex;
+  gap: 1rem;
+}
+
+.pay-btn {
+  flex: 1;
+  padding: 1rem;
+  font-size: 1.2rem;
+  font-weight: 700;
+  border-radius: 0.75rem;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.pay-btn.card {
+  background: #333;
+  color: #fff;
+}
+
+.pay-btn.cash {
+  background: #4caf50;
+  color: white;
+}
+
+.hidden-label {
+  visibility: hidden;
+  height: 0;
+}
+
+
+/* ========== Submit Button ========== */
+.submit-btn {
+  margin-top: 2rem;
+  width: 100%;
+  background-color: var(--color-brand);
+  color: white;
+  font-size: 1.5rem;
+  font-weight: 700;
+  padding: 1rem;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  transition: all 0.2s ease;
+}
+
+.submit-btn:hover {
+  background-color: var(--color-brand-dark);
   transform: scale(0.98);
 }
