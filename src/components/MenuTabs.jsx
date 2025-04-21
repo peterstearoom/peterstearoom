@@ -12,23 +12,38 @@ const menuData = {
       { name: 'Hot beef & onion', price: 9.99, image: '🍖' },
       { name: 'Hot chicken & stuffing', price: 12.5, image: '🍗' },
       { name: 'Sausage muffin', price: 12.5, image: '🌭' },
+      { name: 'Bacon muffin', price: 3.9, image: '🥓' },
+      { name: 'Egg muffin', price: 3.5, image: '🥚' },
+      { name: 'Spam muffin', price: 4.0, image: '🥩' },
     ],
     "Cold sandwiches": [
-      { name: 'Ham muffin', price: 9.99, image: '🥪' },
-      { name: 'Chicken muffin', price: 12.5, image: '🥪' },
+      { name: 'Ham muffin', price: 3.8, image: '🥪' },
+      { name: 'Chicken muffin', price: 3.8, image: '🥪' },
+      { name: 'Prawn muffin', price: 4.2, image: '🦐' },
+      { name: 'Beef muffin', price: 4.0, image: '🥩' },
+      { name: 'Cheese muffin', price: 3.5, image: '🧀' },
+      { name: 'Chicken Tikka muffin', price: 4.2, image: '🍗' },
+      { name: 'Chicken & Bacon muffin', price: 4.4, image: '🥓' },
+      { name: 'Egg Mayo muffin', price: 3.5, image: '🥚' },
+      { name: 'Tuna Mayo muffin', price: 4.0, image: '🐟' },
     ],
     Toasties: [
       { name: 'Cheese & onion toastie', price: 4.5, image: '🧀' },
       { name: 'Cheese & tomato toastie', price: 4.2, image: '🍅' },
+      { name: 'Cheese & tuna toastie', price: 4.6, image: '🐟' },
     ],
     "Plate salads": [
       { name: 'Ham plate salad', price: 5.2, image: '🥗' },
       { name: 'Beef plate salad', price: 5.6, image: '🥗' },
+      { name: 'Prawn plate salad', price: 5.5, image: '🦐' },
+      { name: 'Chicken plate salad', price: 5.5, image: '🍗' },
+      { name: 'Tuna plate salad', price: 5.5, image: '🐟' },
     ],
     "Jacket potatoes": [
-      { name: 'Cheese & tuna', price: 6.2, image: '🥔' },
-      { name: 'Cheese & beans', price: 6.0, image: '🥔' },
-      { name: 'Cheese & chilli', price: 6.4, image: '🥔' },
+      { name: 'Jacket - Cheese & tuna', price: 6.2, image: '🥔' },
+      { name: 'Jacket - Cheese & beans', price: 6.0, image: '🥔' },
+      { name: 'Jacket - Cheese & chilli', price: 6.4, image: '🥔' },
+      { name: 'Jacket - Chicken Curry', price: 6.5, image: '🍛' },
     ],
     Specials: [
       { name: 'Prawn special', price: 7.5, image: '🦐' },
@@ -38,12 +53,30 @@ const menuData = {
       { name: 'Cream scone', price: 2.0, image: '🍰' },
       { name: 'Vanilla bun', price: 2.0, image: '🧁' },
       { name: 'Vanilla slice', price: 2.0, image: '🍮' },
+      { name: 'Eclair', price: 2.0, image: '🍫' },
+      { name: 'Meringue', price: 2.0, image: '🍥' },
+      { name: 'Trifle', price: 2.0, image: '🍨' },
+      { name: 'Manchester tart', price: 2.0, image: '🍓' },
+      { name: 'Apple pie', price: 2.0, image: '🥧' },
+      { name: 'Wimberry tart', price: 2.0, image: '🫐' },
+      { name: 'Strawberry tart', price: 2.0, image: '🍓' },
+      { name: 'Brownie', price: 2.0, image: '🍫' },
+      { name: 'Jam slice', price: 2.0, image: '🍓' },
+      { name: 'Flapjack', price: 2.0, image: '🥮' },
+      { name: 'Shortbread', price: 2.0, image: '🍪' },
     ]
   },
   drinks: {
-    Coffee: [
+    "Hot Drinks": [
       { name: 'Cappuccino', price: 2.8, image: '☕' },
       { name: 'Latte', price: 2.9, image: '🥛' },
+      { name: 'Tea', price: 2.0, image: '🍵' },
+      { name: 'Coffee', price: 2.5, image: '☕' },
+      { name: 'Black Coffee', price: 2.5, image: '☕' },
+      { name: 'Americano', price: 2.8, image: '☕' },
+      { name: 'Hot Chocolate', price: 3.0, image: '🍫' },
+      { name: 'Mocha', price: 3.2, image: '☕' },
+      { name: 'Fruit Tea', price: 2.2, image: '🍋' },
     ],
     Pop: [
       { name: 'Coke', price: 2.8, image: '🥤' },
@@ -60,6 +93,7 @@ const menuData = {
     ]
   }
 }
+
 
 function MenuTabs() {
   const [activeTab, setActiveTab] = useState('food')
