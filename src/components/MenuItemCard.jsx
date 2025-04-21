@@ -58,7 +58,7 @@ function MenuItemCard({ item }) {
         .filter(([key, value]) => value && !item.name.toLowerCase().includes(key))
         .map(([key]) => key)
 
-      if (toast) finalName = finalName.replace('muffin', 'toast')
+      if (toast) finalName = finalName.replace('muffin', 'on toast')
 
       if (selected.length) {
         const additions = selected.join(', ')
