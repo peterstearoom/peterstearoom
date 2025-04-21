@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react'
 import { useOrderStore } from '../store/useOrderStore'
 import '../styles/custom.css'
@@ -47,7 +46,7 @@ function MenuItemCard({ item }) {
         extras.push('black pud')
         finalPrice += 1.4
       }
-      if (extras.length > 0) finalName += ' (' + extras.join(' + ') + ')'
+      if (extras.length > 0) finalName += ` (${extras.join(' + ')})`
     }
 
     // Hot Sandwich logic
@@ -63,10 +62,10 @@ function MenuItemCard({ item }) {
 
       if (selected.length) {
         const additions = selected.join(', ')
-        finalName = finalName.split(' ')[0] + ', ' + additions + ' ' + (toast ? 'on toast' : 'muffin')
+        finalName = `${finalName.split(' ')[0]}, ${additions} ${toast ? 'on toast' : 'muffin'}`
         if (selected.length === 1) finalPrice += 0.7
-        if (selected.length === 2) finalPrice += 1.0
-        if (selected.length === 3) finalPrice += 1.3
+        if (selected.length >= 2) finalPrice += 1.0
+        if (selected.length >= 3) finalPrice += 1.3
       }
     }
 
@@ -138,7 +137,7 @@ function MenuItemCard({ item }) {
             <label>
               <input
                 type="radio"
-                name={\`beans-\${item.name}\`}
+                name={`beans-${item.name}`}
                 checked={beansOption === 'beans'}
                 onChange={() => setBeansOption('beans')}
               /> Beans
@@ -146,7 +145,7 @@ function MenuItemCard({ item }) {
             <label>
               <input
                 type="radio"
-                name={\`beans-\${item.name}\`}
+                name={`beans-${item.name}`}
                 checked={beansOption === 'tomatoes'}
                 onChange={() => setBeansOption('tomatoes')}
               /> Tomatoes
@@ -154,7 +153,7 @@ function MenuItemCard({ item }) {
             <label>
               <input
                 type="radio"
-                name={\`beans-\${item.name}\`}
+                name={`beans-${item.name}`}
                 checked={beansOption === 'both'}
                 onChange={() => setBeansOption('both')}
               /> Both (+£0.40)
