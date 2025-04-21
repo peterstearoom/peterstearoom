@@ -6,29 +6,50 @@ function MenuItemCard({ item }) {
   const [qty, setQty] = useState(1)
   const [note, setNote] = useState('')
   const [addSalad, setAddSalad] = useState(false)
+  const [addOnions, setAddOnions] = useState(false)
+  const [beansOption, setBeansOption] = useState('')
+  const [blackPud, setBlackPud] = useState(false)
+
   const addItem = useOrderStore((s) => s.addItem)
 
-  const isColdSandwich = item?.subcategory?.toLowerCase() === 'cold sandwiches'
-
   const handleAdd = () => {
-    const finalName = addSalad && isColdSandwich
-      ? item.name.replace('muffin', 'salad muffin')
-      : item.name
+    let finalName = item.name
+    let finalPrice = item.price
 
-    const finalPrice = item.price + (addSalad && isColdSandwich ? 0.9 : 0)
+    // Cold sandwich logic
+    if (item.subcategory === 'Cold sandwiches') {
+      if (addSalad) {
+        finalName = finalName.replace('muffin', 'salad muffin')
+        finalPrice += 0.9
+        if (addOnions) finalName += ' (onions)'
+      }
+    }
 
-    addItem({
-      ...item,
-      name: finalName,
-      price: finalPrice,
-      qty,
-      note,
-    })
+    // Breakfast logic
+    if (item.subcategory === 'Breakfast') {
+      let extras = ''
+      if (beansOption) {
+        extras += `(${beansOption}`
+      }
 
-    // Reset
+      if (blackPud) {
+        finalPrice += 1.4
+        extras += beansOption ? ' + black pud' : '(black pud'
+      }
+
+      if (extras) {
+        extras += ')'
+        finalName += ' ' + extras
+      }
+    }
+
+    addItem({ ...item, name: finalName, price: finalPrice, qty, note })
     setQty(1)
     setNote('')
     setAddSalad(false)
+    setAddOnions(false)
+    setBeansOption('')
+    setBlackPud(false)
   }
 
   return (
@@ -51,16 +72,73 @@ function MenuItemCard({ item }) {
         className="item-textarea"
       />
 
-      {/* ✅ Salad checkbox only for Cold Sandwiches */}
-      {isColdSandwich && (
-        <label className="salad-checkbox">
-          <input
-            type="checkbox"
-            checked={addSalad}
-            onChange={(e) => setAddSalad(e.target.checked)}
-          />
-          Add salad? (+£0.90)
-        </label>
+      {/* 🥗 Cold Sandwich Options */}
+      {item.subcategory === 'Cold sandwiches' && (
+        <>
+          <label>
+            <input
+              type="checkbox"
+              checked={addSalad}
+              onChange={() => {
+                setAddSalad(!addSalad)
+                if (!addSalad) setAddOnions(false)
+              }}
+            /> Add salad? (+£0.90)
+          </label>
+
+          {addSalad && (
+            <label>
+              <input
+                type="checkbox"
+                checked={addOnions}
+                onChange={() => setAddOnions(!addOnions)}
+              /> Add onions?
+            </label>
+          )}
+        </>
+      )}
+
+      {/* 🍳 Breakfast Options */}
+      {item.subcategory === 'Breakfast' &&
+        (item.name.includes('Small breakfast') || item.name.includes('Large breakfast')) && (
+          <div style={{ marginTop: '1rem' }}>
+            <p style={{ fontWeight: 600 }}>Breakfast Extras:</p>
+
+            <label>
+              <input
+                type="radio"
+                name={`beans-${item.name}`}
+                checked={beansOption === 'beans'}
+                onChange={() => setBeansOption('beans')}
+              /> Beans
+            </label><br />
+
+            <label>
+              <input
+                type="radio"
+                name={`beans-${item.name}`}
+                checked={beansOption === 'tomatoes'}
+                onChange={() => setBeansOption('tomatoes')}
+              /> Tomatoes
+            </label><br />
+
+            <label>
+              <input
+                type="radio"
+                name={`beans-${item.name}`}
+                checked={beansOption === 'both'}
+                onChange={() => setBeansOption('both')}
+              /> Both
+            </label><br />
+
+            <label>
+              <input
+                type="checkbox"
+                checked={blackPud}
+                onChange={() => setBlackPud(!blackPud)}
+              /> Add black pudding? (+£1.40)
+            </label>
+          </div>
       )}
 
       <button onClick={handleAdd} className="item-add-btn">
