@@ -15,7 +15,10 @@ function MenuItemCard({ item }) {
 
   return (
     <div className="menu-item-card">
-      <h3 className="item-title">{item.name}</h3>
+      <h3 className="item-title">
+        <span className="emoji mr-2">{item.image}</span>
+        {item.name}
+      </h3>
       <p className="item-price">£{item.price.toFixed(2)}</p>
 
       <input
