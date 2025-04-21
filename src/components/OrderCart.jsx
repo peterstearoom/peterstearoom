@@ -93,17 +93,20 @@ function OrderCart() {
         console.warn('Background sync registration failed', err)
       }
 
-      alert("📴 You're offline. Order queued and will sync automatically when you're back online.")
+      sessionStorage.setItem('offlinePrint', JSON.stringify(payload))
+      window.open('/print-temp', '_blank')
+
+      alert("📴 You're offline. Order queued and will print & sync when back online.")
     } else {
       await uploadOrderToFirebase(payload)
+      window.open('/kitchen', '_blank')
+      if (window.confirm("✅ Order Submitted!\n\nClick OK to go to Kitchen view.")) {
+        navigate('/kitchen')
+      }
     }
 
     clearCart()
     setShowPayment(false)
-
-    if (window.confirm("✅ Order Submitted!\n\nClick OK to go to Kitchen view.")) {
-      navigate('/kitchen')
-    }
   }
 
   return (

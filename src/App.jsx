@@ -4,6 +4,7 @@ import KitchenView from './pages/KitchenView'
 import AdminDashboard from './pages/AdminDashboard'
 import './styles/custom.css'
 import StatusBanner from './components/StatusBanner'
+import PrintTemp from './pages/PrintTemp'
 
 function App() {
   return (
@@ -40,6 +41,7 @@ function App() {
             <Route path="/" element={<WaiterScreen />} />
             <Route path="/kitchen" element={<KitchenView />} />
             <Route path="/dashboard" element={<AdminDashboard />} />
+	    <Route path="/print-temp" element={<PrintTemp />} />
           </Routes>
         </div>
       </div>

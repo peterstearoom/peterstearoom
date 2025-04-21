@@ -4,6 +4,24 @@ self.addEventListener('sync', async (event) => {
     event.waitUntil(flushOrderQueue())
   }
 })
+async function syncOfflineOrders() {
+  const data = await localforage.getItem('offlineOrders')
+  if (!data || !Array.isArray(data)) return
+
+  for (const order of data) {
+    try {
+      await fetch('/api/sync-order', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(order),
+      })
+    } catch (err) {
+      console.error('Failed to sync order', err)
+    }
+  }
+
+  await localforage.removeItem('offlineOrders')
+}
 
 async function flushOrderQueue() {
   const orders = await getQueuedOrders()
