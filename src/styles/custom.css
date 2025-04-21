@@ -583,118 +583,21 @@ textarea {
   padding-bottom: 3rem;
 }
 
-.kitchen-brand {
-  text-align: center;
-  font-size: 0.6rem;
-  color: #888;
-  margin-top: 1rem;
-  margin-bottom: 0.5rem;
-}
-
-.kitchen-dropdown-container {
-  padding: 1rem;
-  background: #f0f0f0;
-  font-size: 0.95rem;
-  margin-bottom: 1rem;
-}
-
-.kitchen-dropdown-container select {
-  width: 100%;
-  padding: 0.6rem;
-  border-radius: 0.5rem;
-  border: 1px solid #ccc;
-}
-
-.kitchen-order-info {
-  font-size: 0.9rem;
-  color: #444;
-  padding: 0 1.5rem;
-  line-height: 1.6;
-}
-
-.kitchen-divider {
-  margin: 1rem auto;
-  border-top: 2px solid black;
-  width: 90%;
-}
-
-.kitchen-section {
-  padding: 0 1.5rem;
-  break-inside: avoid;
-}
-
-.kitchen-section h2 {
-  font-size: 1.8rem;
-  margin-bottom: 1rem;
-  font-weight: 800;
-}
-
-.kitchen-item {
-  margin-bottom: 1.5rem;
-}
-
-.kitchen-item-title {
-  font-size: 1.6rem;
-  font-weight: bold;
-}
-
-.kitchen-note {
-  margin-left: 1.5rem;
-  font-size: 1.1rem;
-  font-style: italic;
-}
-
-.kitchen-table-banner {
-  display: block;
-  margin: 2rem auto 0 auto;
-  border: 4px solid black;
-  border-radius: 9999px;
-  padding: 1rem 2rem;
-  font-weight: 900;
-  text-align: center;
-  background: white;
-  font-size: 2rem;
-  page-break-inside: avoid;
-}
-
-
-/* Print Fixes */
-@media print {
-  .no-print {
-    display: none;
-  }
-  .kitchen-view-container {
-    padding: 0;
-    height: 100vh;
-    break-after: avoid;
-  }
-}
-.kitchen-view-container {
-  font-family: Arial, sans-serif;
-  background: white;
-  padding-bottom: 3rem;
-  max-height: 100vh;
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-}
-
+/* Branding */
 .kitchen-brand {
   text-align: center;
   font-size: 0.7rem;
   color: #888;
-  margin-top: 1rem;
-  margin-bottom: 0.5rem;
+  margin: 1rem 0 0.5rem;
 }
 
+/* Dropdown */
 .kitchen-dropdown-container {
   padding: 1rem;
   background: #f0f0f0;
   font-size: 0.95rem;
   margin-bottom: 1rem;
 }
-
 .kitchen-dropdown-container select {
   width: 100%;
   padding: 0.6rem;
@@ -702,6 +605,7 @@ textarea {
   border: 1px solid #ccc;
 }
 
+/* Order info */
 .kitchen-order-info {
   font-size: 0.9rem;
   color: #444;
@@ -709,74 +613,45 @@ textarea {
   line-height: 1.6;
 }
 
+/* Dividers */
 .kitchen-divider,
 .kitchen-divider-thin {
-  margin: 1rem auto;
-  border-top: 2px solid black;
   width: 90%;
+  margin: 1rem auto;
 }
-
+.kitchen-divider {
+  border-top: 2px solid black;
+}
 .kitchen-divider-thin {
   border-top: 1px dashed #333;
-  margin: 1rem 0;
 }
 
+/* Sections */
 .kitchen-section {
   padding: 0 1.5rem;
-  flex-shrink: 1;
+  break-inside: avoid;
 }
-
 .kitchen-section h2 {
   font-size: 1.6rem;
   margin-bottom: 1rem;
   font-weight: 700;
 }
 
+/* Items */
 .kitchen-item {
   margin-bottom: 1.2rem;
 }
-
 .kitchen-item-title {
   font-size: 1.4rem;
   font-weight: bold;
 }
-
 .kitchen-note {
   margin-left: 1.5rem;
   font-size: 1.1rem;
   font-style: italic;
 }
 
-.kitchen-table-banner {
-  position: fixed;
-  bottom: 1rem;
-  left: 50%;
-  transform: translateX(-50%);
-  background: white;
-  padding: 1rem 2rem;
-  border: 4px solid black;
-  border-radius: 999px;
-  font-size: 2.3rem;
-  font-weight: 900;
-  text-align: center;
-}
-
-/* Force single page print */
-@media print {
-  html, body {
-    height: 100%;
-    max-height: 100%;
-    overflow: hidden !important;
-  }
-  .no-print {
-    display: none;
-  }
-  .kitchen-view-container {
-    padding: 0;
-    max-height: 100vh;
-    break-after: avoid;
-  }
-}
+/* Table banner (screen only) */
 .kitchen-table-banner {
   position: fixed;
   bottom: 1rem;
@@ -792,40 +667,81 @@ textarea {
   z-index: 1000;
 }
 
+/* Table banner (print only) */
 .print-banner {
   display: none;
-  font-size: 2.3rem;
-  font-weight: 900;
   text-align: center;
+  font-size: 2.5rem;
+  font-weight: 800;
+  padding-top: 2rem;
   margin-top: 2rem;
-  border: 4px solid black;
-  border-radius: 999px;
-  padding: 1rem 2rem;
-  width: fit-content;
-  margin-left: auto;
-  margin-right: auto;
-  background: white;
+  page-break-inside: avoid;
 }
 
+/* Print Fixes */
 @media print {
+  .no-print {
+    display: none !important;
+  }
+
   .kitchen-table-banner {
     display: none !important;
   }
+
   .print-banner {
-    display: block !important;
+    display: block;
   }
 
   html, body {
+    height: 100%;
     max-height: 100%;
     overflow: hidden !important;
+    margin: 0;
+    padding: 0;
   }
 
   .kitchen-view-container {
-    break-after: avoid;
-    max-height: 100vh;
-    overflow: hidden;
+    page-break-after: avoid;
+    break-inside: avoid;
+    padding: 0;
   }
 }
+.tab-buttons, .sub-tab-buttons {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.tab-btn, .sub-tab-btn {
+  padding: 0.6rem 1.2rem;
+  border: none;
+  background: #eee;
+  border-radius: 999px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.2s;
+}
+.tab-btn.active, .sub-tab-btn.active {
+  background: #4caf50;
+  color: white;
+}
+
+.menu-search {
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid #ccc;
+  border-radius: 0.75rem;
+  margin-bottom: 1rem;
+}
+
+.menu-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: 1rem;
+}
+
 
 .summary-block {
   background: #f9f9f9;
