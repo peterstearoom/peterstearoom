@@ -19,7 +19,7 @@
 /* ========== Layout & Body ========== */
 body {
   /*background: var(--color-bg);*/
-  background-image: url('/assets/PetersTeaRoom-Background.png'); /* adjust path as needed */
+  background-image: url('/PetersTeaRoom-Background.png'); /* adjust path as needed */
   background-size: cover;
   background-position: center;
   background-attachment: fixed;
