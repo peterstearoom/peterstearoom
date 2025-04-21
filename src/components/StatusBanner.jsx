@@ -7,7 +7,7 @@ function StatusBanner() {
 
   return (
     <div className={`status-banner ${isOnline ? 'online' : 'offline'}`}>
-      {isOnline ? '✅ Online - Realtime orders enabled' : '⚠️ Offline - Orders will be queued'}
+      {isOnline ? '✅ Online - You're connected to the internet' : '⚠️ Offline - You're not connected to the internet'}
     </div>
   );
 }
