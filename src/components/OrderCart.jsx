@@ -3,6 +3,8 @@ import { useOrderStore } from '../store/useOrderStore'
 import { ref, push, get, set } from 'firebase/database'
 import { database } from '../lib/firebase'
 import { groupCartItems } from '../utils/groupCartItems'
+import { useNavigate } from 'react-router-dom'
+
 
 function OrderCart() {
   const {
@@ -16,6 +18,7 @@ function OrderCart() {
     clearCart
   } = useOrderStore()
 
+  const navigate = useNavigate()
   const [showPayment, setShowPayment] = useState(false)
   const [showSummary, setShowSummary] = useState(true)
   const total = cart.reduce((sum, i) => sum + i.qty * i.price, 0)
@@ -24,43 +27,46 @@ function OrderCart() {
     if (!tableNumber || cart.length === 0) return alert("Missing table # or cart")
     setShowPayment(true)
   }
+const confirmSubmit = async (method) => {
+  setPaymentType(method)
 
-  const confirmSubmit = async (method) => {
-    setPaymentType(method)
-
-    const payload = {
-      table: tableNumber,
-      items: JSON.parse(JSON.stringify(cart)),
-      payment: method,
-      total: Number(total.toFixed(2)),
-      time: new Date().toISOString()
-    }
-
-    const dateKey = new Date().toISOString().split('T')[0]
-    await push(ref(database, `orders/${dateKey}`), payload)
-
-    const totalsRef = ref(database, `totals/${dateKey}`)
-
-    try {
-      const snapshot = await get(totalsRef)
-      const current = snapshot.val() || { cash: 0, card: 0 }
-      const updated = { ...current }
-
-      if (method === 'Cash') updated.cash += payload.total
-      else updated.card += payload.total
-
-      updated.cash = Number(updated.cash.toFixed(2))
-      updated.card = Number(updated.card.toFixed(2))
-
-      await set(totalsRef, updated)
-    } catch (error) {
-      console.error('Error updating totals:', error)
-    }
-
-    alert("✅ Order Submitted!")
-    clearCart()
-    setShowPayment(false)
+  const payload = {
+    table: tableNumber,
+    items: JSON.parse(JSON.stringify(cart)),
+    payment: method,
+    total: Number(total.toFixed(2)),
+    time: new Date().toISOString()
   }
+
+  const dateKey = new Date().toISOString().split('T')[0]
+  await push(ref(database, `orders/${dateKey}`), payload)
+
+  const totalsRef = ref(database, `totals/${dateKey}`)
+
+  try {
+    const snapshot = await get(totalsRef)
+    const current = snapshot.val() || { cash: 0, card: 0 }
+    const updated = { ...current }
+
+    if (method === 'Cash') updated.cash += payload.total
+    else updated.card += payload.total
+
+    updated.cash = Number(updated.cash.toFixed(2))
+    updated.card = Number(updated.card.toFixed(2))
+
+    await set(totalsRef, updated)
+  } catch (error) {
+    console.error('Error updating totals:', error)
+  }
+
+  clearCart()
+  setShowPayment(false)
+
+  // ✅ Wait until user acknowledges success
+  if (window.confirm("✅ Order Submitted!\n\nClick OK to go to Kitchen view.")) {
+    navigate('/kitchen')
+  }
+}
 
   return (
     <div className="p-6 bg-white mt-6 shadow-md rounded-xl border border-gray-200">
@@ -115,7 +121,9 @@ function OrderCart() {
         </>
       )}
 
-      <p className="mt-2 text-right text-lg font-bold">Total: £{total.toFixed(2)}</p>
+      <p className="mt-6 text-right text-4xl font-extrabold text-emerald-700 tracking-wide">
+  Total: £{total.toFixed(2)}
+</p>
 
       <button
         onClick={submitOrder}
