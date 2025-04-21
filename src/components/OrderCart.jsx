@@ -24,7 +24,7 @@ function OrderCart() {
   const total = cart.reduce((sum, i) => sum + i.qty * i.price, 0)
 
   const submitOrder = () => {
-    if (!tableNumber || cart.length === 0) return alert("Missing table # or cart")
+    if (!tableNumber || cart.length === 0) return alert("You MUST add a table number")
     setShowPayment(true)
   }
 
@@ -82,13 +82,45 @@ function OrderCart() {
         )}
       </div>
 
-      <label className="block text-sm font-medium mb-1 text-gray-700">Table Number</label>
-      <input
-        type="number"
-        value={tableNumber}
-        onChange={(e) => setTableNumber(e.target.value)}
-        className="w-full border rounded-md px-3 py-2 mb-4 text-sm shadow-sm focus:outline-none focus:ring-2 focus:ring-emerald-400"
-      />
+<div className="grid grid-cols-1 md:grid-cols-3 gap-3 mb-4">
+  {/* Table Number */}
+  <div>
+    <label className="block text-sm font-medium mb-1 text-gray-700">Table Number</label>
+    <input
+      type="number"
+      value={tableNumber}
+      onChange={(e) => setTableNumber(e.target.value)}
+      className="w-full border rounded-md px-3 py-2 text-sm shadow-sm focus:outline-none focus:ring-2 focus:ring-emerald-400"
+    />
+  </div>
+
+  {/* Select Waiter */}
+  <div>
+    <label className="block text-sm font-medium mb-1 text-gray-700">Waiter</label>
+    <select
+      className="w-full border rounded-md px-3 py-2 text-sm shadow-sm"
+      value={waiterName}
+      onChange={(e) => setWaiterName(e.target.value)}
+    >
+      <option value="">Select</option>
+      {['Alice', 'Ben', 'Sarah', 'Tom', 'Emma', 'Liam'].map((name) => (
+        <option key={name} value={name}>{name}</option>
+      ))}
+    </select>
+  </div>
+
+  {/* Search Table Button */}
+  <div>
+    <label className="block text-sm font-medium mb-1 text-transparent select-none">Search</label>
+    <button
+      onClick={() => alert('🧭 Table selector UI coming soon')}
+      className="w-full bg-gray-200 hover:bg-gray-300 border text-gray-800 px-4 py-2 rounded-md text-sm shadow-sm"
+    >
+      Search Table
+    </button>
+  </div>
+</div>
+
 
       <button
         onClick={() => setShowSummary(!showSummary)}

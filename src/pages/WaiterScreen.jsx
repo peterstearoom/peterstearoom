@@ -2,13 +2,14 @@ import React from 'react'
 import MenuTabs from '../components/MenuTabs'
 import OrderCart from '../components/OrderCart'
 import HeaderBar from '../components/HeaderBar'
+import FloatingCart from '../components/FloatingCart'
 
 function WaiterScreen() {
   return (
     <>
       <HeaderBar />
 
-      <div className="min-h-screen bg-gradient-to-br from-[#f7f6f3] to-[#e2dfd7] text-gray-800 pt-24 px-4 md:px-8 lg:px-16">
+      <div className="min-h-screen bg-gradient-to-br from-[#f7f6f3] to-[#e2dfd7] text-gray-800 pt-28 px-4 md:px-8 lg:px-16">
         {/* Grid Layout */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
           {/* Menu + Tabs */}
@@ -22,6 +23,8 @@ function WaiterScreen() {
             <OrderCart />
           </div>
         </div>
+
+	<FloatingCart />
 
         {/* Footer */}
         <footer className="mt-12 text-center text-sm text-gray-400">
