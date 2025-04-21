@@ -1,20 +1,35 @@
 import React, { useEffect, useState } from 'react'
-import { ref, onChildAdded } from 'firebase/database'
+import { ref, onChildAdded, get } from 'firebase/database'
 import { database } from '../lib/firebase'
 import { groupCartItems } from '../utils/groupCartItems'
 
 function KitchenView() {
+  const [orders, setOrders] = useState([])
   const [latestOrder, setLatestOrder] = useState(null)
 
+  const dateKey = new Date().toISOString().split('T')[0]
+  const ordersRef = ref(database, `orders/${dateKey}`)
+
   useEffect(() => {
-    const dateKey = new Date().toISOString().split('T')[0]
-    const ordersRef = ref(database, `orders/${dateKey}`)
+    // Load existing orders for dropdown
+    get(ordersRef).then((snapshot) => {
+      const data = snapshot.val() || {}
+      const all = Object.values(data)
+        .sort((a, b) => new Date(b.time) - new Date(a.time)) // newest first
+        .slice(0, 10)
+      setOrders(all)
+      setLatestOrder(all[0] || null)
+    })
 
+    // Listen for new ones
     const unsubscribe = onChildAdded(ordersRef, (snapshot) => {
-      const data = snapshot.val()
-      setLatestOrder(data)
+      const newOrder = snapshot.val()
+      setOrders(prev => {
+        const updated = [newOrder, ...prev].slice(0, 10)
+        return updated
+      })
+      setLatestOrder(newOrder)
 
-      // Delay to ensure layout is rendered before printing
       setTimeout(() => {
         window.print()
       }, 700)
@@ -23,9 +38,14 @@ function KitchenView() {
     return () => unsubscribe()
   }, [])
 
-  if (!latestOrder) {
-    return <div className="p-6 text-center">Waiting for orders...</div>
+  const handleReprint = (order) => {
+    setLatestOrder(order)
+    setTimeout(() => {
+      window.print()
+    }, 700)
   }
+
+  if (!latestOrder) return <div className="p-6 text-center">Waiting for orders...</div>
 
   const grouped = groupCartItems(latestOrder.items || [])
   const food = grouped.filter((item) => item.category === 'food')
@@ -33,18 +53,40 @@ function KitchenView() {
 
   return (
     <div className="relative h-[100vh] print:h-[100vh] overflow-hidden font-mono text-black bg-white text-xl print:text-[2rem] leading-relaxed">
+      {/* DROPDOWN FOR TODAY'S ORDERS */}
+      <div className="p-4 bg-gray-100 mb-2 text-sm print:hidden">
+        <label className="block font-semibold mb-1">Reprint previous order:</label>
+        <select
+          className="w-full border rounded px-3 py-2"
+          onChange={(e) => {
+            const selectedIndex = e.target.value
+            if (selectedIndex !== '') {
+              handleReprint(orders[selectedIndex])
+            }
+          }}
+          defaultValue=""
+        >
+          <option value="" disabled>Select from today’s orders</option>
+          {orders.map((order, i) => (
+            <option key={i} value={i}>
+              Table {order.table} – {new Date(order.time).toLocaleTimeString()}
+            </option>
+          ))}
+        </select>
+      </div>
+
       {/* HEADER */}
-      <div className="mb-2 text-sm print:text-base leading-tight">
+      <div className="mb-2 text-sm print:text-base leading-tight px-6">
         <strong>{new Date(latestOrder.time).toLocaleString()}</strong><br />
         <strong>Total:</strong> £{latestOrder.total.toFixed(2)}<br />
         <strong>Payment:</strong> {latestOrder.payment}
       </div>
 
-      <hr className="my-3 border-black" />
+      <hr className="my-3 border-black mx-6" />
 
       {/* FOOD SECTION */}
       {food.length > 0 && (
-        <>
+        <div className="px-6">
           <h2 className="font-bold text-2xl mb-3 print:text-3xl">FOOD</h2>
           {food.map((item, i) => (
             <div key={i} className="mb-6">
@@ -60,12 +102,12 @@ function KitchenView() {
             </div>
           ))}
           <hr className="my-3 border-black" />
-        </>
+        </div>
       )}
 
       {/* DRINKS SECTION */}
       {drinks.length > 0 && (
-        <>
+        <div className="px-6">
           <h2 className="font-bold text-2xl mb-3 print:text-3xl">DRINKS</h2>
           {drinks.map((item, i) => (
             <div key={i} className="mb-6">
@@ -80,7 +122,7 @@ function KitchenView() {
               ))}
             </div>
           ))}
-        </>
+        </div>
       )}
 
       {/* FIXED TABLE NUMBER */}
