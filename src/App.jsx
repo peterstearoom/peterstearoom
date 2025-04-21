@@ -6,7 +6,7 @@ import AdminDashboard from './pages/AdminDashboard'
 function App() {
   return (
     <Router>
-      <div className="min-h-screen bg-gradient-to-b from-[#f7f6f3] to-[#eae7de] font-sans text-gray-800">
+      <div className="min-h-screen bg-gradient-to-b from-tea-light to-tea font-sans text-gray-800">
         <div className="max-w-4xl mx-auto px-4 py-6">
           {/* 🧭 Centered Nav Buttons */}
           <nav className="flex justify-center flex-wrap gap-4 mb-8">

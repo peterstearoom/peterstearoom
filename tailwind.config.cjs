@@ -17,6 +17,11 @@ module.exports = {
           dark: '#d6d2c4',
         },
         accent: '#4caf50',
+        emerald: {
+          DEFAULT: '#059669',
+          light: '#10b981',
+          dark: '#047857',
+        }
       },
       fontSize: {
         xxl: '2.25rem',
