@@ -46,8 +46,8 @@ function KitchenView() {
   return (
     <div className="relative h-[100vh] print:h-[100vh] overflow-hidden font-mono text-black bg-white text-xl print:text-[2rem] leading-relaxed">
 
-      {/* Branding instead of nav */}
-      <div className="text-center text-xs text-gray-500 font-semibold mb-2 print:mb-2">
+      {/* Brand Text */}
+      <div className="text-center text-xs print:text-[0.65rem] text-gray-500 font-light mb-1 print:mb-2">
         Peter's Tea Room
       </div>
 
@@ -73,8 +73,8 @@ function KitchenView() {
         </select>
       </div>
 
-      {/* Header Info (smaller) */}
-      <div className="mb-2 text-xs print:text-[0.75rem] leading-tight px-6 text-gray-700">
+      {/* Header Info */}
+      <div className="mb-2 px-6 text-[0.75rem] print:text-[0.55rem] leading-tight text-gray-700 tracking-tight">
         <strong>{new Date(latestOrder.time).toLocaleString()}</strong><br />
         <strong>Total:</strong> £{latestOrder.total.toFixed(2)}<br />
         <strong>Payment:</strong> {latestOrder.payment}
@@ -90,7 +90,7 @@ function KitchenView() {
             <div key={i} className="mb-4">
               <div className="text-2xl font-bold print:text-[2rem]">{item.qty} {item.name}</div>
               {item.notes.map((note, idx) => (
-                <div key={idx} className="ml-6 text-base italic print:text-lg">
+                <div key={idx} className="ml-6 text-sm italic print:text-[1.2rem] leading-snug">
                   - {note.qty} {note.note}
                 </div>
               ))}
@@ -108,7 +108,7 @@ function KitchenView() {
             <div key={i} className="mb-4">
               <div className="text-2xl font-bold print:text-[2rem]">{item.qty} {item.name}</div>
               {item.notes.map((note, idx) => (
-                <div key={idx} className="ml-6 text-base italic print:text-lg">
+                <div key={idx} className="ml-6 text-sm italic print:text-[1.2rem] leading-snug">
                   - {note.qty} {note.note}
                 </div>
               ))}
