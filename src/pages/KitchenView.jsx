@@ -32,15 +32,15 @@ function KitchenView() {
   const drinks = grouped.filter((item) => item.category === 'drinks')
 
   return (
-    <div className="p-6 font-mono text-black bg-white text-xl print:text-[2rem] print:leading-relaxed print:max-h-screen overflow-hidden print:overflow-visible print:break-after-avoid">
+    <div className="relative h-[100vh] print:h-[100vh] overflow-hidden font-mono text-black bg-white text-xl print:text-[2rem] leading-relaxed">
       {/* HEADER */}
-      <div className="mb-4 text-lg print:text-2xl">
+      <div className="mb-2 text-sm print:text-base leading-tight">
         <strong>{new Date(latestOrder.time).toLocaleString()}</strong><br />
         <strong>Total:</strong> £{latestOrder.total.toFixed(2)}<br />
         <strong>Payment:</strong> {latestOrder.payment}
       </div>
 
-      <hr className="my-4 border-black" />
+      <hr className="my-3 border-black" />
 
       {/* FOOD SECTION */}
       {food.length > 0 && (
@@ -59,7 +59,7 @@ function KitchenView() {
               ))}
             </div>
           ))}
-          <hr className="my-4 border-black" />
+          <hr className="my-3 border-black" />
         </>
       )}
 
@@ -83,11 +83,9 @@ function KitchenView() {
         </>
       )}
 
-      {/* TABLE NUMBER */}
-      <div className="mt-8 flex justify-center">
-        <div className="border-4 border-black rounded-full px-8 py-4 font-extrabold text-5xl text-center print:text-[3rem]">
-          TABLE {latestOrder.table}
-        </div>
+      {/* FIXED TABLE NUMBER */}
+      <div className="fixed bottom-4 left-1/2 transform -translate-x-1/2 border-4 border-black rounded-full px-8 py-4 font-extrabold text-5xl text-center print:text-[3rem] bg-white">
+        TABLE {latestOrder.table}
       </div>
     </div>
   )
