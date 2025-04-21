@@ -2,6 +2,8 @@ import { create } from 'zustand'
 
 export const useOrderStore = create((set) => ({
   tableNumber: '',
+waiterName: '',
+setWaiterName: (name) => set({ waiterName: name }),
   paymentType: '',
   cart: [],
   addItem: (item) =>
