@@ -54,10 +54,8 @@ function KitchenView() {
   return (
     <div className="kitchen-view-container">
 
-      {/* Logo / Branding */}
       <div className="kitchen-brand">Peter's Tea Room</div>
 
-      {/* Dropdown */}
       <div className="kitchen-dropdown-container no-print">
         <label>Reprint previous order:</label>
         <select
@@ -76,7 +74,6 @@ function KitchenView() {
         </select>
       </div>
 
-      {/* Order Details */}
       <div className="kitchen-order-info">
         <strong>{new Date(latestOrder.time).toLocaleString()}</strong><br />
         <strong>Total:</strong> £{latestOrder.total.toFixed(2)}<br />
@@ -86,7 +83,6 @@ function KitchenView() {
 
       <hr className="kitchen-divider" />
 
-      {/* FOOD */}
       {food.length > 0 && (
         <div className="kitchen-section">
           <h2>FOOD</h2>
@@ -103,7 +99,11 @@ function KitchenView() {
         </div>
       )}
 
-      {/* DRINKS */}
+      {/* Divider between Food and Drinks */}
+      {food.length > 0 && drinks.length > 0 && (
+        <hr className="kitchen-divider-thin" />
+      )}
+
       {drinks.length > 0 && (
         <div className="kitchen-section">
           <h2>DRINKS</h2>
@@ -120,7 +120,6 @@ function KitchenView() {
         </div>
       )}
 
-      {/* Table Number Display */}
       <div className="kitchen-table-banner">
         TABLE {latestOrder.table}
       </div>
