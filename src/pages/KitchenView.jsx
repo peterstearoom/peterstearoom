@@ -44,10 +44,10 @@ function KitchenView() {
   const drinks = grouped.filter((item) => item.category === 'drinks')
 
   return (
-    <div className="relative h-[100vh] print:h-[100vh] overflow-hidden font-mono text-black bg-white text-xl print:text-[2rem] leading-relaxed">
+    <div className="relative h-[100vh] bg-white font-mono text-black overflow-hidden">
 
-      {/* Brand Text */}
-      <div className="text-center text-xs print:text-[0.65rem] text-gray-500 font-light mb-1 print:mb-2">
+      {/* Branding */}
+      <div className="text-center text-xs text-gray-500 mb-2 print:mb-2" style={{ fontSize: '0.5rem' }}>
         Peter's Tea Room
       </div>
 
@@ -73,8 +73,8 @@ function KitchenView() {
         </select>
       </div>
 
-      {/* Header Info */}
-      <div className="mb-2 px-6 text-[0.75rem] print:text-[0.55rem] leading-tight text-gray-700 tracking-tight">
+      {/* Header */}
+      <div className="mb-2 px-6 text-gray-700 leading-tight" style={{ fontSize: '0.5rem' }}>
         <strong>{new Date(latestOrder.time).toLocaleString()}</strong><br />
         <strong>Total:</strong> £{latestOrder.total.toFixed(2)}<br />
         <strong>Payment:</strong> {latestOrder.payment}
@@ -88,9 +88,13 @@ function KitchenView() {
           <h2 className="font-bold text-2xl mb-3 print:text-3xl">FOOD</h2>
           {food.map((item, i) => (
             <div key={i} className="mb-4">
-              <div className="text-2xl font-bold print:text-[2rem]">{item.qty} {item.name}</div>
+              <div className="font-bold" style={{ fontSize: '1.8rem' }}>{item.qty} {item.name}</div>
               {item.notes.map((note, idx) => (
-                <div key={idx} className="ml-6 text-sm italic print:text-[1.2rem] leading-snug">
+                <div
+                  key={idx}
+                  className="ml-6 italic"
+                  style={{ fontSize: '1.1rem' }}
+                >
                   - {note.qty} {note.note}
                 </div>
               ))}
@@ -106,9 +110,13 @@ function KitchenView() {
           <h2 className="font-bold text-2xl mb-3 print:text-3xl">DRINKS</h2>
           {drinks.map((item, i) => (
             <div key={i} className="mb-4">
-              <div className="text-2xl font-bold print:text-[2rem]">{item.qty} {item.name}</div>
+              <div className="font-bold" style={{ fontSize: '1.8rem' }}>{item.qty} {item.name}</div>
               {item.notes.map((note, idx) => (
-                <div key={idx} className="ml-6 text-sm italic print:text-[1.2rem] leading-snug">
+                <div
+                  key={idx}
+                  className="ml-6 italic"
+                  style={{ fontSize: '1.1rem' }}
+                >
                   - {note.qty} {note.note}
                 </div>
               ))}
@@ -118,7 +126,7 @@ function KitchenView() {
       )}
 
       {/* Table Number */}
-      <div className="fixed bottom-4 left-1/2 transform -translate-x-1/2 border-4 border-black rounded-full px-8 py-4 font-extrabold text-5xl text-center print:text-[3rem] bg-white">
+      <div className="fixed bottom-4 left-1/2 transform -translate-x-1/2 border-4 border-black rounded-full px-8 py-4 font-extrabold text-center bg-white" style={{ fontSize: '2.5rem' }}>
         TABLE {latestOrder.table}
       </div>
     </div>
