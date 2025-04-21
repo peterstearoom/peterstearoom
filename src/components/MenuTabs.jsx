@@ -56,7 +56,7 @@ function MenuTabs() {
       {/* Grid */}
       <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
         {filteredItems.map((item, i) => (
-          <MenuCard key={i} item={{ ...item, category: activeTab }} />
+          <MenuItemCard key={i} item={{ ...item, category: activeTab }} />
         ))}
       </div>
     </div>
