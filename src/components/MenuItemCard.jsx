@@ -63,7 +63,7 @@ function MenuItemCard({ item }) {
 
       if (selected.length) {
         const additions = selected.join(', ')
-        finalName = \`\${finalName.split(' ')[0]}, \${additions} \${toast ? 'on toast' : 'muffin'}\`
+        finalName = finalName.split(' ')[0] + ', ' + additions + ' ' + (toast ? 'on toast' : 'muffin')
         if (selected.length === 1) finalPrice += 0.7
         if (selected.length === 2) finalPrice += 1.0
         if (selected.length === 3) finalPrice += 1.3
