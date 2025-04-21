@@ -10,14 +10,16 @@ function App() {
   return (
     <Router>
       <div className="min-h-screen bg-gradient-to-b from-tea-light to-tea font-sans text-gray-800">
-        
-        {/* 🌐 Online/Offline Indicator */}
-        <StatusBanner />
+
+        {/* 🌐 Online/Offline Indicator - Hidden on Print */}
+        <div className="no-print">
+          <StatusBanner />
+        </div>
 
         <div className="max-w-4xl mx-auto px-4 py-6">
 
-          {/* 🧭 Centered Nav Buttons */}
-          <nav className="nav-buttons">
+          {/* 🧭 Nav Buttons - Hidden on Print */}
+          <nav className="nav-buttons no-print">
             <Link to="/" className="nav-btn">📋 Waiter</Link>
             <Link to="/kitchen" className="nav-btn">👨‍🍳 Kitchen</Link>
             <Link to="/dashboard" className="nav-btn">📊 Admin Dashboard</Link>
