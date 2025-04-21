@@ -6,19 +6,18 @@ import { groupCartItems } from '../utils/groupCartItems'
 import { useNavigate } from 'react-router-dom'
 
 function OrderCart() {
-const {
-  cart,
-  tableNumber,
-  waiterName,
-  paymentType,
-  setTableNumber,
-  setWaiterName,
-  setPaymentType,
-  updateItem,
-  removeItem,
-  clearCart
-} = useOrderStore()
-
+  const {
+    cart,
+    tableNumber,
+    waiterName,
+    paymentType,
+    setTableNumber,
+    setWaiterName,
+    setPaymentType,
+    updateItem,
+    removeItem,
+    clearCart
+  } = useOrderStore()
 
   const navigate = useNavigate()
   const [showPayment, setShowPayment] = useState(false)
@@ -27,9 +26,9 @@ const {
   const total = cart.reduce((sum, i) => sum + i.qty * i.price, 0)
 
   const submitOrder = () => {
-if (!tableNumber || !waiterName || cart.length === 0) {
-  return alert("Please select table number AND waiter before submitting.")
-}
+    if (!tableNumber || !waiterName || cart.length === 0) {
+      return alert("Please select table number AND waiter before submitting.")
+    }
     setShowPayment(true)
   }
 
@@ -38,6 +37,7 @@ if (!tableNumber || !waiterName || cart.length === 0) {
 
     const payload = {
       table: tableNumber,
+      waiter: waiterName,
       items: JSON.parse(JSON.stringify(cart)),
       payment: method,
       total: Number(total.toFixed(2)),
@@ -87,45 +87,40 @@ if (!tableNumber || !waiterName || cart.length === 0) {
         )}
       </div>
 
-<div className="grid grid-cols-1 md:grid-cols-3 gap-3 mb-4">
-  {/* Table Number */}
-  <div>
-    <label className="block text-sm font-medium mb-1 text-gray-700">Table Number</label>
-    <input
-      type="number"
-      value={tableNumber}
-      onChange={(e) => setTableNumber(e.target.value)}
-      className="w-full border rounded-md px-3 py-2 text-sm shadow-sm focus:outline-none focus:ring-2 focus:ring-emerald-400"
-    />
-  </div>
-
-  {/* Select Waiter */}
-  <div>
-    <label className="block text-sm font-medium mb-1 text-gray-700">Waiter</label>
-    <select
-      className="w-full border rounded-md px-3 py-2 text-sm shadow-sm"
-      value={waiterName}
-      onChange={(e) => setWaiterName(e.target.value)}
-    >
-      <option value="">Select</option>
-      {['Amanda', 'Linda', 'Carrie', 'Sharon', 'Libby', 'Elaine'].map((name) => (
-        <option key={name} value={name}>{name}</option>
-      ))}
-    </select>
-  </div>
-
-  {/* Search Table Button */}
-  <div>
-    <label className="block text-sm font-medium mb-1 text-transparent select-none">Search</label>
-    <button
-      onClick={() => alert('🧭 Table selector UI coming soon')}
-      className="w-full bg-gray-200 hover:bg-gray-300 border text-gray-800 px-4 py-2 rounded-md text-sm shadow-sm"
-    >
-      Search Table
-    </button>
-  </div>
-</div>
-
+      {/* Table + Waiter */}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-3 mb-4">
+        <div>
+          <label className="block text-sm font-medium mb-1 text-gray-700">Table Number</label>
+          <input
+            type="number"
+            value={tableNumber}
+            onChange={(e) => setTableNumber(e.target.value)}
+            className="w-full border rounded-md px-3 py-2 text-sm shadow-sm focus:outline-none focus:ring-2 focus:ring-emerald-400"
+          />
+        </div>
+        <div>
+          <label className="block text-sm font-medium mb-1 text-gray-700">Waiter</label>
+          <select
+            className="w-full border rounded-md px-3 py-2 text-sm shadow-sm"
+            value={waiterName}
+            onChange={(e) => setWaiterName(e.target.value)}
+          >
+            <option value="">Select</option>
+            {['Amanda', 'Linda', 'Carrie', 'Sharon', 'Libby', 'Elaine'].map((name) => (
+              <option key={name} value={name}>{name}</option>
+            ))}
+          </select>
+        </div>
+        <div>
+          <label className="block text-sm font-medium mb-1 text-transparent select-none">Search</label>
+          <button
+            onClick={() => alert('🧭 Table selector UI coming soon')}
+            className="w-full bg-gray-200 hover:bg-gray-300 text-gray-800 font-semibold py-2 rounded-lg text-sm shadow-md transition"
+          >
+            Search Table
+          </button>
+        </div>
+      </div>
 
       <button
         onClick={() => setShowSummary(!showSummary)}
@@ -155,7 +150,6 @@ if (!tableNumber || !waiterName || cart.length === 0) {
                         🗑️ Remove
                       </button>
                     </div>
-
                     <div className="flex items-center gap-3 mt-2">
                       <input
                         type="number"
@@ -167,7 +161,6 @@ if (!tableNumber || !waiterName || cart.length === 0) {
                         £{(item.qty * item.price).toFixed(2)}
                       </div>
                     </div>
-
                     <textarea
                       value={item.note}
                       onChange={(e) => updateItem(idx, { note: e.target.value })}
@@ -179,64 +172,59 @@ if (!tableNumber || !waiterName || cart.length === 0) {
               </ul>
             </div>
           ) : (
-            <>
-              {['food', 'drinks'].map((type) => {
-                const itemsOfType = cart.filter((i) => i.category === type)
-                const groupedItems = groupCartItems(itemsOfType)
+            ['food', 'drinks'].map((type) => {
+              const itemsOfType = cart.filter((i) => i.category === type)
+              const groupedItems = groupCartItems(itemsOfType)
 
-                return groupedItems.length > 0 && (
-                  <div key={type} className="bg-gray-50 p-4 rounded-lg mb-4 border border-gray-200 shadow-sm">
-                    <h3 className="font-semibold text-lg text-emerald-600 mb-2">{type.toUpperCase()}</h3>
-                    <ul>
-                      {groupedItems.map((item, i) => (
-                        <li key={i} className="mb-4">
-                          <div className="font-bold text-md">{item.qty}x {item.name}</div>
-                          {item.notes.map((note, idx) => (
-                            <div
-                              key={idx}
-                              className="ml-4 text-sm italic text-gray-600"
-                            >
-                              - {note.qty} {note.note}
-                            </div>
-                          ))}
-                          <div className="text-sm text-right font-medium text-gray-700">
-                            £{(item.qty * item.price).toFixed(2)}
+              return groupedItems.length > 0 && (
+                <div key={type} className="bg-gray-50 p-4 rounded-lg mb-4 border border-gray-200 shadow-sm">
+                  <h3 className="font-semibold text-lg text-emerald-600 mb-2">{type.toUpperCase()}</h3>
+                  <ul>
+                    {groupedItems.map((item, i) => (
+                      <li key={i} className="mb-4">
+                        <div className="font-bold text-md">{item.qty}x {item.name}</div>
+                        {item.notes.map((note, idx) => (
+                          <div key={idx} className="ml-4 text-sm italic text-gray-600">
+                            - {note.qty} {note.note}
                           </div>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                )
-              })}
-            </>
+                        ))}
+                        <div className="text-sm text-right font-medium text-gray-700">
+                          £{(item.qty * item.price).toFixed(2)}
+                        </div>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )
+            })
           )}
         </>
       )}
 
-      <p className="mt-6 text-right text-4xl font-extrabold text-emerald-700 tracking-wide">
+      <p className="mt-8 text-center text-5xl font-extrabold text-emerald-700 tracking-wide">
         Total: £{total.toFixed(2)}
       </p>
 
       <button
         onClick={submitOrder}
-        className="mt-4 w-full bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-2 rounded-md transition"
+        className="mt-6 w-full bg-emerald-700 hover:bg-emerald-800 text-white text-lg font-bold py-3 px-4 rounded-xl shadow-md transition-all active:scale-[0.98]"
       >
         Submit Order
       </button>
 
       {showPayment && (
         <div className="mt-5">
-          <p className="mb-2 text-sm font-medium text-gray-700">Select Payment Method</p>
-          <div className="flex gap-3">
+          <p className="mb-3 text-sm font-medium text-gray-700">Select Payment Method</p>
+          <div className="flex gap-4">
             <button
               onClick={() => confirmSubmit('Card')}
-              className="flex-1 bg-gray-800 hover:bg-gray-900 text-white py-2 rounded-md"
+              className="flex-1 bg-gray-800 hover:bg-gray-900 text-white text-lg font-bold py-3 rounded-xl shadow"
             >
               💳 Card
             </button>
             <button
               onClick={() => confirmSubmit('Cash')}
-              className="flex-1 bg-green-600 hover:bg-green-700 text-white py-2 rounded-md"
+              className="flex-1 bg-green-600 hover:bg-green-700 text-white text-lg font-bold py-3 rounded-xl shadow"
             >
               💵 Cash
             </button>

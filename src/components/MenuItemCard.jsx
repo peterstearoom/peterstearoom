@@ -26,18 +26,19 @@ function MenuItemCard({ item }) {
   />
 
   <textarea
-    placeholder="e.g. beans/tomatoes or well done/crispy"
+    placeholder="additional notes"
     value={note}
     onChange={(e) => setNote(e.target.value)}
     className="w-full border px-3 py-2 rounded-md text-sm mb-3 focus:outline-none focus:ring-2 focus:ring-emerald-400"
   />
 
-  <button
-    onClick={handleAdd}
-    className="w-full bg-emerald-600 text-white py-2 rounded-md font-semibold hover:bg-emerald-700 transition"
-  >
-    ➕ Add to Order
-  </button>
+<button
+  onClick={handleAdd}
+  className="w-full bg-emerald-700 hover:bg-emerald-800 text-white text-lg font-bold py-3 px-4 rounded-xl shadow-md transition-all active:scale-[0.98]"
+>
+  ➕ Add to Order
+</button>
+
 </div>
 
   )
