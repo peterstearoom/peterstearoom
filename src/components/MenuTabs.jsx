@@ -82,7 +82,7 @@ const menuData = {
       { name: 'Manchester tart', price: 2.5, image: '🍓' },
       { name: 'Apple pie', price: 3.8, image: '🥧' },
       { name: 'Chocolate cake', price: 3.8, image: '🍫' },
-      { name: 'Carrot cake', price: 3,6, image: '🍰' },
+      { name: 'Carrot cake', price: 3.6, image: '🍰' },
       { name: 'Red velvet cake', price: 3.6, image: '🍰' },
       { name: 'Wimberry tart', price: 4.8, image: '🫐' },
       { name: 'Strawberry tart', price: 4.8, image: '🍓' },
