@@ -106,7 +106,7 @@ const {
       onChange={(e) => setWaiterName(e.target.value)}
     >
       <option value="">Select</option>
-      {['Alice', 'Ben', 'Sarah', 'Tom', 'Emma', 'Liam'].map((name) => (
+      {['Amanda', 'Linda', 'Carrie', 'Sharon', 'Libby', 'Elaine'].map((name) => (
         <option key={name} value={name}>{name}</option>
       ))}
     </select>
