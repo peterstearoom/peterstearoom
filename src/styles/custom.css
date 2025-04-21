@@ -1105,8 +1105,7 @@ textarea {
 }
 
 .calendar-cell.booked {
-  background: #ffebee;
-  color: #c62828;
+  background-color: #ffe9c8; /* light orange */
 }
 .calendar-cell.has-booking {
   background: #e0f2f1;
@@ -1127,5 +1126,21 @@ textarea {
   border-radius: 0.5rem;
   padding: 0.75rem;
   margin-bottom: 0.75rem;
+}
+.calendar-cell.booked-deposit {
+  background-color: #fff3cd; /* yellow tint */
+}
+
+.calendar-cell.booked-full {
+  background-color: #c8f7c5; /* green tint */
+}
+
+.calendar-edit-box {
+  margin-top: 1rem;
+  padding: 1rem;
+  background: #fff;
+  border: 2px solid #ccc;
+  border-radius: 1rem;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
 }
 

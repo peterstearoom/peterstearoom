@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react'
 import { ref, onValue, set } from 'firebase/database'
 import { database } from '../lib/firebase'
@@ -13,9 +12,7 @@ function BookingsCalendar() {
   const [editData, setEditData] = useState({ name: '', party: '', paid: '' })
 
   useEffect(() => {
-    const monthStr = String(currentMonth + 1).padStart(2, '0')
-    const yearMonth = \`\${currentYear}-\${monthStr}\`
-    const bookingsRef = ref(database, \`bookings/\`)
+    const bookingsRef = ref(database, `bookings/`)
     onValue(bookingsRef, snapshot => {
       const data = snapshot.val() || {}
       setBookings(data)
@@ -41,7 +38,7 @@ function BookingsCalendar() {
 
   const saveEdit = async () => {
     if (selected) {
-      const refPath = ref(database, \`bookings/\${selected.date}/\${selected.key || Date.now()}\`)
+      const refPath = ref(database, `bookings/${selected.date}/${selected.key || Date.now()}`)
       await set(refPath, { ...editData, time: new Date().toISOString() })
       setSelected(null)
     }
@@ -65,6 +62,16 @@ function BookingsCalendar() {
     }
   }
 
+  const getCellClass = (dateStr) => {
+    const entries = bookings[dateStr]
+    if (!entries) return ''
+    const key = Object.keys(entries)[0]
+    const status = entries[key]?.paid?.toLowerCase()
+    if (status === 'deposit') return 'booked-deposit'
+    if (status === 'in full') return 'booked-full'
+    return 'booked'
+  }
+
   return (
     <div className="calendar-wrapper">
       <div className="calendar-header">
@@ -72,20 +79,26 @@ function BookingsCalendar() {
         <h2>{monthLabel}</h2>
         <button onClick={nextMonth}>&gt;</button>
       </div>
+
       <div className="calendar-grid">
-        {['Sun','Mon','Tue','Wed','Thu','Fri','Sat'].map(d => <div key={d} className="calendar-cell header">{d}</div>)}
-        {Array.from({ length: firstDay }).map((_, i) => <div key={'blank' + i} className="calendar-cell empty"></div>)}
+        {['Sun','Mon','Tue','Wed','Thu','Fri','Sat'].map(d => (
+          <div key={d} className="calendar-cell header">{d}</div>
+        ))}
+
+        {Array.from({ length: firstDay }).map((_, i) => (
+          <div key={'blank' + i} className="calendar-cell empty"></div>
+        ))}
+
         {Array.from({ length: daysInMonth }).map((_, i) => {
-          const dateStr = \`\${currentYear}-\${String(currentMonth + 1).padStart(2, '0')}-\${String(i + 1).padStart(2, '0')}\`
-          const hasBooking = bookings[dateStr]
+          const dateStr = `${currentYear}-${String(currentMonth + 1).padStart(2, '0')}-${String(i + 1).padStart(2, '0')}`
+          const cellClass = getCellClass(dateStr)
           return (
             <div
               key={i}
-              className={\`calendar-cell \${hasBooking ? 'booked' : ''}\`}
+              className={`calendar-cell ${cellClass}`}
               onClick={() => handleSelect(dateStr)}
             >
               <strong>{i + 1}</strong>
-              {hasBooking && <div className="dot"></div>}
             </div>
           )
         })}
@@ -94,9 +107,22 @@ function BookingsCalendar() {
       {selected && (
         <div className="calendar-edit-box">
           <h3>Edit Booking: {selected.date}</h3>
-          <input value={editData.name} onChange={e => setEditData({ ...editData, name: e.target.value })} placeholder="Name" />
-          <input value={editData.party} onChange={e => setEditData({ ...editData, party: e.target.value })} placeholder="Party" type="number" />
-          <input value={editData.paid} onChange={e => setEditData({ ...editData, paid: e.target.value })} placeholder="Paid status" />
+          <input
+            value={editData.name}
+            onChange={e => setEditData({ ...editData, name: e.target.value })}
+            placeholder="Name"
+          />
+          <input
+            value={editData.party}
+            onChange={e => setEditData({ ...editData, party: e.target.value })}
+            placeholder="Party"
+            type="number"
+          />
+          <input
+            value={editData.paid}
+            onChange={e => setEditData({ ...editData, paid: e.target.value })}
+            placeholder="Paid status"
+          />
           <button onClick={saveEdit} className="btn">💾 Save</button>
         </div>
       )}
