@@ -8,12 +8,12 @@ const menuData = {
       { name: 'Small Breakfast', price: 9.99, image: '🍳' },
       { name: 'Large Breakfast', price: 12.5, image: '🥓' },
     ],
-    Hot sandwiches: [
+    "Hot sandwiches": [
       { name: 'Hot beef & onion', price: 9.99, image: '🍳' },
       { name: 'Hot chicken & stuffin', price: 12.5, image: '🥓' },
       { name: 'Sausage muffin', price: 12.5, image: '🥓' },
     ],
-    Cold sandwiches: [
+    "Cold sandwiches": [
       { name: 'Ham muffin', price: 9.99, image: '🍳' },
       { name: 'Chicken muffin', price: 12.5, image: '🥓' },
     ],
@@ -21,11 +21,11 @@ const menuData = {
       { name: 'Cheese & onion toastie', price: 0.9, image: '🍳' },
       { name: 'Cheese & tomato toastie', price: 12.5, image: '🥓' },
     ],
-    Plate salads: [
+    "Plate salads": [
       { name: 'Ham plate salad', price: 0.9, image: '🍳' },
       { name: 'Beef plate salad', price: 12.5, image: '🥓' },
     ],
-    Jacket potato: [
+    "Jacket potatoes": [
       { name: 'Jacket - cheese & tuna', price: 0.9, image: '🍳' },
       { name: 'Jacket - cheese & beans', price: 12.5, image: '🥓' },
       { name: 'Jacket - cheese & chilli', price: 12.5, image: '🥓' },
