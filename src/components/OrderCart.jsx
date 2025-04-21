@@ -164,7 +164,7 @@ function OrderCart() {
                             - {note.qty} {note.note}
                           </div>
                         ))}
-                        <span>£{(item.qty * item.price).toFixed(2)}</span>
+                        <span>{' '}£{(item.qty * item.price).toFixed(2)}</span>
                       </li>
                     ))}
                   </ul>
