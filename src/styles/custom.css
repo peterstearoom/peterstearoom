@@ -741,6 +741,69 @@ textarea {
   grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
   gap: 1rem;
 }
+.tab-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-bottom: 1rem;
+  flex-wrap: wrap;
+}
+
+.tab-btn {
+  padding: 0.6rem 1.2rem;
+  font-weight: 600;
+  border-radius: 9999px;
+  border: 2px solid #ccc;
+  background: white;
+  color: #333;
+  transition: all 0.2s ease;
+}
+
+.tab-btn.active {
+  background: #059669; /* emerald */
+  color: white;
+  border-color: #059669;
+}
+
+.sub-tab-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  justify-content: center;
+  margin-bottom: 1rem;
+}
+
+.sub-tab-btn {
+  padding: 0.4rem 0.8rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  background: #f3f4f6;
+  border: 1px solid #ccc;
+  border-radius: 9999px;
+  transition: all 0.2s ease;
+}
+
+.sub-tab-btn.active {
+  background-color: #10b981; /* emerald-500 */
+  color: white;
+  border-color: #10b981;
+}
+
+.menu-search {
+  display: block;
+  width: 100%;
+  padding: 0.6rem 1rem;
+  border-radius: 0.5rem;
+  border: 1px solid #ccc;
+  margin-bottom: 1rem;
+  font-size: 1rem;
+}
+
+.menu-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: 1rem;
+}
 
 
 .summary-block {

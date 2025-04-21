@@ -9,35 +9,35 @@ const menuData = {
       { name: 'Large Breakfast', price: 12.5, image: '🥓' },
     ],
     "Hot sandwiches": [
-      { name: 'Hot beef & onion', price: 9.99, image: '🍳' },
-      { name: 'Hot chicken & stuffin', price: 12.5, image: '🥓' },
-      { name: 'Sausage muffin', price: 12.5, image: '🥓' },
+      { name: 'Hot beef & onion', price: 9.99, image: '🍖' },
+      { name: 'Hot chicken & stuffing', price: 12.5, image: '🍗' },
+      { name: 'Sausage muffin', price: 12.5, image: '🌭' },
     ],
     "Cold sandwiches": [
-      { name: 'Ham muffin', price: 9.99, image: '🍳' },
-      { name: 'Chicken muffin', price: 12.5, image: '🥓' },
+      { name: 'Ham muffin', price: 9.99, image: '🥪' },
+      { name: 'Chicken muffin', price: 12.5, image: '🥪' },
     ],
     Toasties: [
-      { name: 'Cheese & onion toastie', price: 0.9, image: '🍳' },
-      { name: 'Cheese & tomato toastie', price: 12.5, image: '🥓' },
+      { name: 'Cheese & onion toastie', price: 4.5, image: '🧀' },
+      { name: 'Cheese & tomato toastie', price: 4.2, image: '🍅' },
     ],
     "Plate salads": [
-      { name: 'Ham plate salad', price: 0.9, image: '🍳' },
-      { name: 'Beef plate salad', price: 12.5, image: '🥓' },
+      { name: 'Ham plate salad', price: 5.2, image: '🥗' },
+      { name: 'Beef plate salad', price: 5.6, image: '🥗' },
     ],
     "Jacket potatoes": [
-      { name: 'Jacket - cheese & tuna', price: 0.9, image: '🍳' },
-      { name: 'Jacket - cheese & beans', price: 12.5, image: '🥓' },
-      { name: 'Jacket - cheese & chilli', price: 12.5, image: '🥓' },
+      { name: 'Cheese & tuna', price: 6.2, image: '🥔' },
+      { name: 'Cheese & beans', price: 6.0, image: '🥔' },
+      { name: 'Cheese & chilli', price: 6.4, image: '🥔' },
     ],
     Specials: [
-      { name: 'Prawn special', price: 0.9, image: '🍳' },
-      { name: 'Panini', price: 12.5, image: '🥓' },
+      { name: 'Prawn special', price: 7.5, image: '🦐' },
+      { name: 'Panini', price: 6.5, image: '🥖' },
     ],
     Cakes: [
       { name: 'Cream scone', price: 2.0, image: '🍰' },
-      { name: 'Vanilla bun', price: 2.0, image: '🍰' },
-      { name: 'Vanilla slice', price: 2.0, image: '🍰' },
+      { name: 'Vanilla bun', price: 2.0, image: '🧁' },
+      { name: 'Vanilla slice', price: 2.0, image: '🍮' },
     ]
   },
   drinks: {
@@ -46,11 +46,11 @@ const menuData = {
       { name: 'Latte', price: 2.9, image: '🥛' },
     ],
     Pop: [
-      { name: 'Coke', price: 2.8, image: '☕' },
-      { name: 'Diet coke', price: 2.9, image: '🥛' },
-      { name: 'Fanta', price: 2.9, image: '🥛' },
-      { name: 'Sprite', price: 2.9, image: '🥛' },
-      { name: 'Irn bru', price: 2.9, image: '🥛' },
+      { name: 'Coke', price: 2.8, image: '🥤' },
+      { name: 'Diet coke', price: 2.9, image: '🥤' },
+      { name: 'Fanta', price: 2.9, image: '🥤' },
+      { name: 'Sprite', price: 2.9, image: '🥤' },
+      { name: 'Irn bru', price: 2.9, image: '🥤' },
     ],
     Juice: [
       { name: 'Fresh Orange', price: 2.0, image: '🧃' },
@@ -68,11 +68,10 @@ function MenuTabs() {
 
   const handleMainTab = (tab) => {
     setActiveTab(tab)
-    setActiveSub(Object.keys(menuData[tab])[0]) // default to first sub
+    setActiveSub(Object.keys(menuData[tab])[0])
     setSearch('')
   }
 
-  const allSubTabs = Object.keys(menuData[activeTab])
   const currentItems = menuData[activeTab][activeSub].filter((item) =>
     item.name.toLowerCase().includes(search.toLowerCase())
   )
@@ -94,7 +93,7 @@ function MenuTabs() {
 
       {/* Sub-tabs */}
       <div className="sub-tab-buttons">
-        {allSubTabs.map((sub) => (
+        {Object.keys(menuData[activeTab]).map((sub) => (
           <button
             key={sub}
             onClick={() => setActiveSub(sub)}
@@ -114,7 +113,7 @@ function MenuTabs() {
         className="menu-search"
       />
 
-      {/* Menu Grid */}
+      {/* Grid */}
       <div className="menu-grid">
         {currentItems.map((item, i) => (
           <MenuItemCard key={i} item={{ ...item, category: activeTab }} />
