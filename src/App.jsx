@@ -2,6 +2,8 @@ import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom'
 import WaiterScreen from './pages/WaiterScreen'
 import KitchenView from './pages/KitchenView'
 import AdminDashboard from './pages/AdminDashboard'
+import './styles/custom.css'
+
 
 function App() {
   return (

@@ -4,6 +4,7 @@ import { ref, push, get, set } from 'firebase/database'
 import { database } from '../lib/firebase'
 import { groupCartItems } from '../utils/groupCartItems'
 import { useNavigate } from 'react-router-dom'
+import '../styles/custom.css' // Import your custom CSS file
 
 function OrderCart() {
   const {
@@ -74,37 +75,28 @@ function OrderCart() {
   }
 
   return (
-    <div className="p-huge bg-white mt-6 shadow-heavy rounded-2xl border border-tea-dark">
-      <div className="flex justify-between items-center mb-6">
-        <h2 className="text-2xl font-bold text-accent">🛒 Order Summary</h2>
+    <div className="order-wrapper">
+      <div className="order-header">
+        <h2>🛒 Order Summary</h2>
         {cart.length > 0 && (
-          <button
-            onClick={() => setShowRawCart((prev) => !prev)}
-            className="text-sm text-gray-600 underline"
-          >
+          <button onClick={() => setShowRawCart((prev) => !prev)} className="edit-toggle">
             {showRawCart ? '🔙 Back to Summary' : '⚙️ Edit Items'}
           </button>
         )}
       </div>
 
-      {/* Inputs */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+      <div className="order-inputs">
         <div>
-          <label className="block text-sm font-medium mb-1 text-gray-700">Table Number</label>
+          <label>Table Number</label>
           <input
             type="number"
             value={tableNumber}
             onChange={(e) => setTableNumber(e.target.value)}
-            className="w-full border border-gray-300 rounded-xl px-4 py-3 text-base shadow-sm focus:outline-none focus:ring-2 focus:ring-accent"
           />
         </div>
         <div>
-          <label className="block text-sm font-medium mb-1 text-gray-700">Waiter</label>
-          <select
-            className="w-full border border-gray-300 rounded-xl px-4 py-3 text-base shadow-sm"
-            value={waiterName}
-            onChange={(e) => setWaiterName(e.target.value)}
-          >
+          <label>Waiter</label>
+          <select value={waiterName} onChange={(e) => setWaiterName(e.target.value)}>
             <option value="">Select</option>
             {['Amanda', 'Linda', 'Carrie', 'Sharon', 'Libby', 'Elaine'].map((name) => (
               <option key={name} value={name}>{name}</option>
@@ -112,60 +104,44 @@ function OrderCart() {
           </select>
         </div>
         <div>
-          <label className="block text-sm font-medium mb-1 text-transparent select-none">Search</label>
-          <button
-            onClick={() => alert('🧭 Table selector UI coming soon')}
-            className="w-full bg-tea-light hover:bg-tea dark text-gray-800 font-semibold py-3 rounded-xl text-base shadow-md transition"
-          >
+          <label className="hidden-label">Search</label>
+          <button onClick={() => alert('🧭 Table selector UI coming soon')} className="search-btn">
             Search Table
           </button>
         </div>
       </div>
 
-      <button
-        onClick={() => setShowSummary(!showSummary)}
-        className="w-full text-left font-semibold text-lg mb-4 text-accent flex justify-between items-center"
-      >
-        🛒 View Items
-        <span>{showSummary ? '▲' : '▼'}</span>
+      <button onClick={() => setShowSummary(!showSummary)} className="view-toggle">
+        🛒 View Items <span>{showSummary ? '▲' : '▼'}</span>
       </button>
 
       {showSummary && (
         <>
           {showRawCart ? (
-            <div className="bg-gray-50 p-4 rounded-xl border border-gray-200 shadow-sm">
-              <h3 className="font-semibold text-lg text-accent mb-3">Edit Items</h3>
+            <div className="raw-cart">
+              <h3>Edit Items</h3>
               <ul>
                 {cart.map((item, idx) => (
-                  <li key={idx} className="mb-4 border-b pb-3">
-                    <div className="flex justify-between items-start">
+                  <li key={idx} className="raw-cart-item">
+                    <div className="item-header">
                       <div>
-                        <div className="font-bold text-md">{item.name}</div>
-                        <div className="text-xs italic text-gray-500">{item.note}</div>
+                        <strong>{item.name}</strong>
+                        <div className="item-note">{item.note}</div>
                       </div>
-                      <button
-                        onClick={() => removeItem(idx)}
-                        className="text-red-500 hover:text-red-700 text-xs"
-                      >
-                        🗑️ Remove
-                      </button>
+                      <button onClick={() => removeItem(idx)} className="remove-btn">🗑️</button>
                     </div>
-                    <div className="flex items-center gap-3 mt-2">
+                    <div className="item-controls">
                       <input
                         type="number"
                         value={item.qty}
                         onChange={(e) => updateItem(idx, { qty: Number(e.target.value) })}
-                        className="w-20 border px-3 py-2 text-sm rounded-md shadow-sm"
                       />
-                      <div className="ml-auto text-sm font-semibold text-gray-700">
-                        £{(item.qty * item.price).toFixed(2)}
-                      </div>
+                      <span>£{(item.qty * item.price).toFixed(2)}</span>
                     </div>
                     <textarea
                       value={item.note}
                       onChange={(e) => updateItem(idx, { note: e.target.value })}
-                      className="w-full border rounded-md text-sm mt-2 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-accent"
-                      placeholder="Add notes or allergies..."
+                      placeholder="Notes or allergies..."
                     />
                   </li>
                 ))}
@@ -177,20 +153,18 @@ function OrderCart() {
               const groupedItems = groupCartItems(itemsOfType)
 
               return groupedItems.length > 0 && (
-                <div key={type} className="bg-gray-50 p-4 rounded-xl mb-4 border border-gray-200 shadow-sm">
-                  <h3 className="font-semibold text-lg text-accent mb-2">{type.toUpperCase()}</h3>
+                <div key={type} className="summary-block">
+                  <h3>{type.toUpperCase()}</h3>
                   <ul>
                     {groupedItems.map((item, i) => (
-                      <li key={i} className="mb-4">
-                        <div className="font-bold text-md">{item.qty}x {item.name}</div>
+                      <li key={i} className="summary-item">
+                        <strong>{item.qty}x {item.name}</strong>
                         {item.notes.map((note, idx) => (
-                          <div key={idx} className="ml-4 text-sm italic text-gray-600">
+                          <div key={idx} className="summary-note">
                             - {note.qty} {note.note}
                           </div>
                         ))}
-                        <div className="text-sm text-right font-medium text-gray-700">
-                          £{(item.qty * item.price).toFixed(2)}
-                        </div>
+                        <span>£{(item.qty * item.price).toFixed(2)}</span>
                       </li>
                     ))}
                   </ul>
@@ -201,34 +175,18 @@ function OrderCart() {
         </>
       )}
 
-      {/* TOTAL */}
-      <p className="mt-10 text-center text-mega font-extrabold text-accent tracking-widest">
-        Total: £{total.toFixed(2)}
-      </p>
+      <p className="order-total">Total: £{total.toFixed(2)}</p>
 
-      <button
-        onClick={submitOrder}
-        className="mt-6 w-full bg-accent hover:bg-green-700 text-white text-xl font-bold py-4 rounded-2xl shadow-heavy transition-all active:scale-[0.98]"
-      >
+      <button onClick={submitOrder} className="submit-btn">
         ✅ Submit Order
       </button>
 
       {showPayment && (
-        <div className="mt-6">
-          <p className="mb-3 text-base font-semibold text-gray-700">Select Payment Method</p>
-          <div className="flex gap-4">
-            <button
-              onClick={() => confirmSubmit('Card')}
-              className="flex-1 bg-gray-800 hover:bg-gray-900 text-white text-lg font-bold py-3 rounded-xl shadow"
-            >
-              💳 Card
-            </button>
-            <button
-              onClick={() => confirmSubmit('Cash')}
-              className="flex-1 bg-green-600 hover:bg-green-700 text-white text-lg font-bold py-3 rounded-xl shadow"
-            >
-              💵 Cash
-            </button>
+        <div className="payment-section">
+          <p>Select Payment Method</p>
+          <div className="payment-buttons">
+            <button onClick={() => confirmSubmit('Card')} className="pay-btn card">💳 Card</button>
+            <button onClick={() => confirmSubmit('Cash')} className="pay-btn cash">💵 Cash</button>
           </div>
         </div>
       )}
