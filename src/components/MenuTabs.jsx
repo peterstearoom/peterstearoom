@@ -150,7 +150,7 @@ function MenuTabs() {
       {/* Grid */}
       <div className="menu-grid">
         {currentItems.map((item, i) => (
-          <MenuItemCard key={i} item={{ ...item, category: activeTab }} />
+          <MenuItemCard key={i} item={{ ...item, category: activeTab, subcategory: activeSub }} />
         ))}
       </div>
     </div>

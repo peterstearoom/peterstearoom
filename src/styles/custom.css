@@ -1163,6 +1163,12 @@ textarea {
 .item-checkbox input {
   margin-right: 0.5rem;
 }
+.salad-checkbox {
+  display: block;
+  margin-bottom: 1rem;
+  font-size: 0.9rem;
+  color: #333;
+}
 
 
 

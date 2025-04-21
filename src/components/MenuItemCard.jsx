@@ -8,16 +8,24 @@ function MenuItemCard({ item }) {
   const [addSalad, setAddSalad] = useState(false)
   const addItem = useOrderStore((s) => s.addItem)
 
+  const isColdSandwich = item?.subcategory?.toLowerCase() === 'cold sandwiches'
+
   const handleAdd = () => {
-    const updatedItem = {
+    const finalName = addSalad && isColdSandwich
+      ? item.name.replace('muffin', 'salad muffin')
+      : item.name
+
+    const finalPrice = item.price + (addSalad && isColdSandwich ? 0.9 : 0)
+
+    addItem({
       ...item,
+      name: finalName,
+      price: finalPrice,
       qty,
       note,
-      price: addSalad ? item.price + 0.9 : item.price,
-      name: addSalad ? item.name.replace(/muffin/i, 'salad muffin') : item.name,
-    }
+    })
 
-    addItem(updatedItem)
+    // Reset
     setQty(1)
     setNote('')
     setAddSalad(false)
@@ -26,7 +34,7 @@ function MenuItemCard({ item }) {
   return (
     <div className="menu-item-card">
       <h3 className="item-title">{item.image} {item.name}</h3>
-      <p className="item-price">£{(addSalad ? item.price + 0.9 : item.price).toFixed(2)}</p>
+      <p className="item-price">£{item.price.toFixed(2)}</p>
 
       <input
         type="number"
@@ -43,17 +51,17 @@ function MenuItemCard({ item }) {
         className="item-textarea"
       />
 
-      {/* ✅ Add Salad Checkbox */}
-      <div className="item-checkbox">
-        <label>
+      {/* ✅ Salad checkbox only for Cold Sandwiches */}
+      {isColdSandwich && (
+        <label className="salad-checkbox">
           <input
             type="checkbox"
             checked={addSalad}
             onChange={(e) => setAddSalad(e.target.checked)}
-          />{' '}
+          />
           Add salad? (+£0.90)
         </label>
-      </div>
+      )}
 
       <button onClick={handleAdd} className="item-add-btn">
         ➕ Add to Order
