@@ -27,7 +27,9 @@ const {
   const total = cart.reduce((sum, i) => sum + i.qty * i.price, 0)
 
   const submitOrder = () => {
-    if (!tableNumber || cart.length === 0) return alert("You MUST add a table number")
+if (!tableNumber || !waiterName || cart.length === 0) {
+  return alert("Please select table number AND waiter before submitting.")
+}
     setShowPayment(true)
   }
 
