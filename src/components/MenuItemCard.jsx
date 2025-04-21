@@ -5,21 +5,28 @@ import '../styles/custom.css'
 function MenuItemCard({ item }) {
   const [qty, setQty] = useState(1)
   const [note, setNote] = useState('')
+  const [addSalad, setAddSalad] = useState(false)
   const addItem = useOrderStore((s) => s.addItem)
 
   const handleAdd = () => {
-    addItem({ ...item, qty, note })
+    const updatedItem = {
+      ...item,
+      qty,
+      note,
+      price: addSalad ? item.price + 0.9 : item.price,
+      name: addSalad ? item.name.replace(/muffin/i, 'salad muffin') : item.name
+    }
+
+    addItem(updatedItem)
     setQty(1)
     setNote('')
+    setAddSalad(false)
   }
 
   return (
     <div className="menu-item-card">
-      <h3 className="item-title">
-        <span className="emoji mr-2">{item.image}</span>
-        {item.name}
-      </h3>
-      <p className="item-price">£{item.price.toFixed(2)}</p>
+      <h3 className="item-title">{item.name}</h3>
+      <p className="item-price">£{(addSalad ? item.price + 0.9 : item.price).toFixed(2)}</p>
 
       <input
         type="number"
@@ -35,6 +42,19 @@ function MenuItemCard({ item }) {
         onChange={(e) => setNote(e.target.value)}
         className="item-textarea"
       />
+
+      {/* ✅ Add salad checkbox */}
+      <div style={{ marginBottom: '1rem' }}>
+        <label>
+          <input
+            type="checkbox"
+            checked={addSalad}
+            onChange={(e) => setAddSalad(e.target.checked)}
+            style={{ marginRight: '0.5rem' }}
+          />
+          Add salad? (+£0.90)
+        </label>
+      </div>
 
       <button onClick={handleAdd} className="item-add-btn">
         ➕ Add to Order
