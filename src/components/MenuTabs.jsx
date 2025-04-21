@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import MenuCard from './MenuCard'
 import MenuItemCard from './MenuItemCard'
-
+import '../styles/custom.css'
 
 const menuData = {
   food: [
@@ -25,9 +25,9 @@ function MenuTabs() {
   )
 
   return (
-    <div>
+    <div className="menu-tabs-wrapper">
       {/* Tabs */}
-      <div className="flex justify-center gap-3 mb-4">
+      <div className="tab-buttons">
         {['food', 'drinks'].map((tab) => (
           <button
             key={tab}
@@ -35,11 +35,7 @@ function MenuTabs() {
               setSearch('')
               setActiveTab(tab)
             }}
-            className={`px-4 py-2 rounded-full font-bold transition-all shadow-sm text-sm
-              ${activeTab === tab
-                ? 'bg-emerald-600 text-white'
-                : 'bg-white border border-gray-300 text-gray-700 hover:bg-gray-100'
-              }`}
+            className={`tab-btn ${activeTab === tab ? 'active' : ''}`}
           >
             {tab === 'food' ? '🍽️ Food' : '🥤 Drinks'}
           </button>
@@ -52,11 +48,11 @@ function MenuTabs() {
         placeholder={`Search ${activeTab}...`}
         value={search}
         onChange={(e) => setSearch(e.target.value)}
-        className="border px-3 py-2 rounded w-full mb-4 shadow-sm"
+        className="menu-search"
       />
 
       {/* Grid */}
-      <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+      <div className="menu-grid">
         {filteredItems.map((item, i) => (
           <MenuItemCard key={i} item={{ ...item, category: activeTab }} />
         ))}
