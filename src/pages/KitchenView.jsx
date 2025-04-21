@@ -11,30 +11,22 @@ function KitchenView() {
   const ordersRef = ref(database, `orders/${dateKey}`)
 
   useEffect(() => {
-    // Load today's existing orders
     get(ordersRef).then((snapshot) => {
       const data = snapshot.val() || {}
       const all = Object.values(data)
-        .filter(o => o.time) // ensure valid orders
+        .filter(o => o.time)
         .sort((a, b) => new Date(b.time) - new Date(a.time))
         .slice(0, 10)
       setOrders(all)
       if (all.length > 0) setLatestOrder(all[0])
     })
 
-    // Live update new orders
     const unsubscribe = onChildAdded(ordersRef, (snapshot) => {
       const newOrder = snapshot.val()
-      if (!newOrder.time) return // ignore malformed
-      setOrders(prev => {
-        const updated = [newOrder, ...prev].slice(0, 10)
-        return updated
-      })
+      if (!newOrder.time) return
+      setOrders(prev => [newOrder, ...prev].slice(0, 10))
       setLatestOrder(newOrder)
-
-      setTimeout(() => {
-        window.print()
-      }, 700)
+      setTimeout(() => window.print(), 700)
     })
 
     return () => unsubscribe()
@@ -42,9 +34,7 @@ function KitchenView() {
 
   const handleReprint = (order) => {
     setLatestOrder(order)
-    setTimeout(() => {
-      window.print()
-    }, 700)
+    setTimeout(() => window.print(), 700)
   }
 
   if (!latestOrder) return <div className="p-6 text-center">Waiting for orders...</div>
@@ -55,7 +45,12 @@ function KitchenView() {
 
   return (
     <div className="relative h-[100vh] print:h-[100vh] overflow-hidden font-mono text-black bg-white text-xl print:text-[2rem] leading-relaxed">
-      
+
+      {/* Branding instead of nav */}
+      <div className="text-center text-xs text-gray-500 font-semibold mb-2 print:mb-2">
+        Peter's Tea Room
+      </div>
+
       {/* Dropdown */}
       <div className="p-4 bg-gray-100 mb-2 text-sm print:hidden">
         <label className="block font-semibold mb-1">Reprint previous order:</label>
@@ -78,30 +73,30 @@ function KitchenView() {
         </select>
       </div>
 
-      {/* Header Info */}
-      <div className="mb-2 text-sm print:text-base leading-tight px-6">
+      {/* Header Info (smaller) */}
+      <div className="mb-2 text-xs print:text-[0.75rem] leading-tight px-6 text-gray-700">
         <strong>{new Date(latestOrder.time).toLocaleString()}</strong><br />
         <strong>Total:</strong> £{latestOrder.total.toFixed(2)}<br />
         <strong>Payment:</strong> {latestOrder.payment}
       </div>
 
-      <hr className="my-3 border-black mx-6" />
+      <hr className="my-2 border-black mx-6" />
 
       {/* FOOD */}
       {food.length > 0 && (
         <div className="px-6">
           <h2 className="font-bold text-2xl mb-3 print:text-3xl">FOOD</h2>
           {food.map((item, i) => (
-            <div key={i} className="mb-6">
-              <div className="text-3xl font-bold print:text-[2.5rem]">{item.qty} {item.name}</div>
+            <div key={i} className="mb-4">
+              <div className="text-2xl font-bold print:text-[2rem]">{item.qty} {item.name}</div>
               {item.notes.map((note, idx) => (
-                <div key={idx} className="ml-6 text-lg italic print:text-2xl">
+                <div key={idx} className="ml-6 text-base italic print:text-lg">
                   - {note.qty} {note.note}
                 </div>
               ))}
             </div>
           ))}
-          <hr className="my-3 border-black" />
+          <hr className="my-2 border-black" />
         </div>
       )}
 
@@ -110,10 +105,10 @@ function KitchenView() {
         <div className="px-6">
           <h2 className="font-bold text-2xl mb-3 print:text-3xl">DRINKS</h2>
           {drinks.map((item, i) => (
-            <div key={i} className="mb-6">
-              <div className="text-3xl font-bold print:text-[2.5rem]">{item.qty} {item.name}</div>
+            <div key={i} className="mb-4">
+              <div className="text-2xl font-bold print:text-[2rem]">{item.qty} {item.name}</div>
               {item.notes.map((note, idx) => (
-                <div key={idx} className="ml-6 text-lg italic print:text-2xl">
+                <div key={idx} className="ml-6 text-base italic print:text-lg">
                   - {note.qty} {note.note}
                 </div>
               ))}
@@ -122,7 +117,7 @@ function KitchenView() {
         </div>
       )}
 
-      {/* Fixed Table Number */}
+      {/* Table Number */}
       <div className="fixed bottom-4 left-1/2 transform -translate-x-1/2 border-4 border-black rounded-full px-8 py-4 font-extrabold text-5xl text-center print:text-[3rem] bg-white">
         TABLE {latestOrder.table}
       </div>
