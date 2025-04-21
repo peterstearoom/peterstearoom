@@ -777,6 +777,55 @@ textarea {
     break-after: avoid;
   }
 }
+.kitchen-table-banner {
+  position: fixed;
+  bottom: 1rem;
+  left: 50%;
+  transform: translateX(-50%);
+  background: white;
+  padding: 1rem 2rem;
+  border: 4px solid black;
+  border-radius: 999px;
+  font-size: 2.3rem;
+  font-weight: 900;
+  text-align: center;
+  z-index: 1000;
+}
+
+.print-banner {
+  display: none;
+  font-size: 2.3rem;
+  font-weight: 900;
+  text-align: center;
+  margin-top: 2rem;
+  border: 4px solid black;
+  border-radius: 999px;
+  padding: 1rem 2rem;
+  width: fit-content;
+  margin-left: auto;
+  margin-right: auto;
+  background: white;
+}
+
+@media print {
+  .kitchen-table-banner {
+    display: none !important;
+  }
+  .print-banner {
+    display: block !important;
+  }
+
+  html, body {
+    max-height: 100%;
+    overflow: hidden !important;
+  }
+
+  .kitchen-view-container {
+    break-after: avoid;
+    max-height: 100vh;
+    overflow: hidden;
+  }
+}
 
 .summary-block {
   background: #f9f9f9;
