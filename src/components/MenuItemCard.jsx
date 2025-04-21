@@ -28,11 +28,17 @@ function MenuItemCard({ item }) {
     // 🍳 Breakfast logic (Small / Large only)
     if (
       item.subcategory === 'Breakfasts' &&
-      (item.name.includes('Small breakfast') || item.name.includes('Large breakfast'))
+      (item.name.toLowerCase().includes('small breakfast') || item.name.toLowerCase().includes('large breakfast'))
     ) {
       let extras = []
 
-      if (beansOption) extras.push(beansOption)
+      if (beansOption) {
+        if (beansOption === 'both') {
+          finalPrice += 0.4
+        }
+        extras.push(beansOption)
+      }
+
       if (blackPud) {
         extras.push('black pud')
         finalPrice += 1.4
@@ -99,8 +105,8 @@ function MenuItemCard({ item }) {
       )}
 
       {/* 🍳 Breakfast Options */}
-      {item.subcategory === 'Breakfast' &&
-        (item.name.includes('Small breakfast') || item.name.includes('Large breakfast')) && (
+      {item.subcategory === 'Breakfasts' &&
+        (item.name.toLowerCase().includes('small breakfast') || item.name.toLowerCase().includes('large breakfast')) && (
           <div className="breakfast-options" style={{ marginTop: '1rem' }}>
             <p style={{ fontWeight: 600 }}>Breakfast Extras:</p>
 
@@ -128,7 +134,7 @@ function MenuItemCard({ item }) {
                 name={`beans-${item.name}`}
                 checked={beansOption === 'both'}
                 onChange={() => setBeansOption('both')}
-              /> Both
+              /> Both (£0.40)
             </label><br />
 
             <label>
