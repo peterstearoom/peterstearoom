@@ -1,17 +1,16 @@
 
-import React, { useState, useEffect } from 'react'
-import { ref, onValue, set } from 'firebase/database'
-import { database } from '../lib/firebase'
-import '../styles/custom.css'
+import React, { useState, useEffect } from 'react';
+import { ref, onValue, set } from 'firebase/database';
+import { database } from '../lib/firebase';
+import '../styles/custom.css';
 
 function BookingsCalendar() {
-  const today = new Date()
-  const [currentMonth, setCurrentMonth] = useState(today.getMonth())
-  const [currentYear, setCurrentYear] = useState(today.getFullYear())
-  const [bookings, setBookings] = useState({})
-  const [modalOpen, setModalOpen] = useState(false)
-  const [selectedDate, setSelectedDate] = useState('')
-  const [formData, setFormData] = useState({
+  const today = new Date();
+  const [currentMonth, setCurrentMonth] = useState(today.getMonth());
+  const [currentYear, setCurrentYear] = useState(today.getFullYear());
+  const [bookings, setBookings] = useState({});
+  const [selected, setSelected] = useState(null);
+  const [editData, setEditData] = useState({
     name: '',
     contact: '',
     address: '',
@@ -19,130 +18,140 @@ function BookingsCalendar() {
     cost: '',
     paid: 'None',
     deposit: ''
-  })
+  });
 
   useEffect(() => {
-    const bookingsRef = ref(database, 'bookings/')
+    const bookingsRef = ref(database, 'bookings/');
     onValue(bookingsRef, snapshot => {
-      const data = snapshot.val() || {}
-      setBookings(data)
-    })
-  }, [currentMonth, currentYear])
+      const data = snapshot.val() || {};
+      setBookings(data);
+    });
+  }, [currentMonth, currentYear]);
 
-  const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate()
-  const firstDay = new Date(currentYear, currentMonth, 1).getDay()
-  const monthLabel = new Date(currentYear, currentMonth).toLocaleString('default', { month: 'long', year: 'numeric' })
+  const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
+  const firstDay = new Date(currentYear, currentMonth, 1).getDay();
+  const monthLabel = new Date(currentYear, currentMonth).toLocaleString('default', {
+    month: 'long',
+    year: 'numeric',
+  });
 
-  const handleOpenModal = (dateStr) => {
-    setSelectedDate(dateStr)
-    const existing = bookings[dateStr]
-    if (existing) {
-      const key = Object.keys(existing)[0]
-      setFormData({ ...existing[key] })
+  const handleSelect = (dateStr) => {
+    const entries = bookings[dateStr] || {};
+    const keys = Object.keys(entries);
+    if (keys.length > 0) {
+      const key = keys[0];
+      setSelected({ date: dateStr, key });
+      setEditData(entries[key]);
     } else {
-      setFormData({
-        name: '', contact: '', address: '', party: '', cost: '', paid: 'None', deposit: ''
-      })
+      setSelected({ date: dateStr, key: null });
+      setEditData({
+        name: '',
+        contact: '',
+        address: '',
+        party: '',
+        cost: '',
+        paid: 'None',
+        deposit: ''
+      });
     }
-    setModalOpen(true)
-  }
+  };
 
-  const saveBooking = async () => {
-    const payload = {
-      ...formData,
-      party: Number(formData.party),
-      cost: Number(formData.cost),
-      deposit: formData.paid === 'Deposit' ? Number(formData.deposit || 0) : 0,
-      time: new Date().toISOString()
+  const saveEdit = async () => {
+    if (selected) {
+      const refPath = ref(database, `bookings/${selected.date}/${selected.key || Date.now()}`);
+      await set(refPath, { ...editData, time: new Date().toISOString() });
+      setSelected(null);
     }
-    const dateKey = selectedDate
-    await set(ref(database, 'bookings/' + dateKey + '/' + dateKey.replaceAll('-', '')), payload)
-    setModalOpen(false)
-  }
-
-  const cellClass = (dateStr) => {
-    const data = bookings[dateStr]
-    if (!data) return ''
-    const key = Object.keys(data)[0]
-    const paidStatus = data[key]?.paid || ''
-    if (paidStatus === 'In Full') return 'booked green'
-    if (paidStatus === 'Deposit') return 'booked orange'
-    if (paidStatus === 'None') return 'booked red'
-    return 'booked'
-  }
-
-  const handleChange = (e) => {
-    const { name, value } = e.target
-    setFormData(prev => ({ ...prev, [name]: value }))
-  }
+  };
 
   const prevMonth = () => {
     if (currentMonth === 0) {
-      setCurrentMonth(11)
-      setCurrentYear(prev => prev - 1)
+      setCurrentMonth(11);
+      setCurrentYear(prev => prev - 1);
     } else {
-      setCurrentMonth(prev => prev - 1)
+      setCurrentMonth(prev => prev - 1);
     }
-  }
+  };
 
   const nextMonth = () => {
     if (currentMonth === 11) {
-      setCurrentMonth(0)
-      setCurrentYear(prev => prev + 1)
+      setCurrentMonth(0);
+      setCurrentYear(prev => prev + 1);
     } else {
-      setCurrentMonth(prev => prev + 1)
+      setCurrentMonth(prev => prev + 1);
     }
-  }
+  };
+
+  const totalCells = 42;
+  const blanksBefore = Array.from({ length: firstDay });
+  const days = Array.from({ length: daysInMonth });
 
   return (
-    <div className="calendar-wrapper">
+    <div className="calendar-wrapper card">
       <div className="calendar-header">
         <button onClick={prevMonth}>←</button>
         <h2>{monthLabel}</h2>
         <button onClick={nextMonth}>→</button>
       </div>
+
       <div className="calendar-grid">
-        {['Sun','Mon','Tue','Wed','Thu','Fri','Sat'].map(d => <div key={d} className="calendar-cell header">{d}</div>)}
-        {Array.from({ length: firstDay }).map((_, i) => <div key={'empty' + i} className="calendar-cell empty"></div>)}
-        {Array.from({ length: daysInMonth }).map((_, i) => {
-          const dateStr = `${currentYear}-${String(currentMonth + 1).padStart(2, '0')}-${String(i + 1).padStart(2, '0')}`
+        {['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].map(d => (
+          <div key={d} className="calendar-cell header">{d}</div>
+        ))}
+        {blanksBefore.map((_, i) => <div key={'b' + i} className="calendar-cell empty"></div>)}
+        {days.map((_, i) => {
+          const dateStr = `${currentYear}-${String(currentMonth + 1).padStart(2, '0')}-${String(i + 1).padStart(2, '0')}`;
+          const hasBooking = bookings[dateStr];
           return (
-            <div key={i} className={`calendar-cell ${cellClass(dateStr)}`} onClick={() => handleOpenModal(dateStr)}>
+            <div
+              key={i}
+              className={`calendar-cell ${hasBooking ? 'booked' : ''}`}
+              onClick={() => handleSelect(dateStr)}
+            >
               <strong>{i + 1}</strong>
+              {hasBooking && <div className="dot"></div>}
             </div>
-          )
+          );
         })}
       </div>
 
-      {modalOpen && (
-        <div className="modal-backdrop">
-          <div className="modal-content">
-            <h3>Booking for {selectedDate}</h3>
-            <input name="name" value={formData.name} onChange={handleChange} placeholder="Name" required />
-            <input name="contact" value={formData.contact} onChange={handleChange} placeholder="Contact" required />
-            <input name="address" value={formData.address} onChange={handleChange} placeholder="Address" required />
-            <input name="party" value={formData.party} onChange={handleChange} placeholder="Party Size" type="number" />
-            <input name="cost" value={formData.cost} onChange={handleChange} placeholder="Total Cost (£)" type="number" />
+      {selected && (
+        <div className="booking-modal">
+          <h3>Booking for {selected.date}</h3>
+          <label>Name</label>
+          <input value={editData.name} onChange={e => setEditData({ ...editData, name: e.target.value })} />
 
-            <select name="paid" value={formData.paid} onChange={handleChange}>
-              <option value="None">None</option>
-              <option value="Deposit">Deposit</option>
-              <option value="In Full">In Full</option>
-            </select>
+          <label>Contact</label>
+          <input value={editData.contact} onChange={e => setEditData({ ...editData, contact: e.target.value })} />
 
-            {formData.paid === 'Deposit' && (
-              <input name="deposit" value={formData.deposit} onChange={handleChange} placeholder="Deposit (£)" type="number" />
-            )}
+          <label>Address</label>
+          <input value={editData.address} onChange={e => setEditData({ ...editData, address: e.target.value })} />
 
-            <div className="modal-actions">
-              <button className="btn" onClick={saveBooking}>💾 Save</button>
-              <button className="btn-outline" onClick={() => setModalOpen(false)}>❌ Cancel</button>
-            </div>
-          </div>
+          <label>Party Size</label>
+          <input value={editData.party} onChange={e => setEditData({ ...editData, party: e.target.value })} type="number" />
+
+          <label>Total Cost (£)</label>
+          <input value={editData.cost} onChange={e => setEditData({ ...editData, cost: e.target.value })} type="number" />
+
+          <label>Payment Status</label>
+          <select value={editData.paid} onChange={e => setEditData({ ...editData, paid: e.target.value })}>
+            <option value="None">None</option>
+            <option value="Deposit">Deposit</option>
+            <option value="In Full">In Full</option>
+          </select>
+
+          {editData.paid === 'Deposit' && (
+            <>
+              <label>Deposit Amount (£)</label>
+              <input value={editData.deposit} onChange={e => setEditData({ ...editData, deposit: e.target.value })} type="number" />
+            </>
+          )}
+
+          <button className="submit-btn" onClick={saveEdit}>💾 Save</button>
         </div>
       )}
     </div>
-  )
+  );
 }
 
-export default BookingsCalendar
+export default BookingsCalendar;

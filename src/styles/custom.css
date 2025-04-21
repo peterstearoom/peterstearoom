@@ -1073,6 +1073,8 @@ textarea {
     grid-column: span 2;
   }
 }
+/* ========== Bookings Calendar Styles ========== */
+
 .calendar-wrapper {
   margin-top: 2rem;
   padding: 1rem;
@@ -1084,57 +1086,51 @@ textarea {
 
 .calendar-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
+  grid-template-columns: repeat(7, 1fr); /* Fixed 7-day week layout */
   gap: 0.5rem;
+  margin-top: 1rem;
 }
 
 .calendar-cell {
   background: #fff;
   border: 2px solid #d6d2c4;
-  padding: 1rem;
+  padding: 1rem 0.5rem;
   border-radius: 1rem;
   text-align: center;
   font-weight: 600;
   cursor: pointer;
   transition: all 0.2s ease;
-}
-
-.calendar-cell.free {
-  background: #e8f5e9;
-  color: #2e7d32;
+  min-height: 80px;
 }
 
 .calendar-cell.booked {
-  background-color: #ffe9c8; /* light orange */
+  background-color: #ffe9c8; /* default tint for any booking */
 }
-.calendar-cell.has-booking {
-  background: #e0f2f1;
-  border-color: #4caf50;
+.calendar-cell.booked-deposit {
+  background-color: #fff3cd; /* yellow tint for deposit */
+}
+.calendar-cell.booked-full {
+  background-color: #c8f7c5; /* green tint for full payment */
+}
+
+.calendar-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1rem;
 }
 
 .calendar-popup {
-  margin-top: 2rem;
+  margin-top: 1rem;
   background: #f9f9f9;
   padding: 1rem;
   border-radius: 1rem;
   border: 1px solid #ccc;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
 }
 
-.calendar-entry {
-  background: #fff;
-  border: 1px solid #ddd;
-  border-radius: 0.5rem;
-  padding: 0.75rem;
-  margin-bottom: 0.75rem;
-}
-.calendar-cell.booked-deposit {
-  background-color: #fff3cd; /* yellow tint */
-}
-
-.calendar-cell.booked-full {
-  background-color: #c8f7c5; /* green tint */
-}
-
+/* Edit form inside popup */
 .calendar-edit-box {
   margin-top: 1rem;
   padding: 1rem;
@@ -1143,4 +1139,22 @@ textarea {
   border-radius: 1rem;
   box-shadow: 0 4px 12px rgba(0,0,0,0.1);
 }
+
+/* Form Grid */
+.form-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+}
+
+@media (min-width: 640px) {
+  .form-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .form-grid .full-width {
+    grid-column: span 2;
+  }
+}
+
 
