@@ -1156,5 +1156,13 @@ textarea {
     grid-column: span 2;
   }
 }
+.item-checkbox {
+  font-size: 0.95rem;
+  margin-bottom: 1rem;
+}
+.item-checkbox input {
+  margin-right: 0.5rem;
+}
+
 
 
