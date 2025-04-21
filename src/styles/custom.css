@@ -1039,4 +1039,93 @@ textarea {
     font-size: 1.6rem;
   }
 }
+.form-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+}
+
+.form-grid label {
+  display: block;
+  margin-bottom: 0.25rem;
+  font-weight: 600;
+}
+
+.form-grid input,
+.form-grid select {
+  width: 100%;
+  padding: 0.75rem;
+  border-radius: 0.75rem;
+  border: 1px solid #ccc;
+  font-size: 1rem;
+}
+
+.form-grid .full-width {
+  grid-column: span 1;
+}
+
+@media (min-width: 640px) {
+  .form-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .form-grid .full-width {
+    grid-column: span 2;
+  }
+}
+.calendar-wrapper {
+  margin-top: 2rem;
+  padding: 1rem;
+  background: white;
+  border-radius: 1rem;
+  border: 2px solid #d6d2c4;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+}
+
+.calendar-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
+  gap: 0.5rem;
+}
+
+.calendar-cell {
+  background: #fff;
+  border: 2px solid #d6d2c4;
+  padding: 1rem;
+  border-radius: 1rem;
+  text-align: center;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.calendar-cell.free {
+  background: #e8f5e9;
+  color: #2e7d32;
+}
+
+.calendar-cell.booked {
+  background: #ffebee;
+  color: #c62828;
+}
+.calendar-cell.has-booking {
+  background: #e0f2f1;
+  border-color: #4caf50;
+}
+
+.calendar-popup {
+  margin-top: 2rem;
+  background: #f9f9f9;
+  padding: 1rem;
+  border-radius: 1rem;
+  border: 1px solid #ccc;
+}
+
+.calendar-entry {
+  background: #fff;
+  border: 1px solid #ddd;
+  border-radius: 0.5rem;
+  padding: 0.75rem;
+  margin-bottom: 0.75rem;
+}
 

@@ -3,7 +3,8 @@ import WaiterScreen from './pages/WaiterScreen'
 import KitchenView from './pages/KitchenView'
 import AdminDashboard from './pages/AdminDashboard'
 import PrintTemp from './pages/PrintTemp'
-import BookingsPage from './pages/BookingsPage' // ✅ NEW
+import BookingsPage from './pages/BookingsPage'
+import BookingsCalendar from './components/BookingsCalendar' // ✅ NEW
 import './styles/custom.css'
 import StatusBanner from './components/StatusBanner'
 
@@ -24,7 +25,7 @@ function App() {
             <Link to="/" className="nav-btn">📋 Waiter</Link>
             <Link to="/kitchen" className="nav-btn">👨‍🍳 Kitchen</Link>
             <Link to="/dashboard" className="nav-btn">📊 Admin Dashboard</Link>
-            <Link to="/bookings" className="nav-btn">📅 Bookings</Link> {/* ✅ NEW */}
+            <Link to="/bookings" className="nav-btn">📅 Bookings</Link>
           </nav>
 
           <Routes>
@@ -32,7 +33,16 @@ function App() {
             <Route path="/kitchen" element={<KitchenView />} />
             <Route path="/dashboard" element={<AdminDashboard />} />
             <Route path="/print-temp" element={<PrintTemp />} />
-            <Route path="/bookings" element={<BookingsPage />} /> {/* ✅ NEW */}
+            <Route path="/calendar" element={<BookingsCalendar />} />
+            <Route
+              path="/bookings"
+              element={
+                <>
+                  <BookingsPage />
+                  <BookingsCalendar /> {/* ✅ Show live calendar view */}
+                </>
+              }
+            />
           </Routes>
         </div>
       </div>

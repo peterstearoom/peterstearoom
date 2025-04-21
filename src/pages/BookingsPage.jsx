@@ -9,6 +9,7 @@ function BookingsPage() {
     contact: '',
     address: '',
     party: '',
+    cost: '',
     paid: 'None',
     deposit: '',
     date: ''
@@ -26,6 +27,7 @@ function BookingsPage() {
     const payload = {
       ...form,
       party: Number(form.party),
+      cost: Number(form.cost || 0),
       deposit: form.paid === 'Deposit' ? Number(form.deposit || 0) : 0,
       time: new Date().toISOString()
     }
@@ -33,33 +35,73 @@ function BookingsPage() {
     const dateKey = form.date
     await push(ref(database, `bookings/${dateKey}`), payload)
     alert('✅ Booking saved!')
+
     setForm({
-      name: '', contact: '', address: '', party: '', paid: 'None', deposit: '', date: ''
+      name: '',
+      contact: '',
+      address: '',
+      party: '',
+      cost: '',
+      paid: 'None',
+      deposit: '',
+      date: ''
     })
   }
 
   return (
     <div className="card">
       <h2 className="section-title">📅 Book a Catering Date</h2>
-      <form onSubmit={handleSubmit}>
-        <input name="name" value={form.name} onChange={handleChange} placeholder="Name" required />
-        <input name="contact" value={form.contact} onChange={handleChange} placeholder="Contact Number" required />
-        <input name="address" value={form.address} onChange={handleChange} placeholder="Address" required />
-        <input name="party" value={form.party} onChange={handleChange} placeholder="Party Amount" type="number" required />
 
-        <select name="paid" value={form.paid} onChange={handleChange} required>
-          <option value="None">None</option>
-          <option value="Deposit">Deposit</option>
-          <option value="In Full">In Full</option>
-        </select>
+      <form onSubmit={handleSubmit} className="form-grid">
+        <div>
+          <label><strong>Name</strong></label>
+          <input name="name" value={form.name} onChange={handleChange} required />
+        </div>
+
+        <div>
+          <label><strong>Contact Number</strong></label>
+          <input name="contact" value={form.contact} onChange={handleChange} required />
+        </div>
+
+        <div className="full-width">
+          <label><strong>Address</strong></label>
+          <input name="address" value={form.address} onChange={handleChange} required />
+        </div>
+
+        <div>
+          <label><strong>Party Size</strong></label>
+          <input name="party" type="number" value={form.party} onChange={handleChange} required />
+        </div>
+
+        <div>
+          <label><strong>Total Cost (£)</strong></label>
+          <input name="cost" type="number" value={form.cost} onChange={handleChange} required />
+        </div>
+
+        <div>
+          <label><strong>Payment Status</strong></label>
+          <select name="paid" value={form.paid} onChange={handleChange} required>
+            <option value="None">None</option>
+            <option value="Deposit">Deposit</option>
+            <option value="In Full">In Full</option>
+          </select>
+        </div>
 
         {form.paid === 'Deposit' && (
-          <input name="deposit" value={form.deposit} onChange={handleChange} type="number" placeholder="£ Deposit amount" required />
+          <div>
+            <label><strong>Deposit Amount (£)</strong></label>
+            <input name="deposit" type="number" value={form.deposit} onChange={handleChange} required />
+          </div>
         )}
 
-        <input name="date" type="date" value={form.date} onChange={handleChange} required />
+        <div>
+          <label><strong>Date</strong></label>
+          <input name="date" type="date" value={form.date} onChange={handleChange} required />
+        </div>
 
-        <button className="submit-btn" type="submit">📌 Submit Booking</button>
+        <div className="full-width">
+          <button className="submit-btn" type="submit">📌 Submit Booking</button>
+        </div>
       </form>
     </div>
   )
