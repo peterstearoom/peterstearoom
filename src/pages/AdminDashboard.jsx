@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { ref, get, set, onValue } from 'firebase/database'
 import { database } from '../lib/firebase'
+import '../styles/custom.css'
 
 const ADMIN_PIN = '1234'
 
@@ -31,15 +32,15 @@ function AdminDashboard() {
 
   if (!authorized) {
     return (
-      <div className="min-h-screen flex flex-col items-center justify-center bg-gray-100">
-        <div className="bg-white p-6 rounded shadow max-w-sm w-full">
-          <h1 className="text-xl font-bold mb-4 text-center">🔒 Admin Login</h1>
+      <div className="admin-container">
+        <div className="admin-login-box">
+          <h1 className="admin-login-title">🔒 Admin Login</h1>
           <input
             type="password"
             placeholder="Enter PIN"
             value={pin}
             onChange={(e) => setPin(e.target.value)}
-            className="border px-3 py-2 w-full rounded mb-3"
+            className="admin-input"
           />
           <button
             onClick={() => {
@@ -49,7 +50,7 @@ function AdminDashboard() {
                 alert('❌ Incorrect PIN')
               }
             }}
-            className="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700"
+            className="admin-btn"
           >
             Access Dashboard
           </button>
@@ -59,22 +60,22 @@ function AdminDashboard() {
   }
 
   return (
-    <div className="min-h-screen p-6 bg-gray-100">
-      <h1 className="text-2xl font-bold mb-4">📊 Daily Totals</h1>
+    <div className="admin-dashboard">
+      <h1 className="admin-heading">📊 Daily Sales Summary</h1>
 
-      <label className="block mb-2 font-medium text-sm">Select Date:</label>
+      <label className="admin-label">Select Date:</label>
       <input
         type="date"
         value={date}
         onChange={(e) => setDate(e.target.value)}
-        className="border px-3 py-1 mb-4 rounded"
+        className="admin-input"
       />
 
-      <div className="bg-white p-4 rounded-lg shadow max-w-md">
-        <p className="text-lg font-semibold">🗓️ {date}</p>
-        <p className="mt-2">💰 Cash: <strong>£{totals.cash.toFixed(2)}</strong></p>
-        <p className="mt-1">💳 Card: <strong>£{totals.card.toFixed(2)}</strong></p>
-        <p className="mt-2 text-gray-500 text-sm">These values update live as orders are placed.</p>
+      <div className="admin-summary-box">
+        <p className="admin-summary-date">🗓️ {date}</p>
+        <p className="admin-summary-line">💰 Cash: <strong>£{totals.cash.toFixed(2)}</strong></p>
+        <p className="admin-summary-line">💳 Card: <strong>£{totals.card.toFixed(2)}</strong></p>
+        <p className="admin-note">These values update live as orders are placed.</p>
       </div>
     </div>
   )

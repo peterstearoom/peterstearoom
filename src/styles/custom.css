@@ -432,6 +432,148 @@ textarea {
   background-color: #43a047;
   transform: scale(0.98);
 }
+.waiter-main {
+  padding-top: 6rem;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  min-height: 100vh;
+  background: linear-gradient(to bottom right, #f7f6f3, #e2dfd7);
+  color: #333;
+}
+
+.waiter-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2rem;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+@media (min-width: 1024px) {
+  .waiter-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.waiter-menu,
+.waiter-cart {
+  background: white;
+  border: 2px solid #d6d2c4;
+  padding: 2rem;
+  border-radius: 1.5rem;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+}
+
+.waiter-section-title {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #4caf50;
+  margin-bottom: 1.5rem;
+}
+
+.waiter-footer {
+  text-align: center;
+  margin-top: 4rem;
+  font-size: 0.875rem;
+  color: #888;
+}
+.admin-container {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #f2f2f2;
+}
+
+.admin-login-box {
+  background: white;
+  padding: 2rem;
+  border-radius: 1rem;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+  max-width: 400px;
+  width: 100%;
+  text-align: center;
+}
+
+.admin-login-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+}
+
+.admin-input {
+  width: 100%;
+  padding: 0.75rem;
+  font-size: 1rem;
+  border-radius: 0.5rem;
+  border: 1px solid #ccc;
+  margin-bottom: 1rem;
+  outline: none;
+}
+
+.admin-btn {
+  width: 100%;
+  background-color: #4caf50;
+  color: white;
+  font-size: 1.1rem;
+  font-weight: 600;
+  padding: 0.8rem;
+  border-radius: 0.75rem;
+  transition: all 0.2s ease;
+  border: none;
+  cursor: pointer;
+}
+
+.admin-btn:hover {
+  background-color: #43a047;
+}
+
+.admin-dashboard {
+  padding: 2rem;
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+.admin-heading {
+  font-size: 2rem;
+  font-weight: bold;
+  margin-bottom: 1.5rem;
+  text-align: center;
+  color: #333;
+}
+
+.admin-label {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  color: #555;
+}
+
+.admin-summary-box {
+  background: white;
+  border: 2px solid #d6d2c4;
+  padding: 2rem;
+  margin-top: 1.5rem;
+  border-radius: 1rem;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.admin-summary-date {
+  font-size: 1.2rem;
+  font-weight: bold;
+  margin-bottom: 1rem;
+}
+
+.admin-summary-line {
+  font-size: 1.1rem;
+  margin-bottom: 0.5rem;
+}
+
+.admin-note {
+  margin-top: 1rem;
+  font-size: 0.9rem;
+  color: #777;
+}
 
 
 .summary-block {
