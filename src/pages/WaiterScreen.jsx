@@ -6,10 +6,10 @@ import FloatingCart from '../components/FloatingCart'
 
 function WaiterScreen() {
   return (
-    <>
+    <div className="min-h-screen bg-gradient-to-br from-[#f7f6f3] to-[#e2dfd7] text-gray-800">
       <HeaderBar />
 
-      <div className="min-h-screen bg-gradient-to-br from-[#f7f6f3] to-[#e2dfd7] text-gray-800 pt-28 px-4 md:px-8 lg:px-16">
+      <main className="pt-28 px-4 md:px-8 lg:px-16">
         {/* Grid Layout */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
           {/* Menu + Tabs */}
