@@ -74,9 +74,9 @@ function OrderCart() {
   }
 
   return (
-    <div className="p-6 bg-white mt-6 shadow-md rounded-xl border border-gray-200">
-      <div className="flex justify-between items-center mb-4">
-        <h2 className="text-2xl font-bold text-emerald-700">🛒 Order Summary</h2>
+    <div className="p-huge bg-white mt-6 shadow-heavy rounded-2xl border border-tea-dark">
+      <div className="flex justify-between items-center mb-6">
+        <h2 className="text-2xl font-bold text-accent">🛒 Order Summary</h2>
         {cart.length > 0 && (
           <button
             onClick={() => setShowRawCart((prev) => !prev)}
@@ -87,21 +87,21 @@ function OrderCart() {
         )}
       </div>
 
-      {/* Table + Waiter */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-3 mb-4">
+      {/* Inputs */}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
         <div>
           <label className="block text-sm font-medium mb-1 text-gray-700">Table Number</label>
           <input
             type="number"
             value={tableNumber}
             onChange={(e) => setTableNumber(e.target.value)}
-            className="w-full border rounded-md px-3 py-2 text-sm shadow-sm focus:outline-none focus:ring-2 focus:ring-emerald-400"
+            className="w-full border border-gray-300 rounded-xl px-4 py-3 text-base shadow-sm focus:outline-none focus:ring-2 focus:ring-accent"
           />
         </div>
         <div>
           <label className="block text-sm font-medium mb-1 text-gray-700">Waiter</label>
           <select
-            className="w-full border rounded-md px-3 py-2 text-sm shadow-sm"
+            className="w-full border border-gray-300 rounded-xl px-4 py-3 text-base shadow-sm"
             value={waiterName}
             onChange={(e) => setWaiterName(e.target.value)}
           >
@@ -115,7 +115,7 @@ function OrderCart() {
           <label className="block text-sm font-medium mb-1 text-transparent select-none">Search</label>
           <button
             onClick={() => alert('🧭 Table selector UI coming soon')}
-            className="w-full bg-gray-200 hover:bg-gray-300 text-gray-800 font-semibold py-2 rounded-lg text-sm shadow-md transition"
+            className="w-full bg-tea-light hover:bg-tea dark text-gray-800 font-semibold py-3 rounded-xl text-base shadow-md transition"
           >
             Search Table
           </button>
@@ -124,7 +124,7 @@ function OrderCart() {
 
       <button
         onClick={() => setShowSummary(!showSummary)}
-        className="w-full text-left font-semibold text-lg mb-3 text-emerald-700 flex justify-between items-center"
+        className="w-full text-left font-semibold text-lg mb-4 text-accent flex justify-between items-center"
       >
         🛒 View Items
         <span>{showSummary ? '▲' : '▼'}</span>
@@ -133,8 +133,8 @@ function OrderCart() {
       {showSummary && (
         <>
           {showRawCart ? (
-            <div className="bg-gray-50 p-4 rounded-lg border border-gray-200 shadow-sm">
-              <h3 className="font-semibold text-lg text-emerald-600 mb-2">Edit Items</h3>
+            <div className="bg-gray-50 p-4 rounded-xl border border-gray-200 shadow-sm">
+              <h3 className="font-semibold text-lg text-accent mb-3">Edit Items</h3>
               <ul>
                 {cart.map((item, idx) => (
                   <li key={idx} className="mb-4 border-b pb-3">
@@ -155,7 +155,7 @@ function OrderCart() {
                         type="number"
                         value={item.qty}
                         onChange={(e) => updateItem(idx, { qty: Number(e.target.value) })}
-                        className="w-20 border px-2 py-1 text-sm rounded-md shadow-sm"
+                        className="w-20 border px-3 py-2 text-sm rounded-md shadow-sm"
                       />
                       <div className="ml-auto text-sm font-semibold text-gray-700">
                         £{(item.qty * item.price).toFixed(2)}
@@ -164,7 +164,7 @@ function OrderCart() {
                     <textarea
                       value={item.note}
                       onChange={(e) => updateItem(idx, { note: e.target.value })}
-                      className="w-full border rounded-md text-sm mt-2 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-emerald-400"
+                      className="w-full border rounded-md text-sm mt-2 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-accent"
                       placeholder="Add notes or allergies..."
                     />
                   </li>
@@ -177,8 +177,8 @@ function OrderCart() {
               const groupedItems = groupCartItems(itemsOfType)
 
               return groupedItems.length > 0 && (
-                <div key={type} className="bg-gray-50 p-4 rounded-lg mb-4 border border-gray-200 shadow-sm">
-                  <h3 className="font-semibold text-lg text-emerald-600 mb-2">{type.toUpperCase()}</h3>
+                <div key={type} className="bg-gray-50 p-4 rounded-xl mb-4 border border-gray-200 shadow-sm">
+                  <h3 className="font-semibold text-lg text-accent mb-2">{type.toUpperCase()}</h3>
                   <ul>
                     {groupedItems.map((item, i) => (
                       <li key={i} className="mb-4">
@@ -201,20 +201,21 @@ function OrderCart() {
         </>
       )}
 
-      <p className="mt-8 text-center text-5xl font-extrabold text-emerald-700 tracking-wide">
+      {/* TOTAL */}
+      <p className="mt-10 text-center text-mega font-extrabold text-accent tracking-widest">
         Total: £{total.toFixed(2)}
       </p>
 
       <button
         onClick={submitOrder}
-        className="mt-6 w-full bg-emerald-700 hover:bg-emerald-800 text-white text-lg font-bold py-3 px-4 rounded-xl shadow-md transition-all active:scale-[0.98]"
+        className="mt-6 w-full bg-accent hover:bg-green-700 text-white text-xl font-bold py-4 rounded-2xl shadow-heavy transition-all active:scale-[0.98]"
       >
-        Submit Order
+        ✅ Submit Order
       </button>
 
       {showPayment && (
-        <div className="mt-5">
-          <p className="mb-3 text-sm font-medium text-gray-700">Select Payment Method</p>
+        <div className="mt-6">
+          <p className="mb-3 text-base font-semibold text-gray-700">Select Payment Method</p>
           <div className="flex gap-4">
             <button
               onClick={() => confirmSubmit('Card')}

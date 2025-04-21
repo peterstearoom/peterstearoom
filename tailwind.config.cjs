@@ -7,8 +7,8 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
-        sans: ['"Inter"', 'sans-serif'],
-        serif: ['"Playfair Display"', 'serif'],
+        sans: ['Inter', 'sans-serif'],
+        serif: ['Playfair Display', 'serif'],
       },
       colors: {
         tea: {
@@ -33,6 +33,9 @@ module.exports = {
       boxShadow: {
         heavy: '0 6px 20px rgba(0, 0, 0, 0.15)',
       },
+      backgroundImage: {
+        'tea-gradient': 'linear-gradient(to bottom right, #f3f0e8, #eae7de)',
+      }
     },
   },
   plugins: [],
