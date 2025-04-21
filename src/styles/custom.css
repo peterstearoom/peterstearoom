@@ -645,18 +645,18 @@ textarea {
 }
 
 .kitchen-table-banner {
-  position: fixed;
-  bottom: 1rem;
-  left: 50%;
-  transform: translateX(-50%);
-  background: white;
-  padding: 1rem 2rem;
+  display: block;
+  margin: 2rem auto 0 auto;
   border: 4px solid black;
-  border-radius: 999px;
-  font-size: 2.5rem;
+  border-radius: 9999px;
+  padding: 1rem 2rem;
   font-weight: 900;
   text-align: center;
+  background: white;
+  font-size: 2rem;
+  page-break-inside: avoid;
 }
+
 
 /* Print Fixes */
 @media print {
