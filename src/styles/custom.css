@@ -18,7 +18,12 @@
 
 /* ========== Layout & Body ========== */
 body {
-  background: var(--color-bg);
+  //background: var(--color-bg);
+  background-image: url('/assets/PetersTeaRoom-Background.png'); /* adjust path as needed */
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  background-repeat: no-repeat;
   font-family: var(--font-sans);
   color: var(--color-text);
   margin: 0;
