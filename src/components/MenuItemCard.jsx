@@ -20,7 +20,7 @@ function MenuItemCard({ item }) {
     if (item.subcategory === 'Cold sandwiches') {
       if (addSalad) {
         finalName = finalName.replace('muffin', 'salad muffin')
-        finalPrice += 0.9
+        finalPrice += 1.5
         if (addOnions) finalName += ' (onions)'
       }
     }
@@ -83,7 +83,7 @@ function MenuItemCard({ item }) {
                 setAddSalad(!addSalad)
                 if (!addSalad) setAddOnions(false)
               }}
-            /> Add salad? (+£0.90)
+            /> Add salad? (+£1.50)
           </label><br />
 
           {addSalad && (

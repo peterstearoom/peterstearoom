@@ -5,8 +5,8 @@ import '../styles/custom.css'
 const menuData = {
   food: {
     Breakfasts: [
-      { name: 'Small breakfast', price: 4.8, image: '🍳' },
-      { name: 'Large breakfast', price: 6.5, image: '🥓' },
+      { name: 'Small breakfast', price: 4.8, image: '🍳', subcategory: 'Breakfast' },
+      { name: 'Large breakfast', price: 6.5, image: '🥓', subcategory: 'Breakfast' },
       { name: 'Toast', price: .9, image: '🥪' },
       { name: 'Teacake', price: 2.3, image: '🧆' },
       { name: 'Crumpets', price: 2.2, image: '🧆' },
