@@ -370,6 +370,68 @@ textarea {
   grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
   gap: 1.25rem;
 }
+.menu-item-card {
+  background: #fff;
+  padding: 1.5rem;
+  border: 2px solid #d6d2c4;
+  border-radius: 1.5rem;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+  transition: box-shadow 0.2s ease;
+}
+
+.menu-item-card:hover {
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+}
+
+.item-title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 0.5rem;
+}
+
+.item-price {
+  color: #777;
+  font-size: 0.9rem;
+  margin-bottom: 1rem;
+}
+
+.item-input,
+.item-textarea {
+  width: 100%;
+  padding: 0.6rem 1rem;
+  border: 1px solid #ccc;
+  border-radius: 0.75rem;
+  margin-bottom: 1rem;
+  font-size: 0.9rem;
+  resize: none;
+  transition: border-color 0.2s ease;
+}
+
+.item-input:focus,
+.item-textarea:focus {
+  border-color: #4caf50;
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(76, 175, 80, 0.2);
+}
+
+.item-add-btn {
+  background-color: #4caf50;
+  color: white;
+  font-size: 1.2rem;
+  font-weight: 700;
+  width: 100%;
+  padding: 0.9rem 1.2rem;
+  border-radius: 1rem;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  transition: all 0.2s ease;
+  cursor: pointer;
+}
+
+.item-add-btn:hover {
+  background-color: #43a047;
+  transform: scale(0.98);
+}
 
 
 .summary-block {
