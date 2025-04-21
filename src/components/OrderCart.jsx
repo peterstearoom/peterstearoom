@@ -6,16 +6,19 @@ import { groupCartItems } from '../utils/groupCartItems'
 import { useNavigate } from 'react-router-dom'
 
 function OrderCart() {
-  const {
-    cart,
-    tableNumber,
-    paymentType,
-    setTableNumber,
-    setPaymentType,
-    updateItem,
-    removeItem,
-    clearCart
-  } = useOrderStore()
+const {
+  cart,
+  tableNumber,
+  waiterName,
+  paymentType,
+  setTableNumber,
+  setWaiterName,
+  setPaymentType,
+  updateItem,
+  removeItem,
+  clearCart
+} = useOrderStore()
+
 
   const navigate = useNavigate()
   const [showPayment, setShowPayment] = useState(false)
