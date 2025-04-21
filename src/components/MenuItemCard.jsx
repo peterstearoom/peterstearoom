@@ -27,7 +27,7 @@ function MenuItemCard({ item }) {
 
     // 🍳 Breakfast logic (Small / Large only)
     if (
-      item.subcategory === 'Breakfast' &&
+      item.subcategory === 'Breakfasts' &&
       (item.name.includes('Small breakfast') || item.name.includes('Large breakfast'))
     ) {
       let extras = []
