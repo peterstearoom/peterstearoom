@@ -8,10 +8,26 @@ function App() {
     <Router>
       <div className="min-h-screen bg-gradient-to-b from-[#f7f6f3] to-[#eae7de] font-sans text-gray-800">
         <div className="max-w-4xl mx-auto px-4 py-6">
-          <nav className="flex justify-end gap-4 mb-8 text-sm font-medium text-gray-700">
-            <Link to="/" className="hover:text-green-700">Waiter</Link>
-            <Link to="/kitchen" className="hover:text-green-700">Kitchen</Link>
-            <Link to="/dashboard" className="hover:text-green-700">Admin Dashboard</Link>
+          {/* 🧭 Centered Nav Buttons */}
+          <nav className="flex justify-center flex-wrap gap-4 mb-8">
+            <Link
+              to="/"
+              className="bg-emerald-600 hover:bg-emerald-700 text-white px-6 py-3 rounded-full text-lg font-semibold shadow transition"
+            >
+              🧾 Waiter
+            </Link>
+            <Link
+              to="/kitchen"
+              className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-full text-lg font-semibold shadow transition"
+            >
+              👨‍🍳 Kitchen
+            </Link>
+            <Link
+              to="/dashboard"
+              className="bg-gray-700 hover:bg-gray-800 text-white px-6 py-3 rounded-full text-lg font-semibold shadow transition"
+            >
+              📊 Admin Dashboard
+            </Link>
           </nav>
 
           <Routes>
@@ -24,6 +40,5 @@ function App() {
     </Router>
   )
 }
-
 
 export default App

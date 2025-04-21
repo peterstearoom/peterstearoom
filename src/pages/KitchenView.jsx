@@ -32,7 +32,7 @@ function KitchenView() {
   const drinks = grouped.filter((item) => item.category === 'drinks')
 
   return (
-    <div className="p-6 font-mono text-sm text-black bg-white print:text-sm">
+    <div className="p-6 font-mono text-black bg-white text-xl print:text-2xl leading-snug">
       {/* HEADER */}
       <div className="mb-2 text-sm print:text-sm">
         <strong>{new Date(latestOrder.time).toLocaleString()}</strong><br />
@@ -87,9 +87,12 @@ function KitchenView() {
         </>
       )}
 
-      <div className="mt-4 text-right font-bold text-lg">
-        Table: {latestOrder.table}
-      </div>
+      <div className="mt-6 flex justify-center">
+  <div className="border-4 border-black rounded-full px-6 py-2 font-extrabold text-4xl text-center">
+    TABLE {latestOrder.table}
+  </div>
+</div>
+
     </div>
   )
 }
