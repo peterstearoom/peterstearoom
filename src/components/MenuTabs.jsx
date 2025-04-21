@@ -43,7 +43,7 @@ const menuData = {
       { name: 'Chicken plate salad', price: 6.5, image: '🍗' },
       { name: 'Tuna plate salad', price: 6.5, image: '🐟' },
     ],
-    Pies/Soups: [
+    "Pies/Soups": [
       { name: 'Meat & potato', price: 5.5, image: '🥧' },
       { name: 'Cottage pie', price: 5.5, image: '🥧' },
       { name: 'Rag pudding', price: 5.5, image: '🥧' },
@@ -53,12 +53,8 @@ const menuData = {
       { name: 'Tomato soup', price: 5.5, image: '🥘' },
     ],
     "Burgers/Hotdogs": [
-      { name: 'Ham plate salad', price: 6.5, image: '🥗' },
-      { name: 'Beef plate salad', price: 6.5, image: '🥗' },
-      { name: 'Prawn plate salad', price: 7.3, image: '🦐' },
-      { name: 'Cheese plate salad', price: 6.5, image: '🧀' },
-      { name: 'Chicken plate salad', price: 6.5, image: '🍗' },
-      { name: 'Tuna plate salad', price: 6.5, image: '🐟' },
+      { name: 'Beef burger', price: 4.3, image: '🍔' },
+      { name: 'Hotdog', price: 3.6, image: '🌭' },
     ],
     "Jacket potatoes": [
       { name: 'Jacket - Cheese', price: 5.2, image: '🥔' },
