@@ -45,10 +45,9 @@ function App() {
                 </>
               }
             />
-      		  <FloatingCart />
-      		  <OrderCart />
           </Routes>
         </div>
+<FloatingCart />
       </div>
     </Router>
   )
