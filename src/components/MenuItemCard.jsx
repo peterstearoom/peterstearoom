@@ -22,6 +22,14 @@ function MenuItemCard({ item }) {
   const [burgerExtras, setBurgerExtras] = useState({
     cheese: false, onions: false, chips: false
   })
+  const [jacketExtras, setJacketExtras] = useState({
+    cheese: false,
+    tuna: false,
+    beans: false,
+    coleslaw: false,
+    chickenCurry: false,
+    chilli: false
+  })
   const [toastieExtras, setToastieExtras] = useState({
     tomato: false, onion: false, ham: false, tuna: false
   })
@@ -166,6 +174,14 @@ if (
     setToastieExtras({ tomato: false, onion: false, ham: false, tuna: false })
     setPieExtras({ peas: false, beans: false, gravy: false, chips: false })
     setBurgerExtras({ cheese: false, onions: false, chips: false })
+    setJacketExtras({
+      cheese: false,
+      tuna: false,
+      beans: false,
+      coleslaw: false,
+      chickenCurry: false,
+      chilli: false
+    })
   }
 
   const handleHotChange = (key) => {
@@ -241,6 +257,27 @@ if (
               onChange={() => setBurgerExtras(prev => ({ ...prev, chips: !prev.chips }))}
             /> Add Chips (+£2.30)
           </label>
+        </div>
+      )}
+
+      {/* 🥔 Jacket Potato Extras */}
+      {item.subcategory === 'Jacket potatoes' && item.name.toLowerCase() === 'jacket potato' && (
+        <div className="jacket-options" style={{ marginTop: '1rem' }}>
+          <p style={{ fontWeight: 600 }}>Choose your toppings:</p>
+          {Object.entries(jacketExtras).map(([key, value]) => {
+            const label = key === 'chickenCurry' ? 'Chicken curry' : key.charAt(0).toUpperCase() + key.slice(1)
+            const selectedCount = Object.values(jacketExtras).filter(v => v).length
+            const priceLabel = selectedCount > 0 ? ' (+£1.40)' : ''
+            return (
+              <label key={key}>
+                <input
+                  type="checkbox"
+                  checked={value}
+                  onChange={() => setJacketExtras(prev => ({ ...prev, [key]: !prev[key] }))}
+                /> {label}{priceLabel}
+              </label>
+            )
+          })}
         </div>
       )}
 

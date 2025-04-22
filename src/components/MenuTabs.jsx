@@ -57,12 +57,7 @@ const menuData = {
       { name: 'Hotdog', price: 3.6, image: '🌭' },
     ],
     "Jacket potatoes": [
-      { name: 'Jacket - Cheese', price: 5.2, image: '🥔' },
-      { name: 'Jacket - Beans', price: 5.2, image: '🥔' },
-      { name: 'Jacket - Tuna', price: 5.2, image: '🥔' },
-      { name: 'Jacket - Chilli', price: 5.2, image: '🥔' },
-      { name: 'Jacket - Curry', price: 5.2, image: '🥔' },
-      { name: 'Jacket - Coleslaw', price: 5.2, image: '🥔' },
+      { name: 'Jacket potato', price: 5.2, image: '🥔' },
     ],
     Specials: [
       { name: 'Prawn special', price: 5.9, image: '🦐' },
