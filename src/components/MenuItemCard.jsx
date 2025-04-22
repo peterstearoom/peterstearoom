@@ -11,10 +11,10 @@ function MenuItemCard({ item }) {
   const [blackPud, setBlackPud] = useState(false)
   const [toast, setToast] = useState(false)
   const [hotAdditions, setHotAdditions] = useState({
-    egg: false,
-    bacon: false,
-    sausage: false,
-    spam: false,
+    egg: false, bacon: false, sausage: false, spam: false
+  })
+  const [toastieExtras, setToastieExtras] = useState({
+    tomato: false, onion: false, ham: false, tuna: false
   })
 
   const addItem = useOrderStore((s) => s.addItem)
@@ -23,7 +23,7 @@ function MenuItemCard({ item }) {
     let finalName = item.name
     let finalPrice = item.price
 
-    // Cold Sandwich logic
+    // 🥪 Cold Sandwich logic
     if (item.subcategory === 'Cold sandwiches') {
       if (addSalad) {
         finalName = finalName.replace('muffin', 'salad muffin')
@@ -32,11 +32,9 @@ function MenuItemCard({ item }) {
       }
     }
 
-    // Breakfast logic
-    if (
-      item.subcategory === 'Breakfasts' &&
-      (item.name.toLowerCase().includes('small breakfast') || item.name.toLowerCase().includes('large breakfast'))
-    ) {
+    // 🍳 Breakfast logic
+    if (item.subcategory === 'Breakfasts' && 
+      (item.name.toLowerCase().includes('small breakfast') || item.name.toLowerCase().includes('large breakfast'))) {
       let extras = []
       if (beansOption) {
         if (beansOption === 'both') finalPrice += 0.4
@@ -49,11 +47,9 @@ function MenuItemCard({ item }) {
       if (extras.length > 0) finalName += ` (${extras.join(' + ')})`
     }
 
-    // Hot Sandwich logic
-    if (
-      item.subcategory === 'Hot sandwiches' &&
-      ['bacon muffin', 'sausage muffin', 'egg muffin', 'spam muffin'].some(v => item.name.toLowerCase().includes(v))
-    ) {
+    // 🌭 Hot Sandwich logic
+    if (item.subcategory === 'Hot sandwiches' &&
+      ['bacon muffin', 'sausage muffin', 'egg muffin', 'spam muffin'].some(v => item.name.toLowerCase().includes(v))) {
       const selected = Object.entries(hotAdditions)
         .filter(([key, value]) => value && !item.name.toLowerCase().includes(key))
         .map(([key]) => key)
@@ -69,19 +65,42 @@ function MenuItemCard({ item }) {
       }
     }
 
+    // 🧀 Toastie Logic (only for Cheese toastie)
+    if (item.subcategory === 'Toasties' && item.name.toLowerCase() === 'cheese toastie') {
+      let additions = ['cheese']
+      if (toastieExtras.ham) {
+        additions.push('ham')
+        finalPrice += 0.7
+      }
+      if (toastieExtras.tuna) {
+        additions.push('tuna')
+        finalPrice += 0.7
+      }
+      if (toastieExtras.tomato) additions.push('tomato')
+      if (toastieExtras.onion) additions.push('onion')
+      finalName = `${additions.join(', ')} toastie`
+    }
+
     addItem({ ...item, name: finalName, price: finalPrice, qty, note })
+
+    // Reset all
     setQty(1)
     setNote('')
     setAddSalad(false)
     setAddOnions(false)
     setBeansOption('')
     setBlackPud(false)
-    setHotAdditions({ egg: false, bacon: false, sausage: false, spam: false })
     setToast(false)
+    setHotAdditions({ egg: false, bacon: false, sausage: false, spam: false })
+    setToastieExtras({ tomato: false, onion: false, ham: false, tuna: false })
   }
 
   const handleHotChange = (key) => {
     setHotAdditions(prev => ({ ...prev, [key]: !prev[key] }))
+  }
+
+  const handleToastieChange = (key) => {
+    setToastieExtras(prev => ({ ...prev, [key]: !prev[key] }))
   }
 
   return (
@@ -108,22 +127,18 @@ function MenuItemCard({ item }) {
       {item.subcategory === 'Cold sandwiches' && (
         <>
           <label>
-            <input
-              type="checkbox"
-              checked={addSalad}
+            <input type="checkbox" checked={addSalad}
               onChange={() => {
                 setAddSalad(!addSalad)
                 if (!addSalad) setAddOnions(false)
-              }}
-            /> Add salad? (+£1.50)
+              }} />
+            Add salad? (+£1.50)
           </label><br />
           {addSalad && (
             <label>
-              <input
-                type="checkbox"
-                checked={addOnions}
-                onChange={() => setAddOnions(!addOnions)}
-              /> Add onions?
+              <input type="checkbox" checked={addOnions}
+                onChange={() => setAddOnions(!addOnions)} />
+              Add onions?
             </label>
           )}
         </>
@@ -134,36 +149,17 @@ function MenuItemCard({ item }) {
         (item.name.toLowerCase().includes('small breakfast') || item.name.toLowerCase().includes('large breakfast')) && (
           <div className="breakfast-options" style={{ marginTop: '1rem' }}>
             <p style={{ fontWeight: 600 }}>Breakfast Extras:</p>
+            {['beans', 'tomatoes', 'both'].map(opt => (
+              <label key={opt}>
+                <input type="radio" name={`beans-${item.name}`} checked={beansOption === opt}
+                  onChange={() => setBeansOption(opt)} />
+                {opt.charAt(0).toUpperCase() + opt.slice(1)} {opt === 'both' ? '(+£0.40)' : ''}
+              </label>
+            ))}
+            <br />
             <label>
-              <input
-                type="radio"
-                name={`beans-${item.name}`}
-                checked={beansOption === 'beans'}
-                onChange={() => setBeansOption('beans')}
-              /> Beans
-            </label><br />
-            <label>
-              <input
-                type="radio"
-                name={`beans-${item.name}`}
-                checked={beansOption === 'tomatoes'}
-                onChange={() => setBeansOption('tomatoes')}
-              /> Tomatoes
-            </label><br />
-            <label>
-              <input
-                type="radio"
-                name={`beans-${item.name}`}
-                checked={beansOption === 'both'}
-                onChange={() => setBeansOption('both')}
-              /> Both (+£0.40)
-            </label><br />
-            <label>
-              <input
-                type="checkbox"
-                checked={blackPud}
-                onChange={() => setBlackPud(!blackPud)}
-              /> Add black pudding? (+£1.40)
+              <input type="checkbox" checked={blackPud} onChange={() => setBlackPud(!blackPud)} />
+              Add black pudding? (+£1.40)
             </label>
           </div>
       )}
@@ -173,26 +169,37 @@ function MenuItemCard({ item }) {
         ['bacon muffin', 'sausage muffin', 'egg muffin', 'spam muffin'].some(v => item.name.toLowerCase().includes(v)) && (
           <div className="hot-options" style={{ marginTop: '1rem' }}>
             <p style={{ fontWeight: 600 }}>Extras:</p>
-            {['egg', 'bacon', 'sausage', 'spam'].map((ingredient) => (
+            {['egg', 'bacon', 'sausage', 'spam'].map(ingredient => (
               <label key={ingredient}>
-                <input
-                  type="checkbox"
-                  checked={hotAdditions[ingredient]}
+                <input type="checkbox" checked={hotAdditions[ingredient]}
                   onChange={() => handleHotChange(ingredient)}
-                  disabled={item.name.toLowerCase().includes(ingredient)}
-                /> Add {ingredient.charAt(0).toUpperCase() + ingredient.slice(1)}
+                  disabled={item.name.toLowerCase().includes(ingredient)} />
+                Add {ingredient.charAt(0).toUpperCase() + ingredient.slice(1)}
               </label>
             ))}
             <br />
             <label>
-              <input
-                type="checkbox"
-                checked={toast}
-                onChange={() => setToast(!toast)}
-              /> Toast?
+              <input type="checkbox" checked={toast} onChange={() => setToast(!toast)} />
+              Toast?
             </label>
           </div>
-        )}
+      )}
+
+      {/* 🧀 Cheese Toastie Extras */}
+      {item.subcategory === 'Toasties' && item.name.toLowerCase() === 'cheese toastie' && (
+        <div className="toastie-options" style={{ marginTop: '1rem' }}>
+          <p style={{ fontWeight: 600 }}>Toastie Extras:</p>
+          {['tomato', 'onion', 'ham', 'tuna'].map(extra => (
+            <label key={extra}>
+              <input
+                type="checkbox"
+                checked={toastieExtras[extra]}
+                onChange={() => handleToastieChange(extra)}
+              /> Add {extra.charAt(0).toUpperCase() + extra.slice(1)} {['ham', 'tuna'].includes(extra) && '(+£0.70)'}
+            </label>
+          ))}
+        </div>
+      )}
 
       <button onClick={handleAdd} className="item-add-btn">
         ➕ Add to Order
