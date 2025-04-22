@@ -318,7 +318,8 @@ if (
               <input type="checkbox" checked={blackPud} onChange={() => setBlackPud(!blackPud)} />
               Add black pudding (+£1.40)
             </label>
-              <input type="checkbox" checked={mushroom} onChange={() => setBlackPud(!blackPud)} />
+            <label>
+              <input type="checkbox" checked={mushroom} onChange={() => setMushroom(!mushroom)} />
               Add mushrooms (+0.90)
             </label>
           </div>
