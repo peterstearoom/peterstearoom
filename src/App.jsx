@@ -8,6 +8,7 @@ import BookingsCalendar from './components/BookingsCalendar' // ✅ NEW
 import './styles/custom.css'
 import FloatingCart from './components/FloatingCart'
 import StatusBanner from './components/StatusBanner'
+import OrderCart from './components/OrderCart'
 
 function App() {
   return (
@@ -41,6 +42,7 @@ function App() {
                 <>
                   <BookingsPage />
       		  <FloatingCart />
+      		  <OrderCart />
                   <BookingsCalendar /> {/* ✅ Show live calendar view */}
                 </>
               }

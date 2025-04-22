@@ -26,7 +26,6 @@ function OrderCart() {
   const [showSummary, setShowSummary] = useState(true)
   const total = cart.reduce((sum, i) => sum + i.qty * i.price, 0)
 
-  // Sync queued orders on reconnect
   useEffect(() => {
     const syncOfflineOrders = async () => {
       const queued = JSON.parse(localStorage.getItem('offlineOrders') || '[]')
@@ -110,7 +109,7 @@ function OrderCart() {
   }
 
   return (
-      <div className="order-wrapper" id="order-summary">
+    <div className="order-wrapper">
       <div className="order-header">
         <h2>🛒 Order Summary</h2>
         {cart.length > 0 && (
@@ -146,64 +145,67 @@ function OrderCart() {
         🛒 View Items <span>{showSummary ? '▲' : '▼'}</span>
       </button>
 
-      {showSummary && (
-        <>
-          {showRawCart ? (
-            <div className="raw-cart">
-              <h3>Edit Items</h3>
-              <ul>
-                {cart.map((item, idx) => (
-                  <li key={idx} className="raw-cart-item">
-                    <div className="item-header">
-                      <div>
-                        <strong>{item.name}</strong>
-                        <div className="item-note">{item.note}</div>
+      {/* 📌 ADDED THIS ID HERE */}
+      <div id="order-summary">
+        {showSummary && (
+          <>
+            {showRawCart ? (
+              <div className="raw-cart">
+                <h3>Edit Items</h3>
+                <ul>
+                  {cart.map((item, idx) => (
+                    <li key={idx} className="raw-cart-item">
+                      <div className="item-header">
+                        <div>
+                          <strong>{item.name}</strong>
+                          <div className="item-note">{item.note}</div>
+                        </div>
+                        <button onClick={() => removeItem(idx)} className="remove-btn">🗑️</button>
                       </div>
-                      <button onClick={() => removeItem(idx)} className="remove-btn">🗑️</button>
-                    </div>
-                    <div className="item-controls">
-                      <input
-                        type="number"
-                        value={item.qty}
-                        onChange={(e) => updateItem(idx, { qty: Number(e.target.value) })}
+                      <div className="item-controls">
+                        <input
+                          type="number"
+                          value={item.qty}
+                          onChange={(e) => updateItem(idx, { qty: Number(e.target.value) })}
+                        />
+                        <span>£{(item.qty * item.price).toFixed(2)}</span>
+                      </div>
+                      <textarea
+                        value={item.note}
+                        onChange={(e) => updateItem(idx, { note: e.target.value })}
+                        placeholder="Notes or allergies..."
                       />
-                      <span>£{(item.qty * item.price).toFixed(2)}</span>
-                    </div>
-                    <textarea
-                      value={item.note}
-                      onChange={(e) => updateItem(idx, { note: e.target.value })}
-                      placeholder="Notes or allergies..."
-                    />
-                  </li>
-                ))}
-              </ul>
-            </div>
-          ) : (
-            ['food', 'drinks'].map((type) => {
-              const itemsOfType = cart.filter((i) => i.category === type)
-              const groupedItems = groupCartItems(itemsOfType)
-              return groupedItems.length > 0 && (
-                <div key={type} className="summary-block">
-                  <h3>{type.toUpperCase()}</h3>
-                  <ul>
-                    {groupedItems.map((item, i) => (
-                      <li key={i} className="summary-item">
-                        <strong>{item.qty}x {item.name}</strong>
-                        {item.notes.map((note, idx) => (
-                          <div key={idx} className="summary-note">
-                            - {note.qty} {note.note}
-                          </div>
-                        ))}
-                        <span>{' '}£{(item.qty * item.price).toFixed(2)}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              )
-            })
-          )}
-        </>
-      )}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ) : (
+              ['food', 'drinks'].map((type) => {
+                const itemsOfType = cart.filter((i) => i.category === type)
+                const groupedItems = groupCartItems(itemsOfType)
+                return groupedItems.length > 0 && (
+                  <div key={type} className="summary-block">
+                    <h3>{type.toUpperCase()}</h3>
+                    <ul>
+                      {groupedItems.map((item, i) => (
+                        <li key={i} className="summary-item">
+                          <strong>{item.qty}x {item.name}</strong>
+                          {item.notes.map((note, idx) => (
+                            <div key={idx} className="summary-note">
+                              - {note.qty} {note.note}
+                            </div>
+                          ))}
+                          <span>{' '}£{(item.qty * item.price).toFixed(2)}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )
+              })
+            )}
+          </>
+        )}
+      </div>
 
       <p className="order-total">Total: £{total.toFixed(2)}</p>
 
