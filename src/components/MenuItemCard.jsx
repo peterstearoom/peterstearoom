@@ -11,6 +11,7 @@ function MenuItemCard({ item }) {
   const [blackPud, setBlackPud] = useState(false)
   const [mushroom, setMushroom] = useState(false)
   const [toast, setToast] = useState(false)
+  const [creamTeaSelection, setCreamTeaSelection] = useState('')
   const [hotAdditions, setHotAdditions] = useState({
     egg: false, bacon: false, sausage: false, spam: false
   })
@@ -40,7 +41,6 @@ const [hotDrinkExtras, setHotDrinkExtras] = useState({
     chilli: false
   })
 const [cakeExtras, setCakeExtras] = useState({
-  addTea: false,
   hot: false,
   cream: false
 })
@@ -115,19 +115,24 @@ if (item.subcategory === 'Hot Drinks') {
   }
 }
 
+// ☕️ Cream Tea addition logic for "Tea" in Hot Drinks
+if (
+  item.subcategory === 'Hot drinks' &&
+  item.name.toLowerCase() === 'tea' &&
+  ['cream scone', 'eclair', 'meringue', 'trifle'].includes(creamTeaSelection)
+) {
+  const formatted = creamTeaSelection.charAt(0).toUpperCase() + creamTeaSelection.slice(1)
+  finalName = `Cream tea (${formatted})`
+  finalPrice += 2.10
+}
+
+
 // 🍰 Cakes Logic
 if (item.subcategory === 'Cakes') {
   const itemName = item.name.toLowerCase()
   const creamTeaItems = ['cream scone', 'eclair', 'meringue', 'trifle']
   const hotCreamItems = ['apple pie', 'chocolate cake', 'brownie']
   const creamOnlyItems = ['carrot cake', 'red velvet cake']
-
-  // Cream Tea logic
-  if (creamTeaItems.includes(itemName) && cakeExtras.addTea) {
-    finalName = `Cream tea (${item.name})`
-    finalPrice += 1.4
-    item.category = 'Drinks' // move to drinks category
-  }
 
   // Hot/Cream combos
   if (hotCreamItems.includes(itemName)) {
@@ -283,11 +288,12 @@ if (
     setBlackPud(false)
     setMushroom(false)
     setToast(false)
+    setCreamTeaSelection('')
     setHotAdditions({ egg: false, bacon: false, sausage: false, spam: false })
     setToastieExtras({ tomato: false, onion: false, ham: false, tuna: false })
     setPieExtras({ peas: false, beans: false, gravy: false, chips: false })
     setBurgerExtras({ cheese: false, onions: false, chips: false })
-    setCakeExtras({ addTea: false, hot: false, cream: false })
+    setCakeExtras({ hot: false, cream: false })
     setHotDrinkExtras({
  	 hotMilk: false,
   	coldMilk: false,
@@ -436,6 +442,25 @@ if (
     )}
   </div>
 )}
+    {/* Cream Tea options */}
+{item.subcategory === 'Hot drinks' && item.name.toLowerCase() === 'tea' && (
+  <div className="hot-drinks-extras" style={{ marginTop: '1rem' }}>
+    <p style={{ fontWeight: 600 }}>Cream Tea Extras:</p>
+    {['cream scone', 'eclair', 'meringue', 'trifle'].map((dessert) => (
+      <label key={dessert} style={{ display: 'block' }}>
+        <input
+          type="radio"
+          name={`cream-tea-${item.name}`}
+          value={dessert}
+          checked={creamTeaSelection === dessert}
+          onChange={(e) => setCreamTeaSelection(e.target.value)}
+        />
+        Add {dessert.charAt(0).toUpperCase() + dessert.slice(1)} (+£2.10)
+      </label>
+    ))}
+  </div>
+)}
+
 
 {/* 🍟 Specials Extras */}
 {item.subcategory === 'Specials' && item.name.toLowerCase() === 'chips' && (
@@ -493,17 +518,6 @@ if (
 {item.subcategory === 'Cakes' && (
   <div className="cake-options" style={{ marginTop: '1rem' }}>
     <p style={{ fontWeight: 600 }}>Cake Extras:</p>
-
-    {/* Cream Tea options */}
-    {['cream scone', 'eclair', 'meringue', 'trifle'].includes(item.name.toLowerCase()) && (
-      <label>
-        <input
-          type="checkbox"
-          checked={cakeExtras.addTea}
-          onChange={() => setCakeExtras(prev => ({ ...prev, addTea: !prev.addTea }))}
-        /> Add tea (+£1.40)
-      </label>
-    )}
 
     {/* Hot & Cream combos */}
     {['apple pie', 'chocolate cake', 'brownie'].includes(item.name.toLowerCase()) && (
