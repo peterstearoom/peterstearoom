@@ -1172,8 +1172,8 @@ textarea {
 /*/MenuItemCard checkbox format/*/
 .menu-item-card input[type="checkbox"],
 .menu-item-card input[type="radio"] {
-  width: 20px;
-  height: 20px;
+  width: 10px;
+  height: 10px;
   transform: scale(2.5); /* increase size */
   margin-right: 10px;
 }
