@@ -1272,6 +1272,74 @@ textarea {
   font-size: 1rem;
   color: #555;
 }
+.table-map-overlay {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0, 0, 0, 0.7);
+  z-index: 999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.table-map-content {
+  background: white;
+  padding: 2rem;
+  border-radius: 12px;
+  max-width: 700px;
+  width: 95%;
+  position: relative;
+  text-align: center;
+}
+
+.close-map-btn {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  font-size: 1.2rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.table-map-layout {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.table-row {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 0.5rem;
+  justify-content: center;
+}
+
+.table-btn {
+  padding: 1rem;
+  background: #f0f0f0;
+  border: 2px solid #333;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.table-room-frame {
+  border: 3px solid #444;
+  padding: 1rem;
+  border-radius: 10px;
+  background: #fdfdfd;
+  margin-top: 1rem;
+}
+
+.door-label {
+  margin-top: 0.5rem;
+  font-weight: 600;
+}
+
+.table-spacer {
+  visibility: hidden;
+}
 
 
 

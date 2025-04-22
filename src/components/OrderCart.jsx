@@ -223,7 +223,6 @@ function OrderCart() {
           </div>
         </div>
       )}
-{/* 🗺️ Table Map Overlay */}
 {showTableMap && (
   <div className="table-map-overlay">
     <div className="table-map-content">
@@ -232,41 +231,40 @@ function OrderCart() {
 
       <div className="table-map-layout">
 
-        {/* OUTSIDE ROW 1 */}
-        <div className="table-row">
+        {/* OUTSIDE SECTION */}
+        <div className="table-row outside-row">
           {[18, 19, 20, 21].map(num => (
             <button key={num} className="table-btn" onClick={() => { setTableNumber(num.toString()); setShowTableMap(false); }}>{num}</button>
           ))}
         </div>
-
-        {/* OUTSIDE ROW 2 */}
-        <div className="table-row">
-          {[14, 15, 16, 17].map(num => (
+        <div className="table-row outside-row">
+          {[14, 15, 16, 17, 6, 7].map(num => (
             <button key={num} className="table-btn" onClick={() => { setTableNumber(num.toString()); setShowTableMap(false); }}>{num}</button>
           ))}
-          <button className="table-btn" onClick={() => { setTableNumber('6'); setShowTableMap(false); }}>6</button>
-          <button className="table-btn" onClick={() => { setTableNumber('7'); setShowTableMap(false); }}>7</button>
         </div>
 
-        {/* INSIDE UPPER ROW */}
-        <div className="table-row">
-          {[2, 3, 4, 5].map(num => (
-            <button key={num} className="table-btn" onClick={() => { setTableNumber(num.toString()); setShowTableMap(false); }}>{num}</button>
-          ))}
-          <div className="spacer" />
-          <button className="table-btn" onClick={() => { setTableNumber('8'); setShowTableMap(false); }}>8</button>
-        </div>
+        {/* INSIDE ROOM FRAME */}
+        <div className="table-room-frame">
+          <div className="table-row">
+            {[2, 3, 4, 5].map(num => (
+              <button key={num} className="table-btn" onClick={() => { setTableNumber(num.toString()); setShowTableMap(false); }}>{num}</button>
+            ))}
+          </div>
 
-        {/* INSIDE BOTTOM ROW */}
-        <div className="table-row">
-          {[1, 13, 12, 11, 10].map(num => (
-            <button key={num} className="table-btn" onClick={() => { setTableNumber(num.toString()); setShowTableMap(false); }}>{num}</button>
-          ))}
-          <button className="table-btn" onClick={() => { setTableNumber('9'); setShowTableMap(false); }}>9</button>
+          <div className="table-row">
+            {[1, 13, 12, 11, 10, 9].map(num => (
+              <button key={num} className="table-btn" onClick={() => { setTableNumber(num.toString()); setShowTableMap(false); }}>{num}</button>
+            ))}
+          </div>
+
+          <div className="table-row">
+            <div className="table-spacer" style={{ gridColumn: '1 / span 5' }}></div>
+            <button className="table-btn" onClick={() => { setTableNumber('8'); setShowTableMap(false); }}>8</button>
+          </div>
+
+          <p className="door-label">🚪 Doors</p>
         </div>
       </div>
-
-      <p className="door-label">🚪 Door Entry</p>
     </div>
   </div>
 )}
