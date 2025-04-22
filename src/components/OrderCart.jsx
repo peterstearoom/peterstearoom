@@ -5,7 +5,7 @@ import { database } from '../lib/firebase'
 import { groupCartItems } from '../utils/groupCartItems'
 import { useNavigate } from 'react-router-dom'
 import '../styles/custom.css'
-import FloatingCart from './components/FloatingCart' // adjust path if needed
+import FloatingCart from './FloatingCart'
 
 
 function OrderCart() {
