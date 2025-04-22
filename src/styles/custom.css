@@ -17,110 +17,6 @@
 }
 
 /* ========== Layout & Body ========== */
-body {
-  background-image: url('/PetersTeaRoom-Background.png');
-  background-size: cover;
-  background-position: center;
-  background-attachment: fixed;
-  background-repeat: no-repeat;
-  font-family: var(--font-sans);
-  color: var(--color-text);
-  margin: 0;
-  padding: 2rem;
-  box-sizing: border-box;
-}
-/* ========= DESKTOP (1025px and up) ========= */
-@media (min-width: 1025px) {
-  .item-title {
-    font-size: 2rem;
-  }
-
-  .item-input,
-  .item-textarea {
-    font-size: 1.2rem;
-  }
-
-  .item-add-btn {
-    font-size: 1.2rem;
-    padding: 0.8rem 1.5rem;
-  }
-
-  .nav-btn {
-    font-size: 1.3rem;
-  }
-
-  .floating-cart {
-    font-size: 1.3rem;
-    right: 2rem;
-    bottom: 2rem;
-  }
-}
-/* ========= MOBILE (phones <600px) ========= */
-@media (max-width: 599px) {
-  .menu-item-card,
-  .order-wrapper {
-    padding: 1rem;
-  }
-
-  .item-title {
-    font-size: 1.4rem;
-  }
-
-  .item-input,
-  .item-textarea {
-    font-size: 1rem;
-  }
-
-  .item-add-btn {
-    font-size: 1.1rem;
-    padding: 0.6rem 1.2rem;
-  }
-
-  .nav-btn {
-    display: block;
-    width: 100%;
-    font-size: 1.1rem;
-    margin: 0.3rem 0;
-  }
-
-  .order-inputs input,
-  .order-inputs select {
-    font-size: 1rem;
-    width: 100%;
-  }
-
-  .floating-cart {
-    font-size: 1.1rem;
-    padding: 0.6rem 1rem;
-    right: 1rem;
-    bottom: 1rem;
-  }
-}
-
-/* ========= TABLETS (600px–1024px) ========= */
-@media (min-width: 600px) and (max-width: 1024px) {
-  .item-title {
-    font-size: 1.8rem;
-  }
-
-  .item-input,
-  .item-textarea,
-  .item-add-btn {
-    font-size: 1.2rem;
-  }
-
-  .nav-btn {
-    font-size: 1.2rem;
-    margin: 0.5rem;
-  }
-
-  .floating-cart {
-    font-size: 1.2rem;
-    padding: 0.8rem 1.2rem;
-    right: 1.5rem;
-    bottom: 1.5rem;
-  }
-}
 
 
 
@@ -1157,7 +1053,15 @@ textarea {
   grid-column: span 1;
 }
 
+@media (min-width: 640px) {
+  .form-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
 
+  .form-grid .full-width {
+    grid-column: span 2;
+  }
+}
 /* ========== Bookings Calendar Styles ========== */
 
 .calendar-wrapper {
@@ -1268,6 +1172,7 @@ textarea {
   margin: 6px 0;
   align-items: center;
 }
+
 
 .floating-cart-btn {
   position: fixed;
