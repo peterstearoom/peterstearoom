@@ -5,6 +5,8 @@ import { database } from '../lib/firebase'
 import { groupCartItems } from '../utils/groupCartItems'
 import { useNavigate } from 'react-router-dom'
 import '../styles/custom.css'
+import FloatingCart from './components/FloatingCart' // adjust path if needed
+
 
 function OrderCart() {
   const {
@@ -260,6 +262,7 @@ function OrderCart() {
     </div>
   </div>
 )}
+  <FloatingCart /> {/* ✅ Reinsert floating cart UI */}
 
     </div>
   )
