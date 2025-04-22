@@ -1169,6 +1169,20 @@ textarea {
   font-size: 0.9rem;
   color: #333;
 }
+/*/MenuItemCard checkbox format/*/
+.menu-item-card input[type="checkbox"],
+.menu-item-card input[type="radio"] {
+  width: 20px;
+  height: 20px;
+  transform: scale(2.5); /* increase size */
+  margin-right: 10px;
+}
+
+.menu-item-card label {
+  display: block; /* ensures each label is on its own line */
+  margin: 6px 0;
+  align-items: center;
+}
 
 
 

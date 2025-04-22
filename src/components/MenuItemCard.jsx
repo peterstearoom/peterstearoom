@@ -117,7 +117,7 @@ if (item.subcategory === 'Hot Drinks') {
 
 // ☕️ Cream Tea addition logic for "Tea" in Hot Drinks
 if (
-  item.subcategory === 'Hot drinks' &&
+  item.subcategory === 'Hot Drinks' &&
   item.name.toLowerCase() === 'tea' &&
   ['cream scone', 'eclair', 'meringue', 'trifle'].includes(creamTeaSelection)
 ) {
