@@ -229,40 +229,41 @@ function OrderCart() {
       <button className="close-map-btn" onClick={() => setShowTableMap(false)}>✖</button>
       <h2 style={{ marginBottom: '1rem' }}>Tap a Table</h2>
 
-      <div className="table-map-layout">
+      <div className="table-layout-grid">
 
-        {/* OUTSIDE SECTION */}
-        <div className="table-row outside-row">
+        {/* OUTSIDE Top Row */}
+        <div className="outside-row">
           {[18, 19, 20, 21].map(num => (
             <button key={num} className="table-btn" onClick={() => { setTableNumber(num.toString()); setShowTableMap(false); }}>{num}</button>
           ))}
         </div>
-        <div className="table-row outside-row">
-          {[14, 15, 16, 17, 6, 7].map(num => (
+
+        {/* OUTSIDE Second Row */}
+        <div className="outside-row second">
+          {[14, 15, 16, 17].map(num => (
             <button key={num} className="table-btn" onClick={() => { setTableNumber(num.toString()); setShowTableMap(false); }}>{num}</button>
           ))}
+          <div className="room-doorway">
+            <button className="table-btn" onClick={() => { setTableNumber('6'); setShowTableMap(false); }}>6</button>
+            <button className="table-btn" onClick={() => { setTableNumber('7'); setShowTableMap(false); }}>7</button>
+          </div>
         </div>
 
-        {/* INSIDE ROOM FRAME */}
-        <div className="table-room-frame">
-          <div className="table-row">
+        {/* ROOM BORDERED SECTION */}
+        <div className="room-border">
+          <div className="inside-row">
             {[2, 3, 4, 5].map(num => (
               <button key={num} className="table-btn" onClick={() => { setTableNumber(num.toString()); setShowTableMap(false); }}>{num}</button>
             ))}
+            <div className="spacer" />
+            <button className="table-btn" onClick={() => { setTableNumber('8'); setShowTableMap(false); }}>8</button>
           </div>
-
-          <div className="table-row">
+          <div className="inside-row bottom">
             {[1, 13, 12, 11, 10, 9].map(num => (
               <button key={num} className="table-btn" onClick={() => { setTableNumber(num.toString()); setShowTableMap(false); }}>{num}</button>
             ))}
           </div>
-
-          <div className="table-row">
-            <div className="table-spacer" style={{ gridColumn: '1 / span 5' }}></div>
-            <button className="table-btn" onClick={() => { setTableNumber('8'); setShowTableMap(false); }}>8</button>
-          </div>
-
-          <p className="door-label">🚪 Doors</p>
+          <div className="door-label">🚪 Doors</div>
         </div>
       </div>
     </div>
