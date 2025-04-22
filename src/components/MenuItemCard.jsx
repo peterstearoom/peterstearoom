@@ -443,7 +443,7 @@ if (
   </div>
 )}
     {/* Cream Tea options */}
-{item.subcategory === 'Hot drinks' && item.name.toLowerCase() === 'tea' && (
+{item.subcategory === 'Hot Drinks' && item.name.toLowerCase() === 'tea' && (
   <div className="hot-drinks-extras" style={{ marginTop: '1rem' }}>
     <p style={{ fontWeight: 600 }}>Cream Tea Extras:</p>
     {['cream scone', 'eclair', 'meringue', 'trifle'].map((dessert) => (
