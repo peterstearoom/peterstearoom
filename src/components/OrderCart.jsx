@@ -202,12 +202,12 @@ function OrderCart() {
                         <span>{' '}£{(item.qty * item.price).toFixed(2)}</span>
                       </li>
                     ))}
-  </div> 
                   </ul>
                 </div>
               )
             })
           )}
+ </div> 
         </>
       )}
 
