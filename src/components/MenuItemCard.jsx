@@ -98,6 +98,20 @@ function MenuItemCard({ item }) {
       if (toastieExtras.onion) additions.push('onion')
       finalName = `${additions.join(', ')} toastie`
     }
+
+    // Jacket Potatoes Logic
+    if (item.subcategory === 'Jacket potatoes' && item.name.toLowerCase() === 'jacket potato') {
+      const selected = Object.entries(jacketExtras).filter(([_, v]) => v).map(([k]) => {
+        if (k === 'chickenCurry') return 'chicken curry'
+        return k
+      })
+
+      if (selected.length > 0) {
+        finalName += ` (${selected.join(', ')})`
+        finalPrice += (selected.length - 1) * 1.4
+      }
+    }
+
 // 🥧 Pies/Soups Logic
 if (
   item.subcategory === 'Pies/Soups' &&
