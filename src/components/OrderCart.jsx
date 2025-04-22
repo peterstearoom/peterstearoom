@@ -24,6 +24,7 @@ function OrderCart() {
   const [showPayment, setShowPayment] = useState(false)
   const [showRawCart, setShowRawCart] = useState(false)
   const [showSummary, setShowSummary] = useState(true)
+  const [showTableMap, setShowTableMap] = useState(false)
   const total = cart.reduce((sum, i) => sum + i.qty * i.price, 0)
 
   useEffect(() => {
@@ -135,9 +136,9 @@ function OrderCart() {
         </div>
         <div>
           <label className="hidden-label">Search</label>
-          <button onClick={() => alert('🧭 Table selector UI coming soon')} className="search-btn">
-            Search Table
-          </button>
+<button onClick={() => setShowTableMap(true)} className="search-btn">
+  Search Table
+</button>
         </div>
       </div>
 
@@ -222,6 +223,54 @@ function OrderCart() {
           </div>
         </div>
       )}
+{/* 🗺️ Table Map Overlay */}
+{showTableMap && (
+  <div className="table-map-overlay">
+    <div className="table-map-content">
+      <button className="close-map-btn" onClick={() => setShowTableMap(false)}>✖</button>
+      <h2 style={{ marginBottom: '1rem' }}>Tap a Table</h2>
+
+      <div className="table-map-layout">
+
+        {/* OUTSIDE ROW 1 */}
+        <div className="table-row">
+          {[18, 19, 20, 21].map(num => (
+            <button key={num} className="table-btn" onClick={() => { setTableNumber(num.toString()); setShowTableMap(false); }}>{num}</button>
+          ))}
+        </div>
+
+        {/* OUTSIDE ROW 2 */}
+        <div className="table-row">
+          {[14, 15, 16, 17].map(num => (
+            <button key={num} className="table-btn" onClick={() => { setTableNumber(num.toString()); setShowTableMap(false); }}>{num}</button>
+          ))}
+          <button className="table-btn" onClick={() => { setTableNumber('6'); setShowTableMap(false); }}>6</button>
+          <button className="table-btn" onClick={() => { setTableNumber('7'); setShowTableMap(false); }}>7</button>
+        </div>
+
+        {/* INSIDE UPPER ROW */}
+        <div className="table-row">
+          {[2, 3, 4, 5].map(num => (
+            <button key={num} className="table-btn" onClick={() => { setTableNumber(num.toString()); setShowTableMap(false); }}>{num}</button>
+          ))}
+          <div className="spacer" />
+          <button className="table-btn" onClick={() => { setTableNumber('8'); setShowTableMap(false); }}>8</button>
+        </div>
+
+        {/* INSIDE BOTTOM ROW */}
+        <div className="table-row">
+          {[1, 13, 12, 11, 10].map(num => (
+            <button key={num} className="table-btn" onClick={() => { setTableNumber(num.toString()); setShowTableMap(false); }}>{num}</button>
+          ))}
+          <button className="table-btn" onClick={() => { setTableNumber('9'); setShowTableMap(false); }}>9</button>
+        </div>
+      </div>
+
+      <p className="door-label">🚪 Door Entry</p>
+    </div>
+  </div>
+)}
+
     </div>
   )
 }
