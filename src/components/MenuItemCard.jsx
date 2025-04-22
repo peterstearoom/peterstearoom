@@ -9,6 +9,7 @@ function MenuItemCard({ item }) {
   const [addOnions, setAddOnions] = useState(false)
   const [beansOption, setBeansOption] = useState('')
   const [blackPud, setBlackPud] = useState(false)
+  const [blackPud, setMushroom] = useState(false)
   const [toast, setToast] = useState(false)
   const [hotAdditions, setHotAdditions] = useState({
     egg: false, bacon: false, sausage: false, spam: false
@@ -60,6 +61,10 @@ function MenuItemCard({ item }) {
       if (blackPud) {
         extras.push('black pud')
         finalPrice += 1.4
+      }
+      if (mushroom) {
+        extras.push('mushroom')
+        finalPrice += 0.9
       }
       if (extras.length > 0) finalName += ` (${extras.join(' + ')})`
     }
@@ -183,6 +188,7 @@ if (
     setAddOnions(false)
     setBeansOption('')
     setBlackPud(false)
+    setMushroom(false)
     setToast(false)
     setHotAdditions({ egg: false, bacon: false, sausage: false, spam: false })
     setToastieExtras({ tomato: false, onion: false, ham: false, tuna: false })
@@ -310,7 +316,10 @@ if (
             <br />
             <label>
               <input type="checkbox" checked={blackPud} onChange={() => setBlackPud(!blackPud)} />
-              Add black pudding? (+£1.40)
+              Add black pudding (+£1.40)
+            </label>
+              <input type="checkbox" checked={mushroom} onChange={() => setBlackPud(!blackPud)} />
+              Add mushrooms (+0.90)
             </label>
           </div>
       )}
