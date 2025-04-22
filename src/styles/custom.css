@@ -1184,5 +1184,19 @@ textarea {
   align-items: center;
 }
 
+.floating-cart-btn {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background-color: #000;
+  color: #fff;
+  padding: 12px 20px;
+  border-radius: 50px;
+  font-size: 16px;
+  z-index: 9999;
+  text-decoration: none;
+}
+
+
 
 

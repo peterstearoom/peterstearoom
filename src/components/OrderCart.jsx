@@ -110,7 +110,7 @@ function OrderCart() {
   }
 
   return (
-    <div className="order-wrapper">
+      <div className="order-wrapper" id="order-summary">
       <div className="order-header">
         <h2>🛒 Order Summary</h2>
         {cart.length > 0 && (

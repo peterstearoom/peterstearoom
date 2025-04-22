@@ -6,6 +6,7 @@ import PrintTemp from './pages/PrintTemp'
 import BookingsPage from './pages/BookingsPage'
 import BookingsCalendar from './components/BookingsCalendar' // ✅ NEW
 import './styles/custom.css'
+import FloatingCart from './components/FloatingCart'
 import StatusBanner from './components/StatusBanner'
 
 function App() {
@@ -39,6 +40,7 @@ function App() {
               element={
                 <>
                   <BookingsPage />
+      		  <FloatingCart />
                   <BookingsCalendar /> {/* ✅ Show live calendar view */}
                 </>
               }
