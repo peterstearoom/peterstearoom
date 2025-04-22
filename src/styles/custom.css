@@ -21,14 +21,39 @@ body {
   background-image: url('/PetersTeaRoom-Background.png');
   background-size: cover;
   background-position: center;
+  background-attachment: fixed;
   background-repeat: no-repeat;
-  background-attachment: scroll; /* ← change from 'fixed' to 'scroll' for mobile stability */
   font-family: var(--font-sans);
   color: var(--color-text);
   margin: 0;
   padding: 2rem;
-  min-height: 100vh;
-  background-color: #fff; /* optional fallback */
+  box-sizing: border-box;
+}
+/* ========= DESKTOP (1025px and up) ========= */
+@media (min-width: 1025px) {
+  .item-title {
+    font-size: 2rem;
+  }
+
+  .item-input,
+  .item-textarea {
+    font-size: 1.2rem;
+  }
+
+  .item-add-btn {
+    font-size: 1.2rem;
+    padding: 0.8rem 1.5rem;
+  }
+
+  .nav-btn {
+    font-size: 1.3rem;
+  }
+
+  .floating-cart {
+    font-size: 1.3rem;
+    right: 2rem;
+    bottom: 2rem;
+  }
 }
 /* ========= MOBILE (phones <600px) ========= */
 @media (max-width: 599px) {
