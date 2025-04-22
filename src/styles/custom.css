@@ -18,16 +18,17 @@
 
 /* ========== Layout & Body ========== */
 body {
-  /*background: var(--color-bg);*/
-  background-image: url('/PetersTeaRoom-Background.png'); /* adjust path as needed */
+  background-image: url('/PetersTeaRoom-Background.png');
   background-size: cover;
   background-position: center;
-  background-attachment: fixed;
   background-repeat: no-repeat;
+  background-attachment: scroll; /* ← change from 'fixed' to 'scroll' for mobile stability */
   font-family: var(--font-sans);
   color: var(--color-text);
   margin: 0;
   padding: 2rem;
+  min-height: 100vh;
+  background-color: #fff; /* optional fallback */
 }
 
 
@@ -1188,14 +1189,22 @@ textarea {
   position: fixed;
   bottom: 20px;
   right: 20px;
-  background-color: #000;
-  color: #fff;
-  padding: 12px 20px;
+  background-color: #ff6f61;
+  color: white;
+  border: none;
   border-radius: 50px;
+  padding: 12px 20px;
   font-size: 16px;
-  z-index: 9999;
-  text-decoration: none;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  z-index: 1000;
+  transition: background-color 0.3s ease;
 }
+
+.floating-cart-btn:hover {
+  background-color: #e65b50;
+}
+
 
 
 

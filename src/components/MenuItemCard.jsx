@@ -73,7 +73,7 @@ const [specialsExtras, setSpecialsExtras] = useState({
       (item.name.toLowerCase().includes('small breakfast') || item.name.toLowerCase().includes('large breakfast'))) {
       let extras = []
       if (beansOption) {
-        if (beansOption === 'both') finalPrice += 0.4
+        if (beansOption === 'both') finalPrice += 0.5
         extras.push(beansOption)
       }
       if (blackPud) {
@@ -583,7 +583,7 @@ if (
               <label key={opt}>
                 <input type="radio" name={`beans-${item.name}`} checked={beansOption === opt}
                   onChange={() => setBeansOption(opt)} />
-                {opt.charAt(0).toUpperCase() + opt.slice(1)} {opt === 'both' ? '(+£0.40)' : ''}
+                {opt.charAt(0).toUpperCase() + opt.slice(1)} {opt === 'both' ? '(+£0.50)' : ''}
               </label>
             ))}
             <br />
