@@ -224,40 +224,45 @@ function OrderCart() {
         </div>
       )}
 {showTableMap && (
-  <div className="table-overlay">
-    <div className="table-map-container">
-      <button className="close-map" onClick={() => setShowTableMap(false)}>❌</button>
-
-      {/* L-Shaped Border */}
-      <div className="room-outline">
-        {Array.from({ length: 21 }, (_, i) => {
-          const id = i + 1
-          const positions = {
-            1: { top: 410, left: 30 }, 2: { top: 270, left: 30 }, 3: { top: 270, left: 160 },
-            4: { top: 270, left: 290 }, 5: { top: 270, left: 420 }, 6: { top: 140, left: 560 },
-            7: { top: 140, left: 690 }, 8: { top: 270, left: 690 }, 9: { top: 410, left: 690 },
-            10: { top: 410, left: 560 }, 11: { top: 410, left: 430 }, 12: { top: 410, left: 300 },
-            13: { top: 410, left: 160 }, 14: { top: 140, left: 30 }, 15: { top: 140, left: 160 },
-            16: { top: 140, left: 290 }, 17: { top: 140, left: 420 }, 18: { top: 20, left: 30 },
-            19: { top: 20, left: 160 }, 20: { top: 20, left: 290 }, 21: { top: 20, left: 420 },
-          }
-
-          const { top, left } = positions[id]
-          return (
-            <div
-              key={id}
-              className="table-btn"
-              style={{ top, left }}
-              onClick={() => {
-                setTableNumber(id)
-                setShowTableMap(false)
-              }}
-            >
-              {id}
-            </div>
-          )
-        })}
-      </div>
+  <div className="table-map-overlay">
+    <div className="table-area">
+      {[
+        { id: 1, top: 360, left: 30 },
+        { id: 2, top: 230, left: 30 },
+        { id: 3, top: 230, left: 170 },
+        { id: 4, top: 230, left: 310 },
+        { id: 5, top: 230, left: 450 },
+        { id: 6, top: 100, left: 530 },
+        { id: 7, top: 100, left: 650 },
+        { id: 8, top: 230, left: 650 },
+        { id: 9, top: 360, left: 650 },
+        { id: 10, top: 360, left: 530 },
+        { id: 11, top: 360, left: 410 },
+        { id: 12, top: 360, left: 290 },
+        { id: 13, top: 360, left: 170 },
+        { id: 14, top: 100, left: 30 },
+        { id: 15, top: 100, left: 170 },
+        { id: 16, top: 100, left: 310 },
+        { id: 17, top: 100, left: 450 },
+        { id: 18, top: 10, left: 30 },
+        { id: 19, top: 10, left: 170 },
+        { id: 20, top: 10, left: 310 },
+        { id: 21, top: 10, left: 450 }
+      ].map(({ id, top, left }) => (
+        <div
+          key={id}
+          className="table-btn"
+          style={{ top, left }}
+          onClick={() => {
+            setTableNumber(id)
+            setShowTableMap(false)
+          }}
+        >
+          {id}
+        </div>
+      ))}
+      <div className="l-border"></div>
+      <button className="close-map" onClick={() => setShowTableMap(false)}>✖</button>
     </div>
   </div>
 )}
