@@ -9,7 +9,7 @@ function MenuItemCard({ item }) {
   const [addOnions, setAddOnions] = useState(false)
   const [beansOption, setBeansOption] = useState('')
   const [blackPud, setBlackPud] = useState(false)
-  const [blackPud, setMushroom] = useState(false)
+  const [mushroom, setMushroom] = useState(false)
   const [toast, setToast] = useState(false)
   const [hotAdditions, setHotAdditions] = useState({
     egg: false, bacon: false, sausage: false, spam: false
