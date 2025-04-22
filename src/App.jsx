@@ -41,12 +41,12 @@ function App() {
               element={
                 <>
                   <BookingsPage />
-      		  <FloatingCart />
-      		  <OrderCart />
                   <BookingsCalendar /> {/* ✅ Show live calendar view */}
                 </>
               }
             />
+      		  <FloatingCart />
+      		  <OrderCart />
           </Routes>
         </div>
       </div>
