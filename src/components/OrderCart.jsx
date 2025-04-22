@@ -115,7 +115,6 @@ function OrderCart() {
   return (
     <div className="order-wrapper">
       <div className="order-header">
-  <div id="order-summary"> {/* ✅ Anchor point here */}
         <h2>🛒 Order Summary</h2>
         {cart.length > 0 && (
           <button onClick={() => setShowRawCart((prev) => !prev)} className="edit-toggle">
@@ -153,6 +152,7 @@ function OrderCart() {
 
       {showSummary && (
         <>
+  <div id="order-summary"> {/* ✅ Anchor point here */}
           {showRawCart ? (
             <div className="raw-cart">
               <h3>Edit Items</h3>
@@ -202,11 +202,11 @@ function OrderCart() {
                         <span>{' '}£{(item.qty * item.price).toFixed(2)}</span>
                       </li>
                     ))}
+  </div> 
                   </ul>
                 </div>
               )
             })
-</div>
           )}
         </>
       )}
