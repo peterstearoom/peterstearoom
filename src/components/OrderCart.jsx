@@ -115,6 +115,7 @@ function OrderCart() {
   return (
     <div className="order-wrapper">
       <div className="order-header">
+  <div id="order-summary"> {/* ✅ Anchor point here */}
         <h2>🛒 Order Summary</h2>
         {cart.length > 0 && (
           <button onClick={() => setShowRawCart((prev) => !prev)} className="edit-toggle">
@@ -150,8 +151,7 @@ function OrderCart() {
         🛒 View Items <span>{showSummary ? '▲' : '▼'}</span>
       </button>
 
-      <div id="order-summary">
-{showSummary && (
+      {showSummary && (
         <>
           {showRawCart ? (
             <div className="raw-cart">
@@ -164,9 +164,7 @@ function OrderCart() {
                         <strong>{item.name}</strong>
                         <div className="item-note">{item.note}</div>
                       </div>
-                      <button onClick={() => removeItem(idx)}
-</div>
- className="remove-btn">🗑️</button>
+                      <button onClick={() => removeItem(idx)} className="remove-btn">🗑️</button>
                     </div>
                     <div className="item-controls">
                       <input
@@ -208,6 +206,7 @@ function OrderCart() {
                 </div>
               )
             })
+</div>
           )}
         </>
       )}
