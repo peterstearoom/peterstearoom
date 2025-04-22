@@ -14,6 +14,14 @@ function MenuItemCard({ item }) {
   const [hotAdditions, setHotAdditions] = useState({
     egg: false, bacon: false, sausage: false, spam: false
   })
+const [hotDrinkExtras, setHotDrinkExtras] = useState({
+  hotMilk: false,
+  coldMilk: false,
+  trimmings: false,
+  extraShot: false,
+  teaType: ''
+})
+
  const [pieExtras, setPieExtras] = useState({
   peas: false,
   beans: false,
@@ -31,6 +39,16 @@ function MenuItemCard({ item }) {
     chickenCurry: false,
     chilli: false
   })
+const [cakeExtras, setCakeExtras] = useState({
+  addTea: false,
+  hot: false,
+  cream: false
+})
+const [specialsExtras, setSpecialsExtras] = useState({
+  cheese: false,
+  gravy: false
+})
+
   const [toastieExtras, setToastieExtras] = useState({
     tomato: false, onion: false, ham: false, tuna: false
   })
@@ -68,6 +86,60 @@ function MenuItemCard({ item }) {
       }
       if (extras.length > 0) finalName += ` (${extras.join(' + ')})`
     }
+// ☕️ Hot Drinks logic
+if (item.subcategory === 'Hot Drinks') {
+  const itemName = item.name.toLowerCase()
+
+  // Americano: hot/cold milk (mutually exclusive)
+  if (itemName === 'americano') {
+    if (hotDrinkExtras.hotMilk) finalName += ' (hot milk)'
+    else if (hotDrinkExtras.coldMilk) finalName += ' (cold milk)'
+  }
+
+  // Hot chocolate: trimmings
+  if (itemName === 'hot chocolate' && hotDrinkExtras.trimmings) {
+    finalName += ' (trimmings)'
+  }
+
+  // Coffee drinks: extra shot
+  if (['cappuccino', 'latte', 'coffee', 'black coffee'].includes(itemName)) {
+    if (hotDrinkExtras.extraShot) {
+      finalName += ' (extra shot)'
+      finalPrice += 1.9
+    }
+  }
+
+  // Fruit tea options
+  if (itemName === 'fruit tea' && hotDrinkExtras.teaType) {
+    finalName = `${hotDrinkExtras.teaType} tea`
+  }
+}
+
+// 🍰 Cakes Logic
+if (item.subcategory === 'Cakes') {
+  const itemName = item.name.toLowerCase()
+  const creamTeaItems = ['cream scone', 'eclair', 'meringue', 'trifle']
+  const hotCreamItems = ['apple pie', 'chocolate cake', 'brownie']
+  const creamOnlyItems = ['carrot cake', 'red velvet cake']
+
+  // Cream Tea logic
+  if (creamTeaItems.includes(itemName) && cakeExtras.addTea) {
+    finalName = `Cream tea (${item.name})`
+    finalPrice += 1.4
+    item.category = 'Drinks' // move to drinks category
+  }
+
+  // Hot/Cream combos
+  if (hotCreamItems.includes(itemName)) {
+    if (cakeExtras.hot) finalName = `Hot ${finalName}`
+    if (cakeExtras.cream) finalName += ' with cream'
+  }
+
+  if (creamOnlyItems.includes(itemName) && cakeExtras.cream) {
+    finalName += ' with cream'
+  }
+}
+
 
     // 🌭 Hot Sandwich logic
     if (item.subcategory === 'Hot sandwiches' &&
@@ -103,6 +175,27 @@ function MenuItemCard({ item }) {
       if (toastieExtras.onion) additions.push('onion')
       finalName = `${additions.join(', ')} toastie`
     }
+
+// 🍟 Specials -> Chips Logic
+if (
+  item.subcategory === 'Specials' &&
+  item.name.toLowerCase() === 'chips'
+) {
+  const selected = []
+  if (specialsExtras.cheese) {
+    selected.push('cheese')
+    finalPrice += 0.9
+  }
+  if (specialsExtras.gravy) {
+    selected.push('gravy')
+    finalPrice += 0.6
+  }
+
+  if (selected.length > 0) {
+    finalName += ` (${selected.join(', ')})`
+  }
+}
+
 
     // Jacket Potatoes Logic
     if (item.subcategory === 'Jacket potatoes' && item.name.toLowerCase() === 'jacket potato') {
@@ -194,6 +287,15 @@ if (
     setToastieExtras({ tomato: false, onion: false, ham: false, tuna: false })
     setPieExtras({ peas: false, beans: false, gravy: false, chips: false })
     setBurgerExtras({ cheese: false, onions: false, chips: false })
+    setCakeExtras({ addTea: false, hot: false, cream: false })
+    setHotDrinkExtras({
+ 	 hotMilk: false,
+  	coldMilk: false,
+  	trimmings: false,
+ 	 extraShot: false,
+ 	 teaType: ''
+	})
+
     setJacketExtras({
       cheese: false,
       tuna: false,
@@ -202,6 +304,8 @@ if (
       chickenCurry: false,
       chilli: false
     })
+    setSpecialsExtras({ cheese: false, gravy: false })
+
   }
 
   const handleHotChange = (key) => {
@@ -252,6 +356,112 @@ if (
           )}
         </>
       )}
+{/* ☕️ Hot Drinks Options */}
+{item.subcategory === 'Hot Drinks' && (
+  <div className="hot-drinks-options" style={{ marginTop: '1rem' }}>
+    <p style={{ fontWeight: 600 }}>Drink Options:</p>
+
+    {/* Americano: Hot/Cold milk */}
+    {item.name.toLowerCase() === 'americano' && (
+      <>
+        <label>
+          <input
+            type="checkbox"
+            checked={hotDrinkExtras.hotMilk}
+            onChange={() =>
+              setHotDrinkExtras(prev => ({
+                ...prev,
+                hotMilk: !prev.hotMilk,
+                coldMilk: false
+              }))
+            }
+          /> Hot milk
+        </label><br />
+        <label>
+          <input
+            type="checkbox"
+            checked={hotDrinkExtras.coldMilk}
+            onChange={() =>
+              setHotDrinkExtras(prev => ({
+                ...prev,
+                coldMilk: !prev.coldMilk,
+                hotMilk: false
+              }))
+            }
+          /> Cold milk
+        </label>
+      </>
+    )}
+
+    {/* Hot Chocolate: Trimmings */}
+    {item.name.toLowerCase() === 'hot chocolate' && (
+      <label>
+        <input
+          type="checkbox"
+          checked={hotDrinkExtras.trimmings}
+          onChange={() =>
+            setHotDrinkExtras(prev => ({ ...prev, trimmings: !prev.trimmings }))
+          }
+        /> Trimmings
+      </label>
+    )}
+
+    {/* Extra Shot */}
+    {['cappuccino', 'latte', 'coffee', 'black coffee'].includes(item.name.toLowerCase()) && (
+      <label>
+        <input
+          type="checkbox"
+          checked={hotDrinkExtras.extraShot}
+          onChange={() =>
+            setHotDrinkExtras(prev => ({ ...prev, extraShot: !prev.extraShot }))
+          }
+        /> Extra shot (+£1.90)
+      </label>
+    )}
+
+    {/* Fruit Tea Flavours */}
+    {item.name.toLowerCase() === 'fruit tea' && (
+      <>
+        {['earl grey', 'lemon & ginger', 'camomile', 'cranberry'].map(type => (
+          <label key={type}>
+            <input
+              type="radio"
+              name={`fruit-tea-${item.name}`}
+              checked={hotDrinkExtras.teaType === type}
+              onChange={() => setHotDrinkExtras(prev => ({ ...prev, teaType: type }))}
+            /> {type.charAt(0).toUpperCase() + type.slice(1)}
+          </label>
+        ))}
+      </>
+    )}
+  </div>
+)}
+
+{/* 🍟 Specials Extras */}
+{item.subcategory === 'Specials' && item.name.toLowerCase() === 'chips' && (
+  <div className="specials-options" style={{ marginTop: '1rem' }}>
+    <p style={{ fontWeight: 600 }}>Extras:</p>
+    <label>
+      <input
+        type="checkbox"
+        checked={specialsExtras.cheese}
+        onChange={() =>
+          setSpecialsExtras(prev => ({ ...prev, cheese: !prev.cheese }))
+        }
+      /> Add cheese (+£0.90)
+    </label><br />
+    <label>
+      <input
+        type="checkbox"
+        checked={specialsExtras.gravy}
+        onChange={() =>
+          setSpecialsExtras(prev => ({ ...prev, gravy: !prev.gravy }))
+        }
+      /> Add gravy (+£0.60)
+    </label>
+  </div>
+)}
+
       {/* 🍔 Burger/Hotdog Extras */}
       {item.subcategory === 'Burgers/Hotdogs' && (
         <div className="burger-options" style={{ marginTop: '1rem' }}>
@@ -279,6 +489,55 @@ if (
           </label>
         </div>
       )}
+{/* 🍰 Cakes Extras */}
+{item.subcategory === 'Cakes' && (
+  <div className="cake-options" style={{ marginTop: '1rem' }}>
+    <p style={{ fontWeight: 600 }}>Cake Extras:</p>
+
+    {/* Cream Tea options */}
+    {['cream scone', 'eclair', 'meringue', 'trifle'].includes(item.name.toLowerCase()) && (
+      <label>
+        <input
+          type="checkbox"
+          checked={cakeExtras.addTea}
+          onChange={() => setCakeExtras(prev => ({ ...prev, addTea: !prev.addTea }))}
+        /> Add tea (+£1.40)
+      </label>
+    )}
+
+    {/* Hot & Cream combos */}
+    {['apple pie', 'chocolate cake', 'brownie'].includes(item.name.toLowerCase()) && (
+      <>
+        <label>
+          <input
+            type="checkbox"
+            checked={cakeExtras.hot}
+            onChange={() => setCakeExtras(prev => ({ ...prev, hot: !prev.hot }))}
+          /> Hot
+        </label><br />
+        <label>
+          <input
+            type="checkbox"
+            checked={cakeExtras.cream}
+            onChange={() => setCakeExtras(prev => ({ ...prev, cream: !prev.cream }))}
+          /> Cream
+        </label>
+      </>
+    )}
+
+    {/* Cream only */}
+    {['carrot cake', 'red velvet cake'].includes(item.name.toLowerCase()) && (
+      <label>
+        <input
+          type="checkbox"
+          checked={cakeExtras.cream}
+          onChange={() => setCakeExtras(prev => ({ ...prev, cream: !prev.cream }))}
+        /> Cream
+      </label>
+    )}
+  </div>
+)}
+
 
       {/* 🥔 Jacket Potato Extras */}
       {item.subcategory === 'Jacket potatoes' && item.name.toLowerCase() === 'jacket potato' && (
@@ -320,7 +579,7 @@ if (
             </label>
             <label>
               <input type="checkbox" checked={mushroom} onChange={() => setMushroom(!mushroom)} />
-              Add mushrooms (+0.90)
+              Add mushrooms (+£0.90)
             </label>
           </div>
       )}
@@ -390,7 +649,7 @@ if (
             <br />
             <label>
               <input type="checkbox" checked={toast} onChange={() => setToast(!toast)} />
-              Toast?
+              On toast
             </label>
           </div>
       )}

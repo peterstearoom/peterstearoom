@@ -65,7 +65,6 @@ const menuData = {
       { name: 'Chips', price: 2.8, image: '🍟' },
       { name: 'Cheese on toast', price: 3.5, image: '🧀' },
       { name: 'Beans on toast', price: 3.5, image: '🍝' },
-      { name: 'Cream tea', price: 3.9, image: '🍯' },
     ],
     Cakes: [
       { name: 'Cream scone', price: 2.5, image: '🍰' },
@@ -85,21 +84,28 @@ const menuData = {
       { name: 'Custard tart', price: 2.1, image: '🍮' },
       { name: 'Jam slice', price: 2.1, image: '🍓' },
       { name: 'Flapjack', price: 2.1, image: '🥮' },
+      { name: 'Mince pie', price: 2.1, image: '🥮' },
       { name: 'Millionaire Shortbread', price: 2.1, image: '🍪' },
       { name: 'Chorley cake', price: 2.0, image: '🍪' },
-    ]
+      { name: 'Gingerbread man', price: 2.0, image: '🍪' },
+    ],
+    Other: [
+      { name: 'Jug of gravy', price: 0.6, image: '🥘' },
+      { name: 'Pot of beans', price: 0.6, image: '🥘' },
+      { name: 'Pot of tomatoes', price: 0.6, image: '🥘' },
+    ],
   },
   drinks: {
     "Hot Drinks": [
-      { name: 'Cappuccino', price: 2.8, image: '☕' },
-      { name: 'Latte', price: 2.9, image: '🥛' },
-      { name: 'Tea', price: 2.0, image: '🍵' },
-      { name: 'Coffee', price: 2.5, image: '☕' },
-      { name: 'Black Coffee', price: 2.5, image: '☕' },
+      { name: 'Cappuccino', price: 3.4, image: '☕' },
+      { name: 'Latte', price: 3.4, image: '🥛' },
+      { name: 'Tea', price: 1.8, image: '🍵' },
+      { name: 'Coffee', price: 2.8, image: '☕' },
+      { name: 'Black coffee', price: 2.7, image: '☕' },
       { name: 'Americano', price: 2.8, image: '☕' },
-      { name: 'Hot Chocolate', price: 3.0, image: '🍫' },
-      { name: 'Mocha', price: 3.2, image: '☕' },
-      { name: 'Fruit Tea', price: 2.2, image: '🍋' },
+      { name: 'Hot chocolate', price: 3.4, image: '🍫' },
+      { name: 'Mocha', price: 3.6, image: '☕' },
+      { name: 'Fruit tea', price: 2.3, image: '🍋' },
     ],
     Pop: [
       { name: 'Coke', price: 2.8, image: '🥤' },
@@ -113,6 +119,11 @@ const menuData = {
       { name: 'Vimto', price: 2.0, image: '🧃' },
       { name: 'Orange fruit shoot', price: 2.0, image: '🧃' },
       { name: 'Blackcurrant fruit shoot', price: 2.0, image: '🧃' },
+    ],
+    Other: [
+      { name: 'Milk', price: 1.6, image: '🥛' },
+      { name: 'Bottled water', price: 1.8, image: '🧃' },
+      { name: 'Tap water', price: 0.0, image: '🧃' },
     ]
   }
 }
