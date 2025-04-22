@@ -13,14 +13,17 @@ function MenuItemCard({ item }) {
   const [hotAdditions, setHotAdditions] = useState({
     egg: false, bacon: false, sausage: false, spam: false
   })
-  const [pieExtras, setPieExtras] = useState({
-    peas: false, beans: false, gravy: false, chips: false
+ const [pieExtras, setPieExtras] = useState({
+  peas: false,
+  beans: false,
+  gravy: false,
+  chips: false
+ })
+  const [burgerExtras, setBurgerExtras] = useState({
+    cheese: false, onions: false, chips: false
   })
   const [toastieExtras, setToastieExtras] = useState({
     tomato: false, onion: false, ham: false, tuna: false
-  })
-  const [burgerExtras, setBurgerExtras] = useState({
-    cheese: false, onions: false, chips: false
   })
 
   const addItem = useOrderStore((s) => s.addItem)
@@ -39,7 +42,7 @@ function MenuItemCard({ item }) {
     }
 
     // 🍳 Breakfast logic
-    if (item.subcategory === 'Breakfasts' &&
+    if (item.subcategory === 'Breakfasts' && 
       (item.name.toLowerCase().includes('small breakfast') || item.name.toLowerCase().includes('large breakfast'))) {
       let extras = []
       if (beansOption) {
@@ -71,7 +74,8 @@ function MenuItemCard({ item }) {
       }
     }
 
-    // 🧀 Toastie logic
+
+    // 🧀 Toastie Logic (only for Cheese toastie)
     if (item.subcategory === 'Toasties' && item.name.toLowerCase() === 'cheese toastie') {
       let additions = ['cheese']
       if (toastieExtras.ham) {
@@ -86,24 +90,27 @@ function MenuItemCard({ item }) {
       if (toastieExtras.onion) additions.push('onion')
       finalName = `${additions.join(', ')} toastie`
     }
+// 🥧 Pies/Soups Logic
+if (
+  item.subcategory === 'Pies/Soups' &&
+  ['meat & potato pie', 'cottage pie', 'rag pudding', 'cheese & onion pie', 'meat & onion pie']
+    .some(name => item.name.toLowerCase().includes(name))
+) {
+  let extras = []
 
-    // 🥧 Pies/Soups logic
-    if (
-      item.subcategory === 'Pies/Soups' &&
-      ['meat & potato pie', 'cottage pie', 'rag pudding', 'cheese & onion pie', 'meat & onion pie']
-        .some(name => item.name.toLowerCase().includes(name))
-    ) {
-      let extras = []
-      if (pieExtras.peas) extras.push('peas')
-      if (pieExtras.beans) extras.push('beans')
-      if (pieExtras.gravy) extras.push('gravy')
-      if (extras.length > 0) finalName += `, ${extras.join(', ')}`
-      if (pieExtras.chips) {
-        finalName += ` (Chips)`
-        finalPrice += 2.3
-      }
-    }
+  if (pieExtras.peas) extras.push('peas')
+  if (pieExtras.beans) extras.push('beans')
+  if (pieExtras.gravy) extras.push('gravy')
 
+  if (extras.length > 0) {
+    finalName += `, ${extras.join(', ')}`
+  }
+
+  if (pieExtras.chips) {
+    finalName += ` (Chips)`
+    finalPrice += 2.3
+  }
+}
     // 🍔 Burger/Hotdog logic
     if (item.subcategory === 'Burgers/Hotdogs') {
       const isBurger = item.name.toLowerCase().includes('burger')
@@ -143,6 +150,7 @@ function MenuItemCard({ item }) {
 
       finalName = burgerName
     }
+
 
     addItem({ ...item, name: finalName, price: finalPrice, qty, note })
 
@@ -188,6 +196,26 @@ function MenuItemCard({ item }) {
         className="item-textarea"
       />
 
+      {/* 🥗 Cold Sandwich Options */}
+      {item.subcategory === 'Cold sandwiches' && (
+        <>
+          <label>
+            <input type="checkbox" checked={addSalad}
+              onChange={() => {
+                setAddSalad(!addSalad)
+                if (!addSalad) setAddOnions(false)
+              }} />
+            Add salad? (+£1.50)
+          </label><br />
+          {addSalad && (
+            <label>
+              <input type="checkbox" checked={addOnions}
+                onChange={() => setAddOnions(!addOnions)} />
+              Add onions?
+            </label>
+          )}
+        </>
+      )}
       {/* 🍔 Burger/Hotdog Extras */}
       {item.subcategory === 'Burgers/Hotdogs' && (
         <div className="burger-options" style={{ marginTop: '1rem' }}>
@@ -216,9 +244,112 @@ function MenuItemCard({ item }) {
         </div>
       )}
 
-      {/* Add your other sections (Cold sandwiches, Breakfast, Pies, Toasties, Hot Sandwiches) below */}
-      {/* Skipped to keep focus on burger logic */}
-      
+      {/* 🍳 Breakfast Options */}
+      {item.subcategory === 'Breakfasts' &&
+        (item.name.toLowerCase().includes('small breakfast') || item.name.toLowerCase().includes('large breakfast')) && (
+          <div className="breakfast-options" style={{ marginTop: '1rem' }}>
+            <p style={{ fontWeight: 600 }}>Breakfast Extras:</p>
+            {['beans', 'tomatoes', 'both'].map(opt => (
+              <label key={opt}>
+                <input type="radio" name={`beans-${item.name}`} checked={beansOption === opt}
+                  onChange={() => setBeansOption(opt)} />
+                {opt.charAt(0).toUpperCase() + opt.slice(1)} {opt === 'both' ? '(+£0.40)' : ''}
+              </label>
+            ))}
+            <br />
+            <label>
+              <input type="checkbox" checked={blackPud} onChange={() => setBlackPud(!blackPud)} />
+              Add black pudding? (+£1.40)
+            </label>
+          </div>
+      )}
+{/* 🥧 Pie Extras */}
+{item.subcategory === 'Pies/Soups' &&
+  ['meat & potato pie', 'cottage pie', 'rag pudding', 'cheese & onion pie', 'meat & onion pie']
+    .some(name => item.name.toLowerCase().includes(name)) && (
+      <div className="pie-options" style={{ marginTop: '1rem' }}>
+        <p style={{ fontWeight: 600 }}>Pie Extras:</p>
+        <label>
+          <input
+            type="checkbox"
+            checked={pieExtras.peas}
+            onChange={() =>
+              setPieExtras(prev => ({
+                ...prev,
+                peas: !prev.peas,
+                beans: prev.peas ? prev.beans : false
+              }))
+            }
+          /> Add Peas
+        </label><br />
+        <label>
+          <input
+            type="checkbox"
+            checked={pieExtras.beans}
+            onChange={() =>
+              setPieExtras(prev => ({
+                ...prev,
+                beans: !prev.beans,
+                peas: prev.beans ? prev.peas : false
+              }))
+            }
+          /> Add Beans
+        </label><br />
+        <label>
+          <input
+            type="checkbox"
+            checked={pieExtras.gravy}
+            onChange={() => setPieExtras(prev => ({ ...prev, gravy: !prev.gravy }))}
+          /> Add Gravy
+        </label><br />
+        <label>
+          <input
+            type="checkbox"
+            checked={pieExtras.chips}
+            onChange={() => setPieExtras(prev => ({ ...prev, chips: !prev.chips }))}
+          /> Add Chips (+£2.30)
+        </label>
+      </div>
+)}
+
+
+      {/* 🌭 Hot Sandwich Extras */}
+      {item.subcategory === 'Hot sandwiches' &&
+        ['bacon muffin', 'sausage muffin', 'egg muffin', 'spam muffin'].some(v => item.name.toLowerCase().includes(v)) && (
+          <div className="hot-options" style={{ marginTop: '1rem' }}>
+            <p style={{ fontWeight: 600 }}>Extras:</p>
+            {['egg', 'bacon', 'sausage', 'spam'].map(ingredient => (
+              <label key={ingredient}>
+                <input type="checkbox" checked={hotAdditions[ingredient]}
+                  onChange={() => handleHotChange(ingredient)}
+                  disabled={item.name.toLowerCase().includes(ingredient)} />
+                Add {ingredient.charAt(0).toUpperCase() + ingredient.slice(1)}
+              </label>
+            ))}
+            <br />
+            <label>
+              <input type="checkbox" checked={toast} onChange={() => setToast(!toast)} />
+              Toast?
+            </label>
+          </div>
+      )}
+
+      {/* 🧀 Cheese Toastie Extras */}
+      {item.subcategory === 'Toasties' && item.name.toLowerCase() === 'cheese toastie' && (
+        <div className="toastie-options" style={{ marginTop: '1rem' }}>
+          <p style={{ fontWeight: 600 }}>Toastie Extras:</p>
+          {['tomato', 'onion', 'ham', 'tuna'].map(extra => (
+            <label key={extra}>
+              <input
+                type="checkbox"
+                checked={toastieExtras[extra]}
+                onChange={() => handleToastieChange(extra)}
+              /> Add {extra.charAt(0).toUpperCase() + extra.slice(1)} {['ham', 'tuna'].includes(extra) && '(+£0.70)'}
+            </label>
+          ))}
+        </div>
+      )}
+
       <button onClick={handleAdd} className="item-add-btn">
         ➕ Add to Order
       </button>
