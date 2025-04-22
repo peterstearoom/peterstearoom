@@ -150,7 +150,8 @@ function OrderCart() {
         🛒 View Items <span>{showSummary ? '▲' : '▼'}</span>
       </button>
 
-      {showSummary && (
+      <div id="order-summary">
+{showSummary && (
         <>
           {showRawCart ? (
             <div className="raw-cart">
@@ -163,7 +164,9 @@ function OrderCart() {
                         <strong>{item.name}</strong>
                         <div className="item-note">{item.note}</div>
                       </div>
-                      <button onClick={() => removeItem(idx)} className="remove-btn">🗑️</button>
+                      <button onClick={() => removeItem(idx)}
+</div>
+ className="remove-btn">🗑️</button>
                     </div>
                     <div className="item-controls">
                       <input
