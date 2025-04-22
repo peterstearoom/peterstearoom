@@ -13,6 +13,12 @@ function MenuItemCard({ item }) {
   const [hotAdditions, setHotAdditions] = useState({
     egg: false, bacon: false, sausage: false, spam: false
   })
+ const [pieExtras, setPieExtras] = useState({
+  peas: false,
+  beans: false,
+  gravy: false,
+  chips: false
+ })
   const [toastieExtras, setToastieExtras] = useState({
     tomato: false, onion: false, ham: false, tuna: false
   })
@@ -65,6 +71,7 @@ function MenuItemCard({ item }) {
       }
     }
 
+
     // 🧀 Toastie Logic (only for Cheese toastie)
     if (item.subcategory === 'Toasties' && item.name.toLowerCase() === 'cheese toastie') {
       let additions = ['cheese']
@@ -80,6 +87,28 @@ function MenuItemCard({ item }) {
       if (toastieExtras.onion) additions.push('onion')
       finalName = `${additions.join(', ')} toastie`
     }
+// 🥧 Pies/Soups Logic
+if (
+  item.subcategory === 'Pies/Soups' &&
+  ['meat & potato pie', 'cottage pie', 'rag pudding', 'cheese & onion pie', 'meat & onion pie']
+    .some(name => item.name.toLowerCase().includes(name))
+) {
+  let extras = []
+
+  if (pieExtras.peas) extras.push('peas')
+  if (pieExtras.beans) extras.push('beans')
+  if (pieExtras.gravy) extras.push('gravy')
+
+  if (extras.length > 0) {
+    finalName += `, ${extras.join(', ')}`
+  }
+
+  if (pieExtras.chips) {
+    finalName += ` (Chips)`
+    finalPrice += 2.6
+  }
+}
+
 
     addItem({ ...item, name: finalName, price: finalPrice, qty, note })
 
@@ -93,6 +122,7 @@ function MenuItemCard({ item }) {
     setToast(false)
     setHotAdditions({ egg: false, bacon: false, sausage: false, spam: false })
     setToastieExtras({ tomato: false, onion: false, ham: false, tuna: false })
+    setPieExtras({ peas: false, beans: false, gravy: false, chips: false })
   }
 
   const handleHotChange = (key) => {
@@ -163,6 +193,55 @@ function MenuItemCard({ item }) {
             </label>
           </div>
       )}
+{/* 🥧 Pie Extras */}
+{item.subcategory === 'Pies/Soups' &&
+  ['meat & potato pie', 'cottage pie', 'rag pudding', 'cheese & onion pie', 'meat & onion pie']
+    .some(name => item.name.toLowerCase().includes(name)) && (
+      <div className="pie-options" style={{ marginTop: '1rem' }}>
+        <p style={{ fontWeight: 600 }}>Pie Extras:</p>
+        <label>
+          <input
+            type="checkbox"
+            checked={pieExtras.peas}
+            onChange={() =>
+              setPieExtras(prev => ({
+                ...prev,
+                peas: !prev.peas,
+                beans: prev.peas ? prev.beans : false
+              }))
+            }
+          /> Add Peas
+        </label><br />
+        <label>
+          <input
+            type="checkbox"
+            checked={pieExtras.beans}
+            onChange={() =>
+              setPieExtras(prev => ({
+                ...prev,
+                beans: !prev.beans,
+                peas: prev.beans ? prev.peas : false
+              }))
+            }
+          /> Add Beans
+        </label><br />
+        <label>
+          <input
+            type="checkbox"
+            checked={pieExtras.gravy}
+            onChange={() => setPieExtras(prev => ({ ...prev, gravy: !prev.gravy }))}
+          /> Add Gravy
+        </label><br />
+        <label>
+          <input
+            type="checkbox"
+            checked={pieExtras.chips}
+            onChange={() => setPieExtras(prev => ({ ...prev, chips: !prev.chips }))}
+          /> Add Chips (+£2.60)
+        </label>
+      </div>
+)}
+
 
       {/* 🌭 Hot Sandwich Extras */}
       {item.subcategory === 'Hot sandwiches' &&
